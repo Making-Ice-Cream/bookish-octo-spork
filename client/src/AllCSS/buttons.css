@@ -1,0 +1,74 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital@0;1&display=swap');
+.buttons > .btn{
+    position: relative;
+    padding: 10px 30px;
+    margin: 0 15px;
+    color: #21ebff;
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 20px;
+    transition: 0.5s;
+    overflow: hidden;
+    font-family: 'Playfair Display', serif;
+
+    
+}
+.buttons > .btn:hover{
+    background: #21ebff;
+    color:#111;
+    box-shadow:  0 0 50px #21ebff;
+    transition-delay: 0.5s;
+}
+.buttons > .btn:before{
+    content: '';
+    position: absolute;
+    top:0;
+    left:0;
+    width: 10px;
+    height: 10px;
+    border-top: 2px solid #21ebff;
+    border-left: 2px solid #21ebff;
+    transition: 0.5s;
+    transition-delay: 0.5s;
+}
+.buttons >.btn:after{
+    content: '';
+    position: absolute;
+    bottom:0;
+    right:0;
+    width: 10px;
+    height: 10px;
+    border-right: 2px solid #21ebff;
+    border-bottom: 2px solid #21ebff;
+    transition: 0.5s;
+    transition-delay: 0.5s;
+}
+.buttons > .btn:hover:before{
+    width: 100%;
+    height: 100%;
+
+}
+.buttons > .btn:hover:after{
+    width: 100%;
+    height: 100%;
+
+}
+
+.buttons{
+    display: flex;
+    height: 50px;
+    /* border: 5px solid green; */
+    justify-content: space-between;
+    align-items:center;
+}
+
+.dropdown-item,
+.Login_text{
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-size: 20px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 20px;
+}

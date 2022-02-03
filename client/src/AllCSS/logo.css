@@ -1,0 +1,15 @@
+@import url('https://fonts.googleapis.com/css2?family=Island+Moments&display=swap');
+
+.navbar-brand{
+    font-family: 'Island Moments', cursive;
+    
+
+}
+.multicolortext {
+    background-image: linear-gradient(to left, violet,  cyan, blue, yellow, red);
+    -webkit-background-clip: text;
+    -moz-background-clip: text;
+    background-clip: text;
+    color: transparent;
+font-size: 3.5rem;
+  }
