@@ -1,0 +1,56 @@
+* {
+    box-sizing: border-box
+  }
+  
+  :root {
+    --color-1: #186cb8;
+    --color-2: #2a9a9f;
+    --color-3: #f1b211;
+    --color-4: #e83611;
+    --color-5: #f9002f;
+  }
+  
+  
+  .wrapper {
+    background: black;
+    line-height: 1;
+    height: 150px;
+    display: grid;
+    place-items: center;
+    min-height: calc(150px - 16px);
+  }
+  
+  h1 {
+    font-family: "Exo", sans-serif;
+    font-size: 2vw;
+    font-weight: 300;
+    
+    margin: auto;
+    text-transform: uppercase;
+    background: linear-gradient(219deg, 
+      var(--color-1) 19%, 
+      transparent 19%,transparent 20%, 
+      var(--color-2) 20%, var(--color-2)  39%,
+      transparent 39%,transparent 40%, 
+      var(--color-3) 40%,var(--color-3) 59% ,
+      transparent 59%,transparent 60%, 
+      var(--color-4) 60%, var(--color-4) 79%,
+      transparent 79%, transparent 80%, 
+      var(--color-5) 80%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+  }
+  
+ 
+  
+  @media screen and (min-width: 768px) {
+    h1 {
+      font-size: 4rem;
+     
+    }
+  }
+
+  form{
+    box-shadow: 12px 10px 8px #888888;
+  }

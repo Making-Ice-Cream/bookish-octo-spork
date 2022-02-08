@@ -1,0 +1,51 @@
+.body{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 200px;
+    width: 100%;
+    flex-direction: column;
+    background-color: rgba(83, 83, 83, 0.157);
+    
+}
+.loader{
+    position: relative;
+}
+.loader::before{
+    content: '';
+    position:absolute;
+    top:0;
+    right:0;
+    width:2px;
+    height: 35px;
+    background-color: #03e9f4;
+    animation: blinkCoursor 0.8s steps(3) infinite;
+}
+@keyframes blinkCoursor{
+    0%,75%{
+        opacity: 1;
+    }
+    76%,100%{
+        opacity: 0;
+    }
+}
+.loader h1{
+    position: relative;
+    color: #03e9f4;
+    letter-spacing: 5px;
+    font-size: 30px;
+    text-transform: uppercase;
+    animation: typing 8s steps(27) infinite;
+    overflow: hidden;
+    /* display: inline; */
+    /* width: 400px; */
+}
+@keyframes typing{
+    0%,90%,100%{
+        width: 0;
+
+    }
+    30%,60%{
+        width: 600px;
+    }
+}

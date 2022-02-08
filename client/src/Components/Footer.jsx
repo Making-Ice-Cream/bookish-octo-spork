@@ -4,10 +4,10 @@ const Footer = () => {
     return (
 
        
-        <div className="container">
+        <div className=" w-100">
           
           <MDBFooter
-                  className="text-center text-lg-start text-white fixed-bottom"
+                  className="text-center text-lg-start text-white "
                   style={{backgroundColor: "#929fba"}}
                   >
            
@@ -53,7 +53,7 @@ const Footer = () => {
                   
                   <div className="col-md-4 col-lg-3 col-xl-3 mx-auto mt-3">
                     <h6 className="text-uppercase mb-4 font-weight-bold">Contact</h6>
-                    <p><i className="fas fa-home mr-3"></i> Jalandhar, JRC-144011, IN</p>
+                    <p><i className="fas fa-home mr-3"></i> Jalandhar, PUB-144011, IN</p>
                     <p><i className="fas fa-envelope mr-3"></i> info@gmail.com</p>
                     <p><i className="fas fa-phone mr-3"></i> +91 6375717641</p>
                    
