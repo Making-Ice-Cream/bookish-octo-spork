@@ -53,5 +53,3 @@ const NavBar = () => {
   )};
 
 export default NavBar;
-
-rafce
