@@ -4,31 +4,33 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleLeft, faEnvelope, faUnlockAlt } from "@fortawesome/free-solid-svg-icons";
 import { faFacebookF, faGithub, faTwitter } from "@fortawesome/free-brands-svg-icons";
 import { Col, Row, Form, Card, Button, FormCheck, Container, InputGroup } from '@themesberg/react-bootstrap';
-//import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+// import "./index1.css"
+import "../AllCSS/pages.css";
+import BgImage from "../images/Img.svg";
+// import { Routes } from "../comp/Routes";
 
-// import { Routes } from "../../routes";
-import BgImage from "../images/signin.svg";
-import "../AllCSS/try.css"
-
-const  Signin  = () => {
+const Login =  (props) => {
   return (
     <main>
-        {/* {console.log({BgImage})} */}
       <section className="d-flex align-items-center my-5 mt-lg-6 mb-lg-5">
-          
         <Container>
-         <p className="text-center">
-            <Card.Link   className="text-gray-700">
-              <FontAwesomeIcon icon={faAngleLeft} className="me-2" /> Back to homepage
-            </Card.Link>
-          </p> 
-           <Row className=" img justify-content-center form-bg-image" style={{ backgroundImage: `url(${BgImage})`}}>
+          <p className="text-center">
+          
+              <Card.Link   className="text-gray-700">
+              <Link to = {{pathname : "/"}}>
+                <FontAwesomeIcon icon={faAngleLeft} className="me-2" /></Link> Back to homepage
+                
+              </Card.Link>
+            
+          </p>
+          <Row className="justify-content-center form-bg-image" style={{ backgroundImage: `url(${BgImage})` }}>
             <Col xs={12} className="d-flex align-items-center justify-content-center">
               <div className="bg-white shadow-soft border rounded border-light p-4 p-lg-5 w-100 fmxw-500">
                 <div className="text-center text-md-center mb-4 mt-md-0">
-                  <h3 className="mb-0">Sign in to our platform</h3>
+                  <h3 className="mb-0">Sign in {props.location.state}</h3>
                 </div>
-                 <Form className="mt-4">
+                <Form className="mt-4">
                   <Form.Group id="email" className="mb-4">
                     <Form.Label>Your Email</Form.Label>
                     <InputGroup>
@@ -53,15 +55,15 @@ const  Signin  = () => {
                         <FormCheck.Input id="defaultCheck5" className="me-2" />
                         <FormCheck.Label htmlFor="defaultCheck5" className="mb-0">Remember me</FormCheck.Label>
                       </Form.Check>
-                      <Card.Link className="small text-end">Lost password?</Card.Link>
+                      <Card.Link className="small text-end" > <Link to = {{pathname : "/forgotPassword"}}>Lost password?</Link></Card.Link>
                     </div>
                   </Form.Group>
                   <Button variant="primary" type="submit" className="w-100">
                     Sign in
                   </Button>
-                </Form> 
+                </Form>
 
-                 <div className="mt-3 mb-4 text-center">
+                <div className="mt-3 mb-4 text-center">
                   <span className="fw-normal">or login with</span>
                 </div>
                 <div className="d-flex justify-content-center my-4">
@@ -75,22 +77,20 @@ const  Signin  = () => {
                     <FontAwesomeIcon icon={faGithub} />
                   </Button>
                 </div>
-                <div className="d-flex justify-content-center align-items-center mt-4">
+                {/* <div className="d-flex justify-content-center align-items-center mt-4">
                   <span className="fw-normal">
                     Not registered?
-                    <Card.Link   className="fw-bold">
+                    <Card.Link as={Link} to = "./"  className="fw-bold">
                       {` Create account `}
                     </Card.Link>
                   </span>
-                </div> 
-
+                </div> */}
               </div>
             </Col>
-          </Row> 
+          </Row>
         </Container>
       </section>
     </main>
   );
 };
-
-export default Signin;
+export default Login;

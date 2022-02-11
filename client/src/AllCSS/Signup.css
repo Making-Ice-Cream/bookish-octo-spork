@@ -1,26 +1,18 @@
-* {
+/* * {
     box-sizing: border-box
-  }
+  } */
   
-  :root {
-    --color-1: #186cb8;
-    --color-2: #2a9a9f;
-    --color-3: #f1b211;
-    --color-4: #e83611;
-    --color-5: #f9002f;
-  }
-  
-  
-  .wrapper {
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,500&display=swap');
+  /* .wrapper-signup {
     background: black;
     line-height: 1;
     height: 150px;
-    display: grid;
-    place-items: center;
-    min-height: calc(150px - 16px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
-  
-  h1 {
+   */
+  /* .h1-signup {
     font-family: "Exo", sans-serif;
     font-size: 2vw;
     font-weight: 300;
@@ -28,29 +20,102 @@
     margin: auto;
     text-transform: uppercase;
     background: linear-gradient(219deg, 
-      var(--color-1) 19%, 
+      var(#186cb8) 19%, 
       transparent 19%,transparent 20%, 
-      var(--color-2) 20%, var(--color-2)  39%,
+      var(#2a9a9f) 20%, var(#2a9a9f)  39%,
       transparent 39%,transparent 40%, 
-      var(--color-3) 40%,var(--color-3) 59% ,
+      var(#f1b211) 40%,var(#f1b211) 59% ,
       transparent 59%,transparent 60%, 
-      var(--color-4) 60%, var(--color-4) 79%,
+      var(#e83611) 60%, var(#e83611) 79%,
       transparent 79%, transparent 80%, 
-      var(--color-5) 80%);
+      var(#f9002f) 80%);
     background-clip: text;
     -webkit-background-clip: text;
-    color: transparent;
-  }
+    color: transparent; 
+  } */
   
  
   
-  @media screen and (min-width: 768px) {
-    h1 {
+  /* @media screen and (min-width: 768px) {
+    .h1-signup {
       font-size: 4rem;
      
     }
+  } */
+
+  /* .form-signup{
+    box-shadow: 12px 10px 8px #888888;
+  } */
+.whole-cont{
+  width: 100vw;
+}
+  MDBContainer{
+    padding : 0;
+    margin : 0;
+    box-sizing:  border-box;
+
+  }
+  .image img {
+    
+    height:100vh;
   }
 
-  form{
+  .wrapper-signup{
+    boder:2px solid green;
+  }
+
+  .h1-signup{
+    text-transform: uppercase;
+    margin-top: 1rem;
+    margin-bottom: 1.5rem;
+    /* font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; */
+    background: linear-gradient(to right, green , yellow,red,cyan,gold,blue,black);
+  background-clip: text;
+  font-family: 'Playfair Display', serif;
+  -webkit-background-clip: text;
+  color: transparent; 
+    font-size: 2.75rem;
+    font-weight: 700;
+  }
+  .col-example1{
     box-shadow: 12px 10px 8px #888888;
   }
+
+@media  screen and (max-width: 700px) {
+  .col-example{
+    display: none;
+  }
+  .col-example1{
+    width:100%;
+  }
+}
+  .image{
+    margin: 1rem;
+    
+  }
+  
+@media  screen and (max-width: 1000px) {
+  .image > img{
+   width:90%;
+   height: 100vmax;
+  }
+  
+}
+.icon{
+  position:relative;
+  left: 20px;
+  top:20px;
+  width: 39px;
+  height: 42px;
+  /* border: 2px solid red; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  background-color: #88888850;
+  cursor: pointer;
+
+}
+.icon:hover{
+  background-color: #5a5a5a50;
+}

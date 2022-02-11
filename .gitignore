@@ -7,6 +7,8 @@
 client/node_modules
 # testing
 /client/coverage
+/client/src/scss
+client/src/scss
 
 # production
 /client/build
