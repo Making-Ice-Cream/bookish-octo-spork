@@ -1,5 +1,5 @@
 
-import React from "react";
+import React , {useState  } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleLeft, faEnvelope, faUnlockAlt } from "@fortawesome/free-solid-svg-icons";
 import { faFacebookF, faGithub, faTwitter } from "@fortawesome/free-brands-svg-icons";
@@ -9,17 +9,94 @@ import { Link } from 'react-router-dom';
 import "../AllCSS/pages.css";
 import BgImage from "../images/Img.svg";
 // import { Routes } from "../comp/Routes";
+import { useHistory } from "react-router-dom";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Login =  (props) => {
+    const history = useHistory();
+  const [user , setuser] = useState({
+     email:"",password :""
+     })
+
+  const [buttonProperty, setbuttonProperty] = useState (false);
+ 
+  const GotoHome = ()=>{
+    history.push("/");
+  }
+
+  const ChangingCredential = (e) =>{
+    let input_name = e.target.name ;
+    let  value = e.target.value ;
+    setuser({...user , [input_name]:value})
+  }
+ 
+  // const validEmail = (email)=>{
+  //   var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+  //   if(email.match(mailformat)){
+  //     return true;
+  //   }
+  //   return false ;
+  // }
+
+  //toast continer
+  
+
+
+  //
+
+  const checkCredential = async(e) =>{
+    // toast("Wow so easy!");
+    // console.log("Hello");
+    const {email , password} = user ;
+    
+    // console.log(validEmail(email));
+    //  if(validEmail(email) === false){
+    //   toast.error("In Valid Email or Password", {
+    //     position: "top-center",
+    //     autoClose: 5000,
+    //     hideProgressBar: false,
+    //     closeOnClick: true,
+    //     pauseOnHover: true,
+    //     draggable: true,
+    //     progress: undefined,
+    //     });
+    //     return ;
+    //  }
+     
+     console.log(email +  " " + password)
+
+      setbuttonProperty(true);
+
+
+
+      e.preventDefault() ;
+
+     
+      const response =  await fetch(`/login`,{
+        method : "POST",
+        headers :{
+            "Accept":"application/json",
+            "Content-Type" : "application/json"
+        },
+        body : JSON.stringify({
+            email,password 
+        })
+    });
+    const awaited_response = await response.json();
+    console.log(awaited_response);
+
+  }
+
   return (
     <main>
       <section className="d-flex align-items-center my-5 mt-lg-6 mb-lg-5">
         <Container>
           <p className="text-center">
           
-              <Card.Link   className="text-gray-700">
-              <Link to = {{pathname : "/"}}>
-                <FontAwesomeIcon icon={faAngleLeft} className="me-2" /></Link> Back to homepage
+              <Card.Link  className="text-gray-700">
+              
+                <FontAwesomeIcon onClick={GotoHome} icon={faAngleLeft} className="me-2" style={{color : "blue", cursor : "pointer"}} /> Back to homepage
                 
               </Card.Link>
             
@@ -37,7 +114,7 @@ const Login =  (props) => {
                       <InputGroup.Text>
                         <FontAwesomeIcon icon={faEnvelope} />
                       </InputGroup.Text>
-                      <Form.Control autoFocus required type="email" placeholder="example@company.com" />
+                      <Form.Control autoFocus onChange= {ChangingCredential} required type="email" placeholder="example@company.com" name = "email" value = {user.email} />
                     </InputGroup>
                   </Form.Group>
                   <Form.Group>
@@ -47,7 +124,7 @@ const Login =  (props) => {
                         <InputGroup.Text>
                           <FontAwesomeIcon icon={faUnlockAlt} />
                         </InputGroup.Text>
-                        <Form.Control required type="password" placeholder="Password" />
+                        <Form.Control required onChange= {ChangingCredential} type="password" placeholder="Password" name = "password" value = {user.password} />
                       </InputGroup>
                     </Form.Group>
                     <div className="d-flex justify-content-between align-items-center mb-4">
@@ -55,13 +132,27 @@ const Login =  (props) => {
                         <FormCheck.Input id="defaultCheck5" className="me-2" />
                         <FormCheck.Label htmlFor="defaultCheck5" className="mb-0">Remember me</FormCheck.Label>
                       </Form.Check>
-                      <Card.Link className="small text-end" > <Link to = {{pathname : "/forgotPassword"}}>Lost password?</Link></Card.Link>
+                      <Card.Link className="small text-end" to = "/forgotPassword">Lost password?</Card.Link>
                     </div>
                   </Form.Group>
-                  <Button variant="primary" type="submit" className="w-100">
+                  <Button disabled = {buttonProperty} variant="primary" type="submit" className="w-100" onClick = {checkCredential}>
                     Sign in
                   </Button>
                 </Form>
+
+                <ToastContainer
+                      position="top-center"
+                      autoClose={5000}
+                      hideProgressBar={false}
+                      newestOnTop={false}
+                      closeOnClick
+                      rtl={false}
+                      pauseOnFocusLoss
+                      draggable
+                      pauseOnHover
+                      />
+                      
+                <ToastContainer />
 
                 <div className="mt-3 mb-4 text-center">
                   <span className="fw-normal">or login with</span>
@@ -77,14 +168,8 @@ const Login =  (props) => {
                     <FontAwesomeIcon icon={faGithub} />
                   </Button>
                 </div>
-                {/* <div className="d-flex justify-content-center align-items-center mt-4">
-                  <span className="fw-normal">
-                    Not registered?
-                    <Card.Link as={Link} to = "./"  className="fw-bold">
-                      {` Create account `}
-                    </Card.Link>
-                  </span>
-                </div> */}
+
+                 
               </div>
             </Col>
           </Row>
