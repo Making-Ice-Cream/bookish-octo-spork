@@ -63,6 +63,7 @@
        "keyword-spacing":0,
       "react-hooks/rules-of-hooks": 2,
       "indent": 0,
+      "arrow-parens" : 0,
       "array-bracket-spacing":0,
       " space-before-blocks":0,
       "react/jsx-first-prop-new-line":0,

@@ -18,8 +18,8 @@ import {UserContext} from '../App';
 const Login =  (props) => {
   const {state,dispatch} = useContext(UserContext);
   const location = useLocation();
-  console.log(location);
-    const navigate = useNavigate();
+  // console.log(location);
+  const navigate = useNavigate();
   const [user , setuser] = useState({
      email:"",password :""
      })
@@ -72,7 +72,7 @@ const Login =  (props) => {
     //     return ;
     //  }
      
-     console.log(email +  " " + password)
+    //  console.log(email +  " " + password)
 
       setbuttonProperty(true);
 
@@ -104,13 +104,16 @@ const Login =  (props) => {
         progress: undefined,
         });
         
-        console.log(awaited_response.token);
+        // console.log(awaited_response.token);
 
         Cookies.set('token', awaited_response.token, { expires: 1, path: '' })
         
         dispatch({type:'USER',payload:true})
         
+        window.sessionStorage.setItem("user_email" , email);
+        window.sessionStorage.setItem("Logged_in_as", location.state.name);
         
+
         navigate('/admin/app',{replace:true});
 
 
@@ -151,7 +154,7 @@ const Login =  (props) => {
             <Col xs={12} className="d-flex align-items-center justify-content-center">
               <div className="bg-white shadow-soft border rounded border-light p-4 p-lg-5 w-100 fmxw-500">
                 <div className="text-center text-md-center mb-4 mt-md-0">
-                  <h3 className="mb-0">Sign in {location.state.name}</h3>
+                  <h3 className="mb-0">Sign in {location.state == null ? window.sessionStorage.getItem("Logged_in_as")   : location.state.name}</h3>
                 </div>
                 <Form className="mt-4">
                   <Form.Group id="email" className="mb-4">

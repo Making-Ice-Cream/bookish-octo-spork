@@ -19,7 +19,7 @@ import Cookies from 'js-cookie'
 // ----------------------------------------------------------------------
 
 export default function DashboardApp() {
-  console.log("hello" + Cookies.get('token'));
+  // console.log("hello" + Cookies.get('token'));
   return (
     <Page title="Dashboard | Admin-UI">
       <Container maxWidth="xl">
