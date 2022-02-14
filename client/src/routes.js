@@ -20,8 +20,12 @@ import NotFound from "./signin_404_etc_pages/NotFound";
 import ResetPassword from "./signin_404_etc_pages/ResetPassword";
 import ServerError from "./signin_404_etc_pages/ServerError";
 import Signup from "./signin_404_etc_pages/Signup";
+import React ,{useState,useContext} from 'react'
+import {UserContext} from './App';
 
 export default function AdminRoutes() {
+  const {state,dispatch} = useContext(UserContext);
+  console.log(state);
   return useRoutes([
     {
       path: '/',
@@ -29,7 +33,7 @@ export default function AdminRoutes() {
     },
     {
       path: '/signin',
-      element: <Login />
+      element: state ? <Navigate to="/admin/app" /> : <Login />
     },
     {
       path: '/signup',
@@ -39,9 +43,10 @@ export default function AdminRoutes() {
       path : '/forgotPassword',
       element: <ForgotPassword />
     },
+
     {
       path: '/admin',
-      element: <DashboardLayout />,
+      element: state ? <DashboardLayout /> : <Navigate to="/signin" />,
       children: [
         { element: <Navigate to="/admin/app" replace /> },
         { path: 'app', element: <DashboardApp /> },

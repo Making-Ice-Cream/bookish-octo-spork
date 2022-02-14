@@ -47,16 +47,16 @@ export default function Signup() {
 
                                     <MDBRow className='mb-4'>
                                         <MDBCol>
-                                            <MDBInput id='form6Example1' label='First name' />
+                                            <MDBInput disabled id='form6Example1' label='First name' />
                                     </MDBCol>
                                     <MDBCol>
-                                        <MDBInput id='form6Example2' label='Last name' />
+                                        <MDBInput disabled id='form6Example2' label='Last name' />
                                     </MDBCol>
                                 </MDBRow>
 
                                 <MDBRow className='mb-4'>
                                     <MDBCol>
-                                    <MDBInput id='form6Example1' className='my-2' label='Email'  type='email' />
+                                    <MDBInput disabled id='form6Example1' className='my-2' label='Email'  type='email' />
                                     </MDBCol>
                                         <MDBCol>
                                         <MDBInput label='Password' className='my-2' id='typePassword' type='password' />
@@ -65,7 +65,7 @@ export default function Signup() {
 
                                     <MDBRow className='mb-4'>
                                         <MDBCol>
-                                            <MDBInput id='form6Example1' label='Matrix Id' />
+                                            <MDBInput focussed id='form6Example1' label='Matrix Id' />
                                         </MDBCol>
                                         <MDBCol>
                                             <MDBInput id='form6Example2' label='City' />

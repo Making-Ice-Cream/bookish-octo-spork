@@ -27,6 +27,7 @@ import { HelmetProvider } from 'react-helmet-async';
 
 //
 import App from './App';
+// import { CookiesProvider } from "react-cookie";
 // import * as serviceWorker from './serviceWorker';
 // import reportWebVitals from './reportWebVitals';
 
@@ -35,7 +36,9 @@ import App from './App';
 ReactDOM.render(
   <HelmetProvider>
     <BrowserRouter>
+     
       <App />
+     
     </BrowserRouter>
   </HelmetProvider>,
   document.getElementById('root')

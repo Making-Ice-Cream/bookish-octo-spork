@@ -15,12 +15,13 @@ import {
   AppCurrentSubject,
   AppConversionRates
 } from '../components/_dashboard/app';
-
+import Cookies from 'js-cookie'
 // ----------------------------------------------------------------------
 
 export default function DashboardApp() {
+  console.log("hello" + Cookies.get('token'));
   return (
-    <Page title="Dashboard | Minimal-UI">
+    <Page title="Dashboard | Admin-UI">
       <Container maxWidth="xl">
         <Box sx={{ pb: 5 }}>
           <Typography variant="h4">Hi, Welcome back</Typography>

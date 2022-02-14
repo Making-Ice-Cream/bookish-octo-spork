@@ -1,5 +1,5 @@
 
-import React , {useState  } from "react";
+import React , {useState,useContext  } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleLeft, faEnvelope, faUnlockAlt } from "@fortawesome/free-solid-svg-icons";
 import { faFacebookF, faGithub, faTwitter } from "@fortawesome/free-brands-svg-icons";
@@ -12,8 +12,11 @@ import BgImage from "../images/Img.svg";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Cookies from 'js-cookie'
+import {UserContext} from '../App';
 
 const Login =  (props) => {
+  const {state,dispatch} = useContext(UserContext);
   const location = useLocation();
   console.log(location);
     const navigate = useNavigate();
@@ -78,7 +81,7 @@ const Login =  (props) => {
       e.preventDefault() ;
 
      
-      const response =  await fetch(`/login`,{
+      const response =  await fetch(`http://localhost:80/login`,{
         method : "POST",
         headers :{
             "Accept":"application/json",
@@ -89,7 +92,45 @@ const Login =  (props) => {
         })
     });
     const awaited_response = await response.json();
-    console.log(awaited_response);
+    
+    if(awaited_response.status === 200){
+      toast.success("Login Sucessfully!", {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        });
+        
+        console.log(awaited_response.token);
+
+        Cookies.set('token', awaited_response.token, { expires: 1, path: '' })
+        
+        dispatch({type:'USER',payload:true})
+        
+        
+        navigate('/admin/app',{replace:true});
+
+
+    }else if(awaited_response.status === 404){
+      toast.error("Invalid Email or Password", {
+            position: "top-center",
+            autoClose: 7000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            });
+      setuser({email:"",password:""});
+      setbuttonProperty(false);
+
+    }else if(awaited_response.status === 500){
+
+           console.log("jhgh");
+    }
 
   }
 
