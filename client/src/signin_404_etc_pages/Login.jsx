@@ -111,6 +111,7 @@ const Login =  (props) => {
         dispatch({type:'USER',payload:true})
         
         window.sessionStorage.setItem("user_email" , email);
+        window.sessionStorage.setItem("name" , awaited_response.name);
         window.sessionStorage.setItem("Logged_in_as", location.state.name);
         
 
@@ -132,7 +133,7 @@ const Login =  (props) => {
 
     }else if(awaited_response.status === 500){
 
-           console.log("jhgh");
+      navigate('/500',{replace:true});
     }
 
   }
@@ -181,7 +182,7 @@ const Login =  (props) => {
                         <FormCheck.Input id="defaultCheck5" className="me-2" />
                         <FormCheck.Label htmlFor="defaultCheck5" className="mb-0">Remember me</FormCheck.Label>
                       </Form.Check>
-                      <Card.Link className="small text-end" onClick = {ForgotPass}to = "/forgotPassword">Lost password?</Card.Link>
+                      <Card.Link className="small text-end" style = {{cursor : "pointer"}} onClick = {ForgotPass}to = "/forgotPassword">Lost password?</Card.Link>
                     </div>
                   </Form.Group>
                   <Button disabled = {buttonProperty} variant="primary" type="submit" className="w-100" onClick = {checkCredential}>

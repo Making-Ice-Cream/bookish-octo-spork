@@ -56,6 +56,7 @@ export default function AdminRoutes() {
       path: '/signin',
       element: state ? <Navigate to="/admin/app" /> : <Login />
     },
+    
     {
       path: '/signup',
       element: <Signup />
@@ -69,6 +70,10 @@ export default function AdminRoutes() {
       element : <NotFound />
     },
     {
+      path: "/lock",
+      element :state ? <Lock /> : <Navigate to="/signin" />
+    },
+    {
       
         path: "/500",
         element : <ServerError />
@@ -77,7 +82,8 @@ export default function AdminRoutes() {
 
     {
       path: '/admin',
-      element: state ? <DashboardLayout /> : <Navigate to="/signin" />,
+      
+       element: state ? (!JSON.parse(sessionStorage.getItem("islocked")) ? <DashboardLayout /> :<Navigate to="/lock" />)  : <Navigate to="/signin" />,
       children: [
         { element: <Navigate to="/admin/app" replace /> },
         { path: 'app', element: <DashboardApp /> },
@@ -85,6 +91,7 @@ export default function AdminRoutes() {
         { path: 'products', element: <Products /> },
         { path: 'blog', element: <Blog /> },
         { path: 'Student', element: <Student /> }
+       
       ]
     },
     

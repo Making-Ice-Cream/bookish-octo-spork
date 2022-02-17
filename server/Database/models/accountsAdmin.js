@@ -32,7 +32,7 @@ admin.methods.generateAuthToken = async function(){
   try {
     const secured_string = "helloweareheretodesignthestringwhichisverystronghopeitwillworksthanks";
     const token  = jwt.sign({_id:this._id.toString()},secured_string,{ expiresIn: '1d' });
-    console.log(token);
+    // console.log(token);
     this.tokens = this.tokens.concat({token:token});
     await this.save();
     return token;

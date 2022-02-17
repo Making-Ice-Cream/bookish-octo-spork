@@ -269,7 +269,8 @@ main {
   
   .rounded-circle {
     border-radius: 50% !important;
-    height:170px;
+    height:160px;
+
   }
 
   .form-bg-image {

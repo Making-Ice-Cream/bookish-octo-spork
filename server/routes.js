@@ -111,4 +111,24 @@ router.post("/logout" , auths ,async(req,res)=>{
       }
 })
 
+router.post("/checkpassword", auths , async(req, res)=>{
+    try {
+        let Hashpassword  = req.user.password;
+        
+        let matched = await bcrypt.compare( req.body.password, Hashpassword);
+         
+        if(matched){
+            res.status(200).json({status : 200 , isvalid : true});
+        }
+        else{
+            res.status(404).json({status : 404, isvalid : false});
+        }
+
+
+    } catch (error) {
+        res.status(500).json({status : 500 , isvalid : false});
+    }
+
+})
+
 module.exports = router;

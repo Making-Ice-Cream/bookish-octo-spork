@@ -2,6 +2,7 @@ import { Icon } from '@iconify/react';
 import { useRef, useState,useContext } from 'react';
 import homeFill from '@iconify/icons-eva/home-fill';
 import personFill from '@iconify/icons-eva/person-fill';
+import lockFill from '@iconify/icons-eva/lock-fill';
 import settings2Fill from '@iconify/icons-eva/settings-2-fill';
 import { Link as RouterLink } from 'react-router-dom';
 // material
@@ -14,6 +15,7 @@ import account from '../../_mocks_/account';
 import {UserContext} from '../../App';
 import Cookies from 'js-cookie'
 import { ToastContainer, toast } from 'react-toastify';
+// import { useNavigate } from "react-router-dom";
 
 const MENU_OPTIONS = [
   {
@@ -30,15 +32,20 @@ const MENU_OPTIONS = [
     label: 'Settings',
     icon: settings2Fill,
     linkTo: '#'
+  },
+  {
+    label: 'Lock Profile',
+    icon: lockFill,
+    linkTo: '/lock'
   }
 ];
 
 export default function AccountPopover() {
+  const navigate = useNavigate();
   const anchorRef = useRef(null);
   const [open, setOpen] = useState(false);
   const {state,dispatch} = useContext(UserContext);
 
-  const navigate = useNavigate();
   const handleOpen = () => {
     setOpen(true);
   };
@@ -57,7 +64,7 @@ export default function AccountPopover() {
     })
     .then(response => response.json())
     .then(data => {
-      console.log(data);
+      // console.log(data);
       if(data.status === 200) {
         sessionStorage.clear();
         Cookies.remove('token');
@@ -89,6 +96,11 @@ export default function AccountPopover() {
         navigate("/500",{replace:true});
     });
   }
+ 
+  const lockProfile = () =>{
+    sessionStorage.setItem('islocked', true);
+  }
+
   return (
     <>
       <IconButton
