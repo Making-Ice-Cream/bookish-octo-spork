@@ -131,4 +131,8 @@ router.post("/checkpassword", auths , async(req, res)=>{
 
 })
 
+router.get("/news" , async(req,res)=>{
+   
+})
+
 module.exports = router;

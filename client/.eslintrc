@@ -60,6 +60,8 @@
       "react/jsx-indent-props": 0,
       "react/jsx-key": 1,
        "padded-blocks":0 ,
+       "no-undef":0,
+       "array-callback-return" : 0 ,
        "keyword-spacing":0,
       "react-hooks/rules-of-hooks": 2,
       "indent": 0,

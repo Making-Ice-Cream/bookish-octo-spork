@@ -12,6 +12,7 @@ import { MHidden } from '../../components/@material-extend';
 //
 import sidebarConfig from './SidebarConfig';
 import account from '../../_mocks_/account';
+import {FpsView} from "react-fps";
 
 // ----------------------------------------------------------------------
 
@@ -94,11 +95,9 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
             bgcolor: 'grey.200'
           }}
         >
-          {/* <Box
-            component="img"
-            src="/static/illustrations/illustration_avatar.png"
-            sx={{ width: 100, position: 'absolute', top: -50 }}
-          /> */}
+          {/* <Box ><FpsView width={100} height={120} bottom={60} left={80}/></Box> */}
+          
+          
 
           {/* <Box sx={{ textAlign: 'center' }}>
             <Typography gutterBottom variant="h6">
