@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const encrypt = require("mongoose-encryption");
 
 const AddressSchema = mongoose.Schema({
     plotno: String,
@@ -10,11 +9,15 @@ const AddressSchema = mongoose.Schema({
 });
 
 const student = new mongoose.Schema({
-    firstname:{
+    scholarNumber:{
         type:String,
         required:true
     },
-    lastname:{
+    firstName:{
+        type:String,
+        required:true
+    },
+    lastName:{
         type:String,
         required:true
     },
@@ -24,20 +27,32 @@ const student = new mongoose.Schema({
     },
     password:{
         type:String,
-        required:true
+        //required:true
     },
     address:{
         type:AddressSchema,
-        required:true
+        //required:true
     },
     batch:{
         type:String,
         required:true
     },
-    paymentype:{
+    paymentType:{
         type:String,
         required:true
+    },
+    contact: {
+        type:Number,
+        required: true
+    },
+    parent_contact: {
+        type:Number,
+        required: true
     },
     url1:String,
     url2:String
 });
+
+var s = mongoose.model('student', student);
+
+module.exports = s;

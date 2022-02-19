@@ -3,7 +3,9 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const bcrypt = require("bcrypt");
 const router = express.Router();
+const nodemailer = require('nodemailer');
 const signupSchema = require("./Database/models/accountsAdmin");
+const studentSchema = require("./Database/models/accountsStudents");
 const jwt = require('jsonwebtoken');
 router.use(bodyParser.urlencoded({extended: true}));
 
@@ -131,8 +133,45 @@ router.post("/checkpassword", auths , async(req, res)=>{
 
 })
 
-router.get("/news" , async(req,res)=>{
-   
-})
+
+
+
+//adding add student route
+router.post("/admin/student/newstudent",async(req,res)=>{
+    let email = req.body.email;
+    let scNo = req.body.scholarNumber;
+    let newst = new studentSchema(req.body);
+    try {
+        newst.save();
+        let mailTransporter = nodemailer.createTransport({
+            service: 'gmail',
+            auth: {
+                user: 'noreply.5671@gmail.com',
+                pass: 'Apni@123'
+            }
+        });
+          
+        let mailDetails = {
+            from: 'noreply.5671@gmail.com',
+            to: email,
+            subject: 'Complete Registration mail',
+            text: 'Your Scholar Number is '+scNo+' , Signup at the given link ____ with the provided scholar number to access your details.',
+        };
+          
+        mailTransporter.sendMail(mailDetails, function(err, data) {
+            if(err) {
+                console.log('Error Occurs');
+            } else {
+                console.log('Email sent successfully');
+            }
+        });
+        res.status(201).json({message: "Student Added Successfully." ,
+                            status : 201});
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({message: "Server error!" ,
+                            status : 500});
+    }
+});
 
 module.exports = router;

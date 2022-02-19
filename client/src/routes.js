@@ -1,7 +1,7 @@
 import { Navigate, useRoutes } from 'react-router-dom';
 import DashboardLayout from './layouts/dashboard';
 import LogoOnlyLayout from './layouts/LogoOnlyLayout';
-// import Login from './pages/Login';
+import RegisterStudent from './pages/Login';
 import Register from './pages/Register';
 import DashboardApp from './pages/DashboardApp';
 import Products from './pages/Products';
@@ -93,6 +93,10 @@ export default function AdminRoutes() {
         { path: 'Student', element: <Student /> }
        
       ]
+    },
+    {
+      path:"/admin/new/student",
+      element: state ? (!JSON.parse(sessionStorage.getItem("islocked")) ? <RegisterStudent /> :<Navigate to="/lock" />)  : <Navigate to="/signin" />
     },
     
     { path: '*', element: <Navigate to="/404" replace /> }
