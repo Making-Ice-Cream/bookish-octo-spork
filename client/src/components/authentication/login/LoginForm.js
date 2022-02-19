@@ -2,13 +2,10 @@ import * as Yup from 'yup';
 import { useState,useEffect } from 'react';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { useFormik, Form, FormikProvider } from 'formik';
-// import { Icon } from '@iconify/react';
-// import eyeFill from '@iconify/icons-eva/eye-fill';
-// import eyeOffFill from '@iconify/icons-eva/eye-off-fill';
+
 import "../../../AllCSS/textColor.css"
 import { ToastContainer, toast } from 'react-toastify';
-// import { useNavigate } from "react-router-dom";
-// material
+
 import { 
   Stack,
   MenuItem, 
@@ -48,8 +45,8 @@ export default function LoginForm() {
     email: Yup.string().email('Email must be a valid email address').required('Email is required'),
     firstName: Yup.string().min(2, 'Too Short!').max(50, 'Too Long!').required('First Name is required'),
     lastName: Yup.string().min(2, 'Too Short!').max(50, 'Too Long!').required('Last Name is required'),
-    contact: Yup.string().required('Mobile Number is required'),
-     parent_contact: Yup.string().required('Mobile Number is required'),
+    contact: Yup.string().min(9, 'Too Short!').max(11, 'Too Long!').required('Mobile Number is required'),
+     parent_contact: Yup.string().min(9, 'Too Short!').max(11, 'Too Long!').required('Mobile Number is required'),
     batch:Yup.string().required("Batch is Required"),
     paymentType: Yup.string().required("Payment Type is Required")
   });

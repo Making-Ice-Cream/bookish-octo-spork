@@ -39,15 +39,16 @@ const ContentStyle = styled('div')(({ theme }) => ({
 
 // ----------------------------------------------------------------------
 
-export default function Login() {
+export default function Login(props) {
   return (
-    <RootStyle title=" hello">
+    <RootStyle title="Admin | Student | Teacher ">
       <AuthLayout>
         Back to Home? &nbsp;
         <Link underline="none" variant="subtitle2" component={RouterLink} to="/admin/app">
           Dashboard
         </Link>
       </AuthLayout>
+      {/* {console.log(props.data)} */}
 
       <MHidden width="mdDown">
         <SectionStyle>

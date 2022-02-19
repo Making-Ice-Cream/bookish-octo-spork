@@ -22,7 +22,8 @@ import ServerError from "./signin_404_etc_pages/ServerError";
 import Signup from "./signin_404_etc_pages/Signup";
 import React ,{useState,useContext} from 'react'
 import {UserContext} from './App';
-import Cookies from 'js-cookie'
+import Cookies from 'js-cookie';
+import AddTeacher from './components/authentication/login/AddTeacher';
 
 export default function AdminRoutes() {
   const {state,dispatch} = useContext(UserContext);
@@ -93,6 +94,21 @@ export default function AdminRoutes() {
         { path: 'Student', element: <Student /> }
        
       ]
+    },
+    {
+      path: '/',
+      element: <LogoOnlyLayout />,
+      children: [
+        { path: 'login', element: <Login /> },
+        { path: 'fee_payment_manually', element: <Register /> },
+        { path: '404', element: <NotFound /> },
+        { path: '/', element: <Navigate to="/dashboard" /> },
+        { path: '*', element: <Navigate to="/404" /> }
+      ]
+    },
+    {
+      path:"/admin/new/teacher",
+      element: state ? (!JSON.parse(sessionStorage.getItem("islocked")) ? <AddTeacher /> :<Navigate to="/lock" />)  : <Navigate to="/signin" />
     },
     {
       path:"/admin/new/student",

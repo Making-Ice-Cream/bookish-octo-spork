@@ -43,7 +43,7 @@ export default function Register() {
     <RootStyle title="Register | Minimal-UI">
       <AuthLayout>
         Cancel this Transaction? &nbsp;
-        <Link underline="none" variant="subtitle2" component={RouterLink} to="/">
+        <Link underline="none" variant="subtitle2" component={RouterLink} to="/admin/app">
           Dashboard
         </Link>
       </AuthLayout>

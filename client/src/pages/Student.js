@@ -53,6 +53,7 @@ export default function Student() {
             variant="contained"
             component={RouterLink}
             to="/admin/new/student"
+            // data = {"student"}
             // onClick={handleOpen}
             startIcon={<Icon icon={plusFill} />}
           >

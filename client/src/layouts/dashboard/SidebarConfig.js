@@ -44,7 +44,7 @@ const sidebarConfig = [
   },
   {
     title : "Fee Submission",
-    path :"/register",
+    path :"/fee_payment_manually",
     icon : getIcon(lockFill)
   }
   // {

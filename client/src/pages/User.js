@@ -143,7 +143,7 @@ export default function User() {
             className = "new-btn"
             variant="contained"
             component={RouterLink}
-            to="#"
+            to="/admin/new/teacher"
             startIcon={<Icon icon={plusFill} />}
           >
             New Faculty
