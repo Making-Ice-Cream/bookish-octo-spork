@@ -31,7 +31,8 @@ export default function RegisterForm() {
       firstName: '',
       lastName: '',
       email: '',
-      password: ''
+      password: '',
+      RollNo:''
     },
     validationSchema: RegisterSchema,
     onSubmit: () => {
@@ -76,6 +77,10 @@ export default function RegisterForm() {
         <TextField
             fullWidth
             label="Roll No. of Student"
+            type = "number"
+            {...getFieldProps('RollNo')}
+            error={Boolean(touched.RollNo && errors.RollNo)}
+            helperText={touched.RollNo && errors.RollNo}
           />
 
           <TextField

@@ -90,7 +90,7 @@ export default function Signup() {
                                     < MDBCol>
                                     <FormControl fullWidth>
                                             <InputLabel id="demo-simple-select-label">Batch</InputLabel>
-                                            <Select
+                                            <Select disabled
                                             labelId="demo-simple-select-label"
                                             id="demo-simple-select"
                                             value={age}
@@ -110,7 +110,7 @@ export default function Signup() {
                                     <MDBCol>
                                     <FormControl fullWidth>
                                             <InputLabel id="demo-simple-select-label">Payment Type</InputLabel>
-                                            <Select
+                                            <Select disabled
                                             labelId="demo-simple-select-label"
                                             id="demo-simple-select"
                                             value={age}
@@ -144,8 +144,10 @@ export default function Signup() {
                                         label='I have read all the terms and condition'
                                         defaultChecked
                                     />
-
-                                    <MDBBtn className='mb-4' type='submit' >
+                                     <MDBBtn color='secondary' className='m-4' rounded type='submit' >
+                                        Fetch Data
+                                    </MDBBtn>
+                                    <MDBBtn disabled className='mb-4' rounded type='submit' >
                                         SignUp
                                     </MDBBtn>
                                 </form>

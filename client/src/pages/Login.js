@@ -63,7 +63,7 @@ export default function Login(props) {
         <ContentStyle>
           <Stack sx={{ mb: 5 }}>
             <Typography variant="h4" gutterBottom className = "text_color">
-            Create a New Student
+            Add a New Student
             </Typography>
             <Typography sx={{ color: 'text.secondary' }}>Enter the details below.</Typography>
           </Stack>

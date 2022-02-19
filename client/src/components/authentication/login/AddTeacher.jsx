@@ -1,11 +1,11 @@
-import React from 'react'
+import React , {useState} from 'react'
 import { Link as RouterLink } from 'react-router-dom';
 // material
 import { styled } from '@mui/material/styles';
 import { Card, Stack, Link, Container, Typography,MenuItem,FormControl,
     InputLabel, 
     Select,
-    TextField } from '@mui/material';
+    TextField,IconButton, InputAdornment } from '@mui/material';
 // layouts
 import AuthLayout from '../../../layouts/AuthLayout';
 
@@ -19,6 +19,10 @@ import { LoadingButton } from '@mui/lab';
 import { useFormik, Form, FormikProvider,Field } from 'formik';
 // import AuthSocial from '../components/authentication/AuthSocial';
 import "../../../AllCSS/textColor.css"
+import { Icon } from '@iconify/react';
+
+import eyeFill from '@iconify/icons-eva/eye-fill';
+import eyeOffFill from '@iconify/icons-eva/eye-off-fill';
 // ----------------------------------------------------------------------
 
 const RootStyle = styled(Page)(({ theme }) => ({
@@ -49,6 +53,9 @@ const ContentStyle = styled('div')(({ theme }) => ({
 // ----------------------------------------------------------------------
 
 export default function AddTeacher() {
+
+    const [showPassword, setShowPassword] = useState(false);
+
     const RegisterSchema = Yup.object().shape({
         email: Yup.string().email('Email must be a valid email address').required('Email is required'),
         fullName: Yup.string().min(2, 'Too Short!').max(50, 'Too Long!').required('Name is required'),
@@ -56,6 +63,7 @@ export default function AddTeacher() {
        
         contact: Yup.string().min(9, 'Too Short!').max(11, 'Too Long!').required('Mobile Number is required'),
         role: Yup.string().required('Role is required'),
+        password: Yup.string().required('Password is required')
         
 
       });
@@ -66,7 +74,8 @@ export default function AddTeacher() {
           department:'',
           email:'',
           contact:'',
-          role:''
+          role:'',
+          password:''
          
         },
         validationSchema: RegisterSchema,
@@ -98,7 +107,7 @@ export default function AddTeacher() {
         <ContentStyle>
           <Stack sx={{ mb: 5 }}>
             <Typography variant="h4" gutterBottom className = "text_color">
-            Create a New Teacher
+            Add a New Teacher
             </Typography>
             <Typography sx={{ color: 'text.secondary' }}>Enter the details below.</Typography>
           </Stack>
@@ -150,6 +159,27 @@ export default function AddTeacher() {
                 helperText={touched.contact && errors.contact}
                
                 />
+              </Stack>
+              <Stack mt={4}>
+              <TextField
+            fullWidth
+            autoComplete="current-password"
+            type={showPassword ? 'text' : 'password'}
+            label="Password"
+            {...getFieldProps('password')}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton edge="end" onClick={() => setShowPassword((prev) => !prev)}>
+                    <Icon icon={showPassword ? eyeFill : eyeOffFill} />
+                  </IconButton>
+                </InputAdornment>
+              )
+            }}
+            error={Boolean(touched.password && errors.password)}
+            helperText={touched.password && errors.password}
+          />
+
               </Stack>
               <Stack mt={4}  >
               <TextField label="Profile Picture"
