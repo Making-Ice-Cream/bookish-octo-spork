@@ -12,7 +12,7 @@ const student = new mongoose.Schema({
     scholarNumber:{
         type:String,
         required:true,
-        unique:true
+        //unique:true
     },
     firstName:{
         type:String,
@@ -22,10 +22,14 @@ const student = new mongoose.Schema({
         type:String,
         required:true
     },
+    gender: {
+        type:String,
+        //required:true
+    },
     email:{
         type:String,
         required:true,
-        unique:true
+        //unique:true
     },
     password:{
         type:String,

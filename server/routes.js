@@ -3,9 +3,18 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const bcrypt = require("bcrypt");
 const router = express.Router();
+const path = require("path");
 const nodemailer = require('nodemailer');
+const fs = require("fs");
+const handlebars = require('handlebars');
+const smtpTransport = require('nodemailer-smtp-transport');
+
 const signupSchema = require("./Database/models/accountsAdmin");
 const studentSchema = require("./Database/models/accountsStudents");
+const facultySchema = require("./Database/models/accountsFaculty");
+const sentEmail = require("./sentEmail");
+const saltRounds = 10;
+
 const jwt = require('jsonwebtoken');
 router.use(bodyParser.urlencoded({extended: true}));
 
@@ -134,39 +143,46 @@ router.post("/checkpassword", auths , async(req, res)=>{
 })
 
 
-
-
 //adding add student route
 router.post("/admin/student/newstudent",async(req,res)=>{
     let email = req.body.email;
-    let scNo = req.body.scholarNumber;
+    let schoNum = req.body.scholarNumber;
     let newst = new studentSchema(req.body);
     try {
         newst.save();
-        let mailTransporter = nodemailer.createTransport({
-            service: 'gmail',
-            auth: {
-                user: 'noreply.5671@gmail.com',
-                pass: 'Apni@123'
-            }
-        });
-          
-        let mailDetails = {
-            from: 'noreply.5671@gmail.com',
-            to: email,
-            subject: 'Complete Registration mail',
-            text: 'Your Scholar Number is '+scNo+' , Signup at the given link ____ with the provided scholar number to access your details.',
+        const filePath = path.join(__dirname, './emailTemplates/signupStudent.html');
+        const replacements = {
+            Username: req.body.firstname,
+            scno: schoNum
         };
-          
-        mailTransporter.sendMail(mailDetails, function(err, data) {
-            if(err) {
-                console.log('Error Occurs');
-            } else {
-                console.log('Email sent successfully');
-            }
-        });
+        sentEmail.sendEmail(email, "User Registration", filePath, replacements);
         res.status(201).json({message: "Student Added Successfully." ,
                             status : 201});
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({message: "Server error!" ,
+                            status : 500});
+    }
+});
+
+// adding add teacher route
+router.post("/admin/faculty/newfaculty",async(req,res)=>{
+    let email = req.body.email;
+    let password = req.body.password;
+    let newfct = new facultySchema(req.body);; 
+    const salt = await bcrypt.genSalt(10);
+    newfct.password = await bcrypt.hash(newfct.password, salt);
+    try {
+        newfct.save();
+        const filePath = path.join(__dirname, './emailTemplates/signupFaculty.html');
+        const replacements = {
+            id: email,
+            password: password
+        };
+        sentEmail.sendEmail(email, "Login Credentials", filePath, replacements);
+        res.status(201).json({message: "Faculty Added Successfully." ,
+                            status : 201,
+                        });
     } catch (error) {
         console.log(error);
         res.status(500).json({message: "Server error!" ,
