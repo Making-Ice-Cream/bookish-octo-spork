@@ -169,6 +169,7 @@ router.post("/admin/student/newstudent",async(req,res)=>{
 router.post("/admin/faculty/newfaculty",async(req,res)=>{
     let email = req.body.email;
     let password = req.body.password;
+    console.log(req.body.imageUrl)
     let newfct = new facultySchema(req.body);; 
     const salt = await bcrypt.genSalt(10);
     newfct.password = await bcrypt.hash(newfct.password, salt);

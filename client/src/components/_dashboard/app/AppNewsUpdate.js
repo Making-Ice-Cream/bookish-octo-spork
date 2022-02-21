@@ -88,7 +88,7 @@ function NewsItem({ news }) {
 }
 
 function NewsItems({ news }) {
-  console.log(news);
+  // console.log(news);
   const { urlToImage, title, description ,publishedAt } = news;
   return (
     <Stack direction="row" alignItems="center" spacing={2}>
@@ -118,7 +118,7 @@ function NewsItems({ news }) {
 export default function AppNewsUpdate() {
   let d = [];
  try{
-  const metadata = fetch('https://newsapi.org/v2/everything?q=india&from=2022-02-17&sortBy=popularity&apiKey=a19dd466d7324e3cb83429f0d1818f3b', {
+  const metadata = fetch('https://newsapi.org/v2/top-headlines?country=in&sortBy=popularity&from=2022-02-17&sortBy=popularity&apiKey=a19dd466d7324e3cb83429f0d1818f3b', {
   headers: {
     Accept: 'application/vnd.citationstyles.csl+json'
   }

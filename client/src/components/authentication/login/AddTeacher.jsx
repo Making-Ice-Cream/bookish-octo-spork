@@ -1,5 +1,5 @@
 import React , {useState} from 'react'
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink,useNavigate } from 'react-router-dom';
 // material
 import { styled } from '@mui/material/styles';
 import { Card, Stack, Link, Container, Typography,MenuItem,FormControl,
@@ -53,16 +53,35 @@ const ContentStyle = styled('div')(({ theme }) => ({
 // ----------------------------------------------------------------------
 
 export default function AddTeacher() {
+  const navigate = useNavigate();
+  const [url ,seturl] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
-    const [showPassword, setShowPassword] = useState(false);
+  const uploadImage = async(e)=>{
+    const files = e.target.files;
+    const data = new FormData();
+    data.append('file',files[0]);
+    data.append('upload_preset','teacher_image');
 
-    const RegisterSchema = Yup.object().shape({
+    const res = await fetch("https://api.cloudinary.com/v1_1/apni-coaching/image/upload",{
+      method:"POST",
+      body:data
+    })
+    const file = await res.json();
+    seturl(file.secure_url);
+    console.log(file.secure_url)
+    console.log(url);
+  }
+
+    
+
+    const RegisterTeacherSchema = Yup.object().shape({
         email: Yup.string().email('Email must be a valid email address').required('Email is required'),
         fullName: Yup.string().min(2, 'Too Short!').max(50, 'Too Long!').required('Name is required'),
-        department: Yup.string().required('Department is required'),
-       
+        batch: Yup.string().required('Batch is required'),
+        subject: Yup.string().required('Subject is required'),
+        gender: Yup.string().required('Gender is required'),
         contact: Yup.string().min(9, 'Too Short!').max(11, 'Too Long!').required('Mobile Number is required'),
-        role: Yup.string().required('Role is required'),
         password: Yup.string().required('Password is required')
         
 
@@ -71,20 +90,43 @@ export default function AddTeacher() {
       const formik = useFormik({
         initialValues: {
           fullName: '',
-          department:'',
+          batch:'',
           email:'',
           contact:'',
-          role:'',
-          password:''
+          password:'',
+          gender:'',
+          subject:''
          
         },
-        validationSchema: RegisterSchema,
-        onSubmit:async(values) => {
-          // console.log(values)
+        validationSchema: RegisterTeacherSchema,
+        onSubmit: async(values) => {
+        
+          let {fullName , batch , email , contact , gender ,subject , password} = values;
+           
+          const response =  await fetch(`http://localhost:80/admin/faculty/newfaculty`,{
+            method : "POST",
+            headers :{
+                "Accept":"application/json",
+                "Content-Type" : "application/json"
+            },
+            body : JSON.stringify({
+              fullName , batch , email , contact , gender ,subject , password , imageUrl : url 
+            })
+        });
+        const awaited_response = await response.json();
+        if(awaited_response.status === 201){
+          alert("Faculty Addition Successfully, Now Redirecting to Home Page!");
+          navigate("/admin/app" , {replace:true});
+        }
+        else{
+          alert("An Error Occurred!");
+          naviagte("/500" ,{replace:true});
+        }
            
         }
       });
       const { errors, touched,  isSubmitting, handleSubmit, getFieldProps } = formik;
+  
   return (
     <RootStyle title="Admin | Student | Teacher ">
       <AuthLayout>
@@ -127,17 +169,17 @@ export default function AddTeacher() {
 
                 </Stack>
                <Stack mt={4} direction={{ xs: 'column', sm: 'row' }} spacing={2}>
-                      <TextField  label="Department"
+                      <TextField  label="Batch"
                             type = "text"
-                            {...getFieldProps('department')}
-                            error={Boolean(touched.department && errors.department)}
-                            helperText={touched.department && errors.department}
+                            {...getFieldProps('batch')}
+                            error={Boolean(touched.batch && errors.batch)}
+                            helperText={touched.batch && errors.batch}
                       />
-                      <TextField  label="Role"
+                      <TextField  label="Subject"
                             type = "text"
-                            {...getFieldProps('role')}
-                            error={Boolean(touched.role && errors.role)}
-                            helperText={touched.role && errors.role}
+                            {...getFieldProps('subject')}
+                            error={Boolean(touched.subject && errors.subject)}
+                            helperText={touched.subject && errors.subject}
                       />
                 </Stack>
                
@@ -184,7 +226,9 @@ export default function AddTeacher() {
               <Stack mt={4}  >
               <TextField label="Profile Picture"
                 focused
+                name = "file"
                 type = "file"
+                onChange={uploadImage}
                 // {...getFieldProps('contact')}
                 // error={Boolean(touched.contact && errors.contact)}
                 // helperText={touched.contact && errors.contact}
@@ -203,9 +247,9 @@ export default function AddTeacher() {
                                              
                                               style = {{padding:"-1px"}}
 
-                                              {...getFieldProps('batch')}
-                                              error={Boolean(touched.batch && errors.batch)}
-                                              helpertext={touched.batch && errors.batch}
+                                              {...getFieldProps('gender')}
+                                              error={Boolean(touched.gender && errors.gender)}
+                                              helpertext={touched.gender && errors.gender}
                                               >
                                               <MenuItem value={"Male"}>Male</MenuItem>
                                               <MenuItem value={"Female"}>Female</MenuItem>

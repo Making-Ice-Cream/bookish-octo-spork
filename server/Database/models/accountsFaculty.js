@@ -31,6 +31,6 @@ const faculty = new mongoose.Schema({
     imageUrl:String
 });
 
-var f = mongoose.model('faculty', faculty);
+var facultyObject = mongoose.model('faculty', faculty);
 
-module.exports = f;
+module.exports = facultyObject;

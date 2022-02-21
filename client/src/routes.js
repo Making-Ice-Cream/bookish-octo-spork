@@ -24,6 +24,7 @@ import React ,{useState,useContext} from 'react'
 import {UserContext} from './App';
 import Cookies from 'js-cookie';
 import AddTeacher from './components/authentication/login/AddTeacher';
+import ContactDev from './Prev_Components/ContactDev';
 
 export default function AdminRoutes() {
   const {state,dispatch} = useContext(UserContext);
@@ -113,6 +114,10 @@ export default function AdminRoutes() {
     {
       path:"/admin/new/student",
       element: state ? (!JSON.parse(sessionStorage.getItem("islocked")) ? <RegisterStudent /> :<Navigate to="/lock" />)  : <Navigate to="/signin" />
+    },
+    {
+      path:"/contact/developers",
+      element : <> <NavBar /><ContactDev /> <Footer />  </>
     },
     
     { path: '*', element: <Navigate to="/404" replace /> }

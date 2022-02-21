@@ -2,9 +2,9 @@ import React from 'react';
 import logo from '../images/logo.png'; // Tell webpack this JS file uses this image
 import "../AllCSS/logo.css"
 import "../AllCSS/buttons.css"
-import { Link } from 'react-router-dom';
+import { Link ,NavLink } from 'react-router-dom';
 // import {useNavigate} from 'react-router-dom'
-const NavBar = () => {
+const NavBar = (props) => {
   
   return ( 
     <nav className="navbar navbar-expand-lg  navbar-dark bg-dark">
@@ -17,13 +17,14 @@ const NavBar = () => {
       <div className="collapse navbar-collapse mx-5" id="navbarSupportedContent">
         <ul className="navbar-nav me-auto mb-2 mb-lg-0">
           <li className="nav-item">
-            <Link className="nav-link active" aria-current="page" to = "/">Home</Link>
+            <NavLink className="nav-link" activeClassName="active" aria-current="page" exact to = "/">Home</NavLink>
+          </li>
+          {/* {console.log(props.active === 'home' ? "active" : '')} */}
+          <li className="nav-item">
+            <NavLink className="nav-link" activeClassName="active" to="/about-us">About-Us</NavLink>
           </li>
           <li className="nav-item">
-            <Link className="nav-link" to="/about-us">About-Us</Link>
-          </li>
-          <li className="nav-item">
-            <Link className="nav-link" to="/contact-developers">Contact-Developer</Link>
+            <NavLink className="nav-link" activeClassName="active" exact to="/contact/developers">Contact-Developer</NavLink>
           </li>
           
         </ul>
