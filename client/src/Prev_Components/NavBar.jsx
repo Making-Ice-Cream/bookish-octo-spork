@@ -17,14 +17,15 @@ const NavBar = (props) => {
       <div className="collapse navbar-collapse mx-5" id="navbarSupportedContent">
         <ul className="navbar-nav me-auto mb-2 mb-lg-0">
           <li className="nav-item">
-            <NavLink className="nav-link" activeClassName="active" aria-current="page" exact to = "/">Home</NavLink>
+            {/* {console.log(props.active + "hello")} */}
+            <NavLink className="nav-link {(navData) => (navData.isActive ? 'active' : '')} "  aria-current="page" to = "/">Home</NavLink>
           </li>
           {/* {console.log(props.active === 'home' ? "active" : '')} */}
           <li className="nav-item">
-            <NavLink className="nav-link" activeClassName="active" to="/about-us">About-Us</NavLink>
+            <Link className="nav-link"  to="/about-us">About-Us</Link>
           </li>
           <li className="nav-item">
-            <NavLink className="nav-link" activeClassName="active" exact to="/contact/developers">Contact-Developer</NavLink>
+            <NavLink className="nav-link {(navData) => (navData.isActive ? 'active' : '')}"  to="/contact/developers">Contact-Developer</NavLink>
           </li>
           
         </ul>
