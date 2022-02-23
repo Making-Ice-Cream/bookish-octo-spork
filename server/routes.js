@@ -75,7 +75,7 @@ const auths = async (req,res,next)=>{
         
     } catch (error) {
      
-      res.status(500).json({message: "Server error!" ,
+      res.status(500).json({message: "Unauthorized access!" ,
       status : 500,
       isvalid : false});
       
@@ -148,6 +148,11 @@ router.post("/admin/student/newstudent",async(req,res)=>{
     let email = req.body.email;
     let schoNum = req.body.scholarNumber;
     let newst = new studentSchema(req.body);
+    let result = await signupSchema.find({});
+    let curScholarNo = result[0].scholarNumber;
+
+    await signupSchema.updateOne({},{$set:{'scholarNumber': curScholarNo+1}});
+    
     try {
         newst.save();
         const filePath = path.join(__dirname, './emailTemplates/signupStudent.html');
@@ -158,6 +163,7 @@ router.post("/admin/student/newstudent",async(req,res)=>{
         sentEmail.sendEmail(email, "User Registration", filePath, replacements);
         res.status(201).json({message: "Student Added Successfully." ,
                             status : 201});
+        
     } catch (error) {
         console.log(error);
         res.status(500).json({message: "Server error!" ,
@@ -191,4 +197,26 @@ router.post("/admin/faculty/newfaculty",async(req,res)=>{
     }
 });
 
+router.post("/admin/student/scholarNumber",auths, async(req,res)=>{
+    try{
+    let result = await signupSchema.find({});
+    if(result){
+        res.status(201).json({message: "Scholar Number Generated.",
+                          scholarNumber: result[0].scholarNumber,
+                            status : 201,
+                        });
+    }
+    else{
+        res.status(404).json({message: "Unauthorized access",
+                            status : 404,
+                        });
+    }
+    
+    }
+    catch (error) {
+        console.log(error);
+        res.status(500).json({message: "Server error!" ,
+                            status : 500});
+    }
+});
 module.exports = router;

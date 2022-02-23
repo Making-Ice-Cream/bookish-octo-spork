@@ -20,6 +20,10 @@ const admin = new mongoose.Schema({
         type:String,
         required:true
     },
+    scholarNumber: {
+      type:Number,
+      required: true
+    },
     tokens:[{
       token:{
           type:String,

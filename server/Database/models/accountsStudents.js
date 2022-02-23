@@ -8,9 +8,20 @@ const AddressSchema = mongoose.Schema({
     country:String
 });
 
+const installmentSchema = mongoose.Schema({
+    dueDate: Date,
+    amount: Number,
+    paid: Boolean
+});
+
+const lumpsumpSchema = mongoose.Schema({
+    amount: Number,
+    paid: Boolean
+});
+
 const student = new mongoose.Schema({
     scholarNumber:{
-        type:String,
+        type:Number,
         required:true,
         //unique:true
     },
@@ -54,6 +65,14 @@ const student = new mongoose.Schema({
     parent_contact: {
         type:Number,
         required: true
+    },
+    payment:{
+        installments: {
+            type: [installmentSchema]
+        },
+        lumpsum: {
+            type: lumpsumpSchema
+        }
     },
     url1:String,
     url2:String
