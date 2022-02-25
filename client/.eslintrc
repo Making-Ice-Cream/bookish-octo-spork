@@ -66,8 +66,9 @@
       "react-hooks/rules-of-hooks": 2,
       "indent": 0,
       "no-nested-ternary" : 0,
-      "space-infix-ops" :0,
-
+      "space-infix-ops": 0,
+      "import/no-unresolved":0,
+      "import/extensions":0,
       "arrow-parens" : 0,
       "array-bracket-spacing":0,
       " space-before-blocks":0,

@@ -7,9 +7,9 @@ const users = [...Array(24)].map((_, index) => ({
   id: faker.datatype.uuid(),
   avatarUrl: mockImgAvatar(index + 1),
   name: faker.name.findName(),
-  company: faker.company.companyName(),
+  company: faker.phone.phoneNumberFormat(),
   isVerified: sample(["Male", "Female"]),
-  status: sample(['active', 'retire']),
+  status: sample(['absent', 'present']),
   role: sample([
     'Leader',
     'Hr Manager',

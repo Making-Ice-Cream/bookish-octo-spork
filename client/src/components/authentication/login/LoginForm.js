@@ -17,26 +17,37 @@ import {
 } from '@mui/material';
 
 import { LoadingButton } from '@mui/lab';
-let d ;
+import Cookies from 'js-cookie';
+
 
 export default function LoginForm() {
   
-  function makeid(length) {
-    let result           = '';
-    let characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    let charactersLength = characters.length;
-    let i = 0;
-    while (i < length) {
-      result += characters.charAt(Math.floor(Math.random() * 
-  charactersLength));
-   i += 1;
-   }
-   
-   return result ;
+  const [isinstall , setisinstall ] = useState(true);
+   const [num , setnum] = useState("Generating Scholar Number");
+  const gettingToken = () =>{
+
+    fetch('http://localhost:80/admin/student/scholarNumber', {
+      method: 'POST', 
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body:JSON.stringify({
+        token:Cookies.get('token')
+      })
+    })
+    .then(response => response.json())
+    .then(data => {
+       setnum(data.scholarNumber);
+    })
+    .catch((error) => {
+      console.error('Error:', error);
+    });
+
   }
+  
   useEffect(() => {
-  d =   makeid(29);
- 
+    gettingToken();
+
   }, [])
 
   const navigate = useNavigate();
@@ -48,7 +59,9 @@ export default function LoginForm() {
     contact: Yup.string().min(9, 'Too Short!').max(11, 'Too Long!').required('Mobile Number is required'),
      parent_contact: Yup.string().min(9, 'Too Short!').max(11, 'Too Long!').required('Mobile Number is required'),
     batch:Yup.string().required("Batch is Required"),
-    paymentType: Yup.string().required("Payment Type is Required")
+    paymentType: Yup.string().required("Payment Type is Required"),
+    totalAmount : Yup.string().required("Total amount is Required"),
+    numberofInstallment:Yup.string()
   });
 
   const formik = useFormik({
@@ -59,12 +72,14 @@ export default function LoginForm() {
       contact:'',
       parent_contact:'',
       batch:'',
-      paymentType:''
+      paymentType:'',
+      totalAmount:'',
+      numberofInstallment:''
     },
     validationSchema: RegisterSchema,
     onSubmit:async(values) => {
       // console.log(values)
-       let { email, firstName, lastName,  contact, parent_contact,paymentType,batch,} = values;
+       let { email, firstName, lastName,  contact, parent_contact,paymentType,batch,totalAmount, numberofInstallment} = values;
        
 
        const response =  await fetch(`http://localhost:80/admin/student/newstudent`,{
@@ -74,7 +89,7 @@ export default function LoginForm() {
             "Content-Type" : "application/json"
         },
         body : JSON.stringify({
-            email,firstName, lastName,  contact, parent_contact,paymentType,batch,scholarNumber : `${d}`
+            email,firstName, lastName,  contact, parent_contact,paymentType,batch,totalAmount,numberofInstallment,scholarNumber : `${num}`
         })
     });
     const awaited_response = await response.json();
@@ -142,7 +157,7 @@ export default function LoginForm() {
                 {/* {console.log(d)} */}
                  <TextField disabled label="Scholar Number"
                 type = "text"
-                value = {typeof d === 'undefined' ? "generating ID" : d}
+                value = {num}
                
                 />
               </Stack>
@@ -185,11 +200,31 @@ export default function LoginForm() {
                                             // onChange={handleChange}
                                             style = {{padding:"-1px"}}
                                             >
-                                            <MenuItem value={"Lump Sum"}>Lump Sum</MenuItem>
-                                            <MenuItem value={"Installments"}>Installments</MenuItem>
+                                            <MenuItem value={"Lump Sum"} onClick = {()=>{
+                                              setisinstall(true);
+                                            }}>Lump Sum</MenuItem>
+                                            <MenuItem value={"Installments"} onClick = {()=>{
+                                              setisinstall(false);
+                                            }}>Installments</MenuItem>
                                             
                                             </Select>
                                         </FormControl>
+              </Stack>
+
+              <Stack mt={4} direction = "row" spacing = {6}>
+                  <TextField style={{display:isinstall ? 'none' : 'block'}} 
+                   label= "No. of Installment"
+                   type = "number"
+                  {...getFieldProps('numberofInstallment')}
+                  error={Boolean(touched.numberofInstallment && errors.numberofInstallment)}
+                  helperText={touched.numberofInstallment && errors.numberofInstallment} />
+
+                  <TextField  label = "Total Amount(in ₹)" 
+                  {...getFieldProps('totalAmount')}
+                  error={Boolean(touched.totalAmount && errors.totalAmount)}
+                  helperText={touched.totalAmount && errors.totalAmount}/>
+
+
               </Stack>
 
 
@@ -201,7 +236,7 @@ export default function LoginForm() {
           variant="contained"
           loading={isSubmitting}
         >
-          Login
+          Add Student
         </LoadingButton>
       </Form>
       <ToastContainer

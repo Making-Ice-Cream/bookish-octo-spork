@@ -11,9 +11,7 @@ import {
   AppWeeklySales,
   
   AppCurrentVisits,
-  AppTrafficBySite,
-  AppCurrentSubject,
-  AppConversionRates
+  AppTrafficBySite
 } from '../components/_dashboard/app';
 import Cookies from 'js-cookie'
 // ----------------------------------------------------------------------
@@ -46,14 +44,6 @@ export default function DashboardApp() {
 
           <Grid item xs={12} md={6} lg={4}>
             <AppCurrentVisits />
-          </Grid>
-
-          <Grid item xs={12} md={6} lg={8}>
-            <AppConversionRates />
-          </Grid>
-
-          <Grid item xs={12} md={6} lg={4}>
-            <AppCurrentSubject />
           </Grid>
 
           <Grid item xs={12} md={6} lg={4}>

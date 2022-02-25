@@ -34,8 +34,8 @@ import USERLIST from '../_mocks_/user';
 
 const TABLE_HEAD = [
   { id: 'name', label: 'Name', alignRight: false },
-  { id: 'company', label: 'Department', alignRight: false },
-  { id: 'role', label: 'Role', alignRight: false },
+  { id: 'company', label: 'Phone Number', alignRight: false },
+  { id: 'role', label: 'Subject', alignRight: false },
   { id: 'isVerified', label: 'Gender', alignRight: false },
   { id: 'status', label: 'Status', alignRight: false },
   { id: '' }
@@ -205,7 +205,7 @@ export default function User() {
                           <TableCell align="left">
                             <Label
                               variant="ghost"
-                              color={(status === 'retire' && 'error') || 'success'}
+                              color={(status === 'absent' && 'error') || 'success'}
                             >
                               {sentenceCase(status)}
                             </Label>

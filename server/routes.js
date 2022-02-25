@@ -219,4 +219,6 @@ router.post("/admin/student/scholarNumber",auths, async(req,res)=>{
                             status : 500});
     }
 });
+
+
 module.exports = router;

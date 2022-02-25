@@ -88,9 +88,10 @@ function NewsItem({ news }) {
 }
 
 function NewsItems({ news }) {
-  // console.log(news);
-  const { urlToImage, title, description ,publishedAt } = news;
+  console.log(news);
+  const { urlToImage, title, description ,publishedAt  } = news;
   return (
+   
     <Stack direction="row" alignItems="center" spacing={2}>
       <Box
         component="img"
@@ -98,7 +99,7 @@ function NewsItems({ news }) {
         sx={{ width: 48, height: 48, borderRadius: 1.5 }}
       />
       <Box sx={{ minWidth: 240 }}>
-        <Link to="#" color="inherit" underline="hover" component={RouterLink}>
+        <Link to="#" color="inherit" underline="hover" component={RouterLink} target = "_blank">
           <Typography variant="subtitle2" noWrap>
             {title}
           </Typography>
