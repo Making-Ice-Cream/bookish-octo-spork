@@ -13,7 +13,7 @@ const signupSchema = require("./Database/models/accountsAdmin");
 const studentSchema = require("./Database/models/accountsStudents");
 const facultySchema = require("./Database/models/accountsFaculty");
 const sentEmail = require("./sentEmail");
-const saltRounds = 10;
+
 
 const jwt = require('jsonwebtoken');
 router.use(bodyParser.urlencoded({extended: true}));
