@@ -161,17 +161,17 @@ router.post("/admin/student/newstudent",async(req,res)=>{
         const installmentAmount = totalAmount/no_of_I;
         const monthsDiff = 12/no_of_I;
         const firstM = installmentDate.getMonth();
+        const installments = [];
         for(let i=1; i<=no_of_I; i++){
-            console.log(installmentDate);
-            //installmentDate.setMonth(firstM + monthsDiff*i);
+            installmentDate.setMonth(firstM + monthsDiff*(i-1));
             const installment = {
-                "dueDate": installmentDate,
+                "dueDate": new Date(installmentDate),
                 "amount": installmentAmount,
                 "paid":false
             };
-            newst.payment.installments.push(installment);
+            installments.push(installment);
         }
-        console.log(newst.payment.installments);
+        newst.payment.installments = installments;
     }
     else{
         const obj = {
