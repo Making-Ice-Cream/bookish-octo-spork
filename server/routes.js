@@ -219,4 +219,29 @@ router.post("/admin/student/scholarNumber",auths, async(req,res)=>{
                             status : 500});
     }
 });
+
+// send teacher details
+router.post("/getTeachersData", auths, async(req, res) =>{
+    try{
+        let result = await facultySchema.find();
+        if(result){
+            res.status(201).json({message: "Data sent successfully.",
+                                 faculties: result,
+                                 status : 201,
+                            });
+        }
+        else{
+            res.status(404).json({message: "Unauthorized access",
+                                status : 404,
+                            });
+        }
+        
+        }
+        catch (error) {
+            console.log(error);
+            res.status(500).json({message: "Server error!" ,
+                                status : 500});
+        }
+});
+
 module.exports = router;
