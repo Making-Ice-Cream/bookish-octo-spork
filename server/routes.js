@@ -145,11 +145,41 @@ router.post("/checkpassword", auths , async(req, res)=>{
 
 //adding add student route
 router.post("/admin/student/newstudent",async(req,res)=>{
+    var installmentDate = new Date();
     let email = req.body.email;
+    //console.log(req.body);
     let schoNum = req.body.scholarNumber;
     let newst = new studentSchema(req.body);
     let result = await signupSchema.find({});
     let curScholarNo = result[0].scholarNumber;
+    let paymentType = req.body.paymentType;
+    let totalAmount = req.body.totalAmount;
+    if(paymentType === "Installments"){
+        const no_of_I = req.body.numberofInstallment;
+
+        totalAmount = parseInt(totalAmount);
+        const installmentAmount = totalAmount/no_of_I;
+        const monthsDiff = 12/no_of_I;
+        const firstM = installmentDate.getMonth();
+        for(let i=1; i<=no_of_I; i++){
+            console.log(installmentDate);
+            //installmentDate.setMonth(firstM + monthsDiff*i);
+            const installment = {
+                "dueDate": installmentDate,
+                "amount": installmentAmount,
+                "paid":false
+            };
+            newst.payment.installments.push(installment);
+        }
+        console.log(newst.payment.installments);
+    }
+    else{
+        const obj = {
+            "amount": totalAmount,
+            "paid": false
+        }
+        newst.payment.lumpsum = obj; 
+    }
 
     await signupSchema.updateOne({},{$set:{'scholarNumber': curScholarNo+1}});
     
@@ -223,7 +253,7 @@ router.post("/admin/student/scholarNumber",auths, async(req,res)=>{
 // send teacher details
 router.post("/getTeachersData", auths, async(req, res) =>{
     try{
-        let result = await facultySchema.find();
+        let result = await facultySchema.find({},{email:0, password:0});
         if(result){
             res.status(201).json({message: "Data sent successfully.",
                                  faculties: result,
