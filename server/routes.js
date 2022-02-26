@@ -147,7 +147,7 @@ router.post("/checkpassword", auths , async(req, res)=>{
 router.post("/admin/student/newstudent",async(req,res)=>{
     var installmentDate = new Date();
     let email = req.body.email;
-    //console.log(req.body);
+    console.log(req.body);
     let schoNum = req.body.scholarNumber;
     let newst = new studentSchema(req.body);
     let result = await signupSchema.find({});
@@ -160,17 +160,24 @@ router.post("/admin/student/newstudent",async(req,res)=>{
         totalAmount = parseInt(totalAmount);
         const installmentAmount = totalAmount/no_of_I;
         const monthsDiff = 12/no_of_I;
-        const firstM = installmentDate.getMonth();
+        // const firstM = installmentDate.getMonth();
+        // console.log(monthsDiff)
+        let arr = [];
         for(let i=1; i<=no_of_I; i++){
-            console.log(installmentDate);
-            //installmentDate.setMonth(firstM + monthsDiff*i);
+            // console.log(installmentDate);
+            
+            installmentDate.setMonth(monthsDiff * i);
+            console.log(installmentDate)
             const installment = {
                 "dueDate": installmentDate,
                 "amount": installmentAmount,
                 "paid":false
             };
-            newst.payment.installments.push(installment);
+            console.log(installment);
+            arr.push(installment);
+            console.log(arr);
         }
+        newest.payment.installments = arr ;
         console.log(newst.payment.installments);
     }
     else{
