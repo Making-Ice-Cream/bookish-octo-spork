@@ -342,15 +342,27 @@ router.post("/submitFee", async(req, res) =>{
             //let result = await studentSchema.findOne({scholarNumber:scholarNumber});
             //console.log(result);
             
-            try{let err = await studentSchema.updateOne({scholarNumber:scholarNumber},{$set:{'payment.installments.$installmentNumber.paid': true}});
-        console.log(err);}
+            try{
+                //  console.log(await studentSchema.findOne({scholarNumber}))
+                
+                 studentSchema.findOne({scholarNumber}).then(item =>{
+                
+                    item.payment.installments[installmentNumber].paid  =  true
+                        item.save();
+                    }
+                 )
+                 res.status(201).json({message: "Fee submitted successfully",
+                 status : 201,
+             });
+            }
             catch(err){
-                console.log(err);
+                // console.log(err);
+                res.status(500).json({message: "No record found, check the scholar number.",
+                status : 500,
+            });
             }
  
-            res.status(201).json({message: "Fee submitted successfully",
-                                status : 201,
-                            });
+           
         } catch (error) {
             res.status(404).json({message: "No record found, check the scholar number.",
                                 status : 404,
