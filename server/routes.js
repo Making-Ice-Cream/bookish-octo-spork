@@ -274,4 +274,60 @@ router.post("/getTeachersData", auths, async(req, res) =>{
         }
 });
 
+
+//get fee details manually route
+router.post("/fee_payment_manually", auths, async(req, res) =>{
+    const scholarNumber = req.body.scholarNumber;
+    try{
+        let result = await studentSchema.findOne({scholarNumber:scholarNumber});
+
+        if(result){
+            console.log(result);
+            const paymentType = result.paymentType;
+            let installmentNumber = "";
+            let amount = 0;
+            if(result.payment.installments.length === 0){
+                installmentNumber = "N/A";
+                if(result.payment.lumpsum.paid === false)
+                amount = result.payment.lumpsum.amount;
+                else
+                amount = 0;
+            }
+            else{
+                let insts = result.payment.installments;
+                for(let i=0; i<insts.length; i++){
+                    if(insts[i].paid === false){
+                        installmentNumber = (i+1).toString();
+                        amount = insts[i].amount;
+                        break;
+                    }
+                    else{
+                        installmentNumber = "N/A";
+                        amount = 0;
+                    }
+                }
+            }
+            res.status(201).json({message: "Data sent successfully.",
+                                firstname:result.firstName,
+                                lastname:result.lastName,
+                                paymentType: result.paymentType,
+                                installmentNumber: installmentNumber,
+                                amount:amount,
+                                status : 201,
+                            });
+        }
+        else{
+            res.status(404).json({message: "No record found, check the scholar number.",
+                                status : 404,
+                            });
+        }
+        
+        }
+        catch (error) {
+            console.log(error);
+            res.status(500).json({message: "Server error!" ,
+                                status : 500});
+        }
+});
+
 module.exports = router;
