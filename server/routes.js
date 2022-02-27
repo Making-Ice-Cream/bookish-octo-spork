@@ -13,7 +13,7 @@ const signupSchema = require("./Database/models/accountsAdmin");
 const studentSchema = require("./Database/models/accountsStudents");
 const facultySchema = require("./Database/models/accountsFaculty");
 const sentEmail = require("./sentEmail");
-const saltRounds = 10;
+
 
 const jwt = require('jsonwebtoken');
 router.use(bodyParser.urlencoded({extended: true}));
@@ -147,7 +147,7 @@ router.post("/checkpassword", auths , async(req, res)=>{
 router.post("/admin/student/newstudent",async(req,res)=>{
     var installmentDate = new Date();
     let email = req.body.email;
-    //console.log(req.body);
+    console.log(req.body);
     let schoNum = req.body.scholarNumber;
     let newst = new studentSchema(req.body);
     let result = await signupSchema.find({});
@@ -251,7 +251,7 @@ router.post("/admin/student/scholarNumber",auths, async(req,res)=>{
 });
 
 // send teacher details
-router.post("/getTeachersData", auths, async(req, res) =>{
+router.post("/getTeachersData", async(req, res) =>{
     try{
         let result = await facultySchema.find({},{email:0, password:0});
         if(result){
@@ -276,7 +276,7 @@ router.post("/getTeachersData", auths, async(req, res) =>{
 
 
 //get fee details manually route
-router.post("/fee_payment_manually", auths, async(req, res) =>{
+router.post("/fee_payment_manually", async(req, res) =>{
     const scholarNumber = req.body.scholarNumber;
     try{
         let result = await studentSchema.findOne({scholarNumber:scholarNumber});
@@ -307,13 +307,13 @@ router.post("/fee_payment_manually", auths, async(req, res) =>{
                     }
                 }
             }
-            res.status(201).json({message: "Data sent successfully.",
+            res.status(200).json({message: "Data sent successfully.",
                                 firstname:result.firstName,
                                 lastname:result.lastName,
                                 paymentType: result.paymentType,
                                 installmentNumber: installmentNumber,
                                 amount:amount,
-                                status : 201,
+                                status : 200,
                             });
         }
         else{

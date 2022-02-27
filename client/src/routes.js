@@ -47,6 +47,11 @@ export default function AdminRoutes() {
     .catch((error) => {
       console.error('Error:', error);
     });
+
+
+    
+
+
   }
     
   return useRoutes([
@@ -101,7 +106,7 @@ export default function AdminRoutes() {
       element: <LogoOnlyLayout />,
       children: [
         { path: 'login', element: <Login /> },
-        { path: 'fee_payment_manually', element: <Register /> },
+        { path: 'fee_payment_manually', element: state ? (!JSON.parse(sessionStorage.getItem("islocked")) ?<Register /> :<Navigate to="/lock" />)  : <Navigate to="/signin" /> },
         { path: '404', element: <NotFound /> },
         { path: '/', element: <Navigate to="/dashboard" /> },
         { path: '*', element: <Navigate to="/404" /> }
