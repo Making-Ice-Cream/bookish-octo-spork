@@ -38,6 +38,10 @@ export default function RegisterForm() {
     validationSchema: RegisterSchema,
     onSubmit: async(values,actions) => {
       // navigate('/dashboard', { replace: true });
+
+      if(paymentstatus === "Fetch Details"){
+
+      
       const {RollNo} = values;
       const response =  await fetch(`http://localhost:80/fee_payment_manually`,{
         method : "POST",
@@ -52,6 +56,10 @@ export default function RegisterForm() {
     const awaited_response = await response.json();
     
     if(awaited_response.status === 200){
+      if(awaited_response.amount === 0){
+        alert("Fees is Fully Paid of this Student");
+        navigate("/admin/app" , {replace:true});
+      }
         actions.resetForm({
         values: {
           firstName: awaited_response.firstname,
@@ -65,16 +73,39 @@ export default function RegisterForm() {
     })
         setpaymentstatus("Make Payment");
     }
+    else{
+      navigate("/500",{replace:true})
+    }
 
-
-    //   actions.resetForm({
-    //     values: {
-    //       // the type of `values` inferred to be Blog
-    //       email: `Installment`,
-    //       RollNo:''
-    //     },
-    // })
+    
      }
+    
+    else{
+      const { paymentType, installmentNumber , RollNo } = values;
+      const response =  await fetch(`http://localhost:80/submitFee`,{
+        method : "POST",
+        headers :{
+            "Accept":"application/json",
+            "Content-Type" : "application/json"
+        },
+        body : JSON.stringify({
+          paymentType,installmentNumber,"scholarNumber" : RollNo
+        })
+    });
+    const awaited_response = await response.json();
+   
+     if(awaited_response.status === 201){
+       alert(awaited_response.message + " ,Now Navigating to Home Page!")
+       navigate("/admin/app",{replace:true});
+
+     }
+     else{
+       navigate("/500", {replace:true});
+     }
+
+     
+    }
+  }
   });
   const { errors, touched, handleSubmit, isSubmitting, getFieldProps } = formik;
 
