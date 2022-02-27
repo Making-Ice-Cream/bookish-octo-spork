@@ -20,7 +20,7 @@ export default function RegisterForm() {
     firstName: Yup.string(),
     lastName: Yup.string(),
     RollNo : Yup.string(),
-    email:Yup.string(),
+   
     paymentType:Yup.string(),
     installmentNumber:Yup.string(),
     Amount:Yup.string()
@@ -29,17 +29,44 @@ export default function RegisterForm() {
   const formik = useFormik({
     initialValues: {
       firstName: '',
-      lastName: '',
-      email: '',
+      lastName: '',      
       RollNo:'',
       paymentType:'',
       installmentNumber:'',
       Amount:''
     },
     validationSchema: RegisterSchema,
-    onSubmit: (values,actions) => {
+    onSubmit: async(values,actions) => {
       // navigate('/dashboard', { replace: true });
-       console.log("hjgh")
+      const {RollNo} = values;
+      const response =  await fetch(`http://localhost:80/fee_payment_manually`,{
+        method : "POST",
+        headers :{
+            "Accept":"application/json",
+            "Content-Type" : "application/json"
+        },
+        body : JSON.stringify({
+          "scholarNumber" : RollNo
+        })
+    });
+    const awaited_response = await response.json();
+    
+    if(awaited_response.status === 200){
+        actions.resetForm({
+        values: {
+          firstName: awaited_response.firstname,
+          lastName: awaited_response.lastname ,          
+          paymentType:awaited_response.paymentType,
+          installmentNumber:awaited_response.installmentNumber,
+          Amount: awaited_response.amount,
+          RollNo
+        },
+       
+    })
+        setpaymentstatus("Make Payment");
+    }
+
+
     //   actions.resetForm({
     //     values: {
     //       // the type of `values` inferred to be Blog

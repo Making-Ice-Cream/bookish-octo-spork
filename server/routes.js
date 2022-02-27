@@ -276,7 +276,7 @@ router.post("/getTeachersData", async(req, res) =>{
 
 
 //get fee details manually route
-router.post("/fee_payment_manually", auths, async(req, res) =>{
+router.post("/fee_payment_manually", async(req, res) =>{
     const scholarNumber = req.body.scholarNumber;
     try{
         let result = await studentSchema.findOne({scholarNumber:scholarNumber});
@@ -307,13 +307,13 @@ router.post("/fee_payment_manually", auths, async(req, res) =>{
                     }
                 }
             }
-            res.status(201).json({message: "Data sent successfully.",
+            res.status(200).json({message: "Data sent successfully.",
                                 firstname:result.firstName,
                                 lastname:result.lastName,
                                 paymentType: result.paymentType,
                                 installmentNumber: installmentNumber,
                                 amount:amount,
-                                status : 201,
+                                status : 200,
                             });
         }
         else{
