@@ -357,7 +357,7 @@ router.post("/submitFee", async(req, res) =>{
             }
             catch(err){
                 // console.log(err);
-                res.status(500).json({message: "No record found, check the scholar number.",
+                res.status(500).json({message: "Server Error.",
                 status : 500,
             });
             }
