@@ -330,4 +330,46 @@ router.post("/fee_payment_manually", auths, async(req, res) =>{
         }
 });
 
+// route to submit manual fee through admin
+
+router.post("/submitFee", async(req, res) =>{
+    const scholarNumber = req.body.scholarNumber;
+    const paymentType = req.body.paymentType;
+    const installmentNumber = parseInt(req.body.installmentNumber);
+    if(paymentType === "Installments"){
+        try {
+            console.log(installmentNumber);
+            //let result = await studentSchema.findOne({scholarNumber:scholarNumber});
+            //console.log(result);
+            
+            try{let err = await studentSchema.updateOne({scholarNumber:scholarNumber},{$set:{'payment.installments.$installmentNumber.paid': true}});
+        console.log(err);}
+            catch(err){
+                console.log(err);
+            }
+ 
+            res.status(201).json({message: "Fee submitted successfully",
+                                status : 201,
+                            });
+        } catch (error) {
+            res.status(404).json({message: "No record found, check the scholar number.",
+                                status : 404,
+                            });
+        }    
+    }
+    else{
+        try {
+            await studentSchema.updateOne({scholarNumber:scholarNumber},{$set:{'payment.lumpsum.paid': true}});
+            res.status(201).json({message: "Fee submitted successfully",
+                                status : 201,
+                            });
+        } catch (error) {
+            res.status(404).json({message: "No record found, check the scholar number.",
+                                status : 404,
+                            });
+        } 
+    }
+});
+
+
 module.exports = router;
