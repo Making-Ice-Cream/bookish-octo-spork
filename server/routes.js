@@ -160,25 +160,18 @@ router.post("/admin/student/newstudent",async(req,res)=>{
         totalAmount = parseInt(totalAmount);
         const installmentAmount = totalAmount/no_of_I;
         const monthsDiff = 12/no_of_I;
-        // const firstM = installmentDate.getMonth();
-        // console.log(monthsDiff)
-        let arr = [];
+        const firstM = installmentDate.getMonth();
+        const installments = [];
         for(let i=1; i<=no_of_I; i++){
-            // console.log(installmentDate);
-            
-            installmentDate.setMonth(monthsDiff * i);
-            console.log(installmentDate)
+            installmentDate.setMonth(firstM + monthsDiff*(i-1));
             const installment = {
-                "dueDate": installmentDate,
+                "dueDate": new Date(installmentDate),
                 "amount": installmentAmount,
                 "paid":false
             };
-            console.log(installment);
-            arr.push(installment);
-            console.log(arr);
+            installments.push(installment);
         }
-        newest.payment.installments = arr ;
-        console.log(newst.payment.installments);
+        newst.payment.installments = installments;
     }
     else{
         const obj = {
@@ -258,7 +251,7 @@ router.post("/admin/student/scholarNumber",auths, async(req,res)=>{
 });
 
 // send teacher details
-router.post("/getTeachersData", auths, async(req, res) =>{
+router.post("/getTeachersData", async(req, res) =>{
     try{
         let result = await facultySchema.find({},{email:0, password:0});
         if(result){

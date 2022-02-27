@@ -12,18 +12,18 @@ import { LoadingButton } from '@mui/lab';
 // ----------------------------------------------------------------------
 
 export default function RegisterForm() {
-  const [paymentstatus, setpaymentstatus ] = useState("Fetch Amount")
+  const [paymentstatus, setpaymentstatus ] = useState("Fetch Details")
   const navigate = useNavigate();
-  const [showPassword, setShowPassword] = useState(false);
+  // const [showPassword, setShowPassword] = useState(false);
 
   const RegisterSchema = Yup.object().shape({
-    firstName: Yup.string()
-      .min(2, 'Too Short!')
-      .max(50, 'Too Long!')
-      .required('First name required'),
-    lastName: Yup.string().min(2, 'Too Short!').max(50, 'Too Long!').required('Last name required'),
-    RollNo : Yup.string().required('Roll No. is required'),
-    password: Yup.string().required('Your Password is required')
+    firstName: Yup.string(),
+    lastName: Yup.string(),
+    RollNo : Yup.string(),
+    email:Yup.string(),
+    paymentType:Yup.string(),
+    installmentNumber:Yup.string(),
+    Amount:Yup.string()
   });
 
   const formik = useFormik({
@@ -31,15 +31,24 @@ export default function RegisterForm() {
       firstName: '',
       lastName: '',
       email: '',
-      password: '',
-      RollNo:''
+      RollNo:'',
+      paymentType:'',
+      installmentNumber:'',
+      Amount:''
     },
     validationSchema: RegisterSchema,
-    onSubmit: () => {
-      navigate('/dashboard', { replace: true });
-    }
+    onSubmit: (values,actions) => {
+      // navigate('/dashboard', { replace: true });
+       console.log("hjgh")
+    //   actions.resetForm({
+    //     values: {
+    //       // the type of `values` inferred to be Blog
+    //       email: `Installment`,
+    //       RollNo:''
+    //     },
+    // })
+     }
   });
-
   const { errors, touched, handleSubmit, isSubmitting, getFieldProps } = formik;
 
   return (
@@ -49,63 +58,55 @@ export default function RegisterForm() {
           <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
             <TextField
               fullWidth
+              disabled
               label="First name"
               {...getFieldProps('firstName')}
-              error={Boolean(touched.firstName && errors.firstName)}
-              helperText={touched.firstName && errors.firstName}
+              
             />
 
             <TextField
+            disabled
               fullWidth
               label="Last name"
               {...getFieldProps('lastName')}
-              error={Boolean(touched.lastName && errors.lastName)}
-              helperText={touched.lastName && errors.lastName}
+              
             />
           </Stack>
+          <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
+              <TextField
+                fullWidth
+                disabled
+                type="string"
+                label="Payment Type"
+                {...getFieldProps('paymentType')}
+                
+              />
+              <TextField
+                fullWidth
+                disabled
+                type="string"
+                label="Installment Number"
+                {...getFieldProps('installmentNumber')}
+              />
 
-          <TextField
-            fullWidth
-           
-            type="email"
-            label="Email address"
-            {...getFieldProps('email')}
-            error={Boolean(touched.email && errors.email)}
-            helperText={touched.email && errors.email}
-          />
-
+           </Stack>
         <TextField
             fullWidth
-            label="Roll No. of Student"
+            focussed="true"
+            label="Scholar Number"
             type = "number"
             {...getFieldProps('RollNo')}
             error={Boolean(touched.RollNo && errors.RollNo)}
             helperText={touched.RollNo && errors.RollNo}
           />
 
-          <TextField
-            fullWidth
-            
-            type={showPassword ? 'text' : 'password'}
-            label="Password"
-            {...getFieldProps('password')}
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position="end">
-                  <IconButton edge="end" onClick={() => setShowPassword((prev) => !prev)}>
-                    <Icon icon={showPassword ? eyeFill : eyeOffFill} />
-                  </IconButton>
-                </InputAdornment>
-              )
-            }}
-            error={Boolean(touched.password && errors.password)}
-            helperText={touched.password && errors.password}
-          />
+         
           <TextField
             fullWidth
             
             type="String"
             label="Required Amount"
+            {...getFieldProps('Amount')}
             disabled
             helperText = "Automatically fetched from Database"
           />
