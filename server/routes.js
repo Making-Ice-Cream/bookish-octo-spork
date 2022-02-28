@@ -340,7 +340,7 @@ router.post("/submitFee", async(req, res) =>{
             try{
                  studentSchema.findOne({scholarNumber}).then(item =>{
                 
-                    item.payment.installments[installmentNumber].paid  =  true
+                    item.payment.installments[installmentNumber-1].paid  =  true
                         item.save();
                     }
                  )
