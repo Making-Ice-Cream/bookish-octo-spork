@@ -23,7 +23,6 @@ router.post("/login",async(req,res)=>{
     let password = req.body.password;
     try {
         let result = await signupSchema.find({email:email});
-        console.log(result);
         if(result!=null){
             let matched = await bcrypt.compare(password, result[0].password);
             if(matched){
@@ -47,7 +46,6 @@ router.post("/login",async(req,res)=>{
                                                      status : 404});
         }
     } catch (error) {
-        console.log(error);
         res.status(500).json({message: "Server error!" ,
                             status : 500});
     }
@@ -99,7 +97,6 @@ router.post("/check" ,auths ,async(req,res)=>{
   }
    catch(err)
    {
-    // console.log(err);
     res.status(404).json({message:`${err}` ,
                           status : 404})
    }
@@ -117,7 +114,6 @@ router.post("/logout" , auths ,async(req,res)=>{
       }
       catch(err)
       {
-       // console.log(err);
        res.status(404).json({status:404})
       }
 })
@@ -147,7 +143,6 @@ router.post("/checkpassword", auths , async(req, res)=>{
 router.post("/admin/student/newstudent",async(req,res)=>{
     var installmentDate = new Date();
     let email = req.body.email;
-    console.log(req.body);
     let schoNum = req.body.scholarNumber;
     let newst = new studentSchema(req.body);
     let result = await signupSchema.find({});
@@ -205,7 +200,6 @@ router.post("/admin/student/newstudent",async(req,res)=>{
 router.post("/admin/faculty/newfaculty",async(req,res)=>{
     let email = req.body.email;
     let password = req.body.password;
-    console.log(req.body.imageUrl)
     let newfct = new facultySchema(req.body);; 
     const salt = await bcrypt.genSalt(10);
     newfct.password = await bcrypt.hash(newfct.password, salt);
@@ -282,7 +276,6 @@ router.post("/fee_payment_manually", async(req, res) =>{
         let result = await studentSchema.findOne({scholarNumber:scholarNumber});
 
         if(result){
-            console.log(result);
             const paymentType = result.paymentType;
             let installmentNumber = "";
             let amount = 0;
@@ -324,7 +317,6 @@ router.post("/fee_payment_manually", async(req, res) =>{
         
         }
         catch (error) {
-            console.log(error);
             res.status(500).json({message: "Server error!" ,
                                 status : 500});
         }
@@ -340,7 +332,7 @@ router.post("/submitFee", async(req, res) =>{
             try{
                  studentSchema.findOne({scholarNumber}).then(item =>{
                 
-                    item.payment.installments[installmentNumber].paid  =  true
+                    item.payment.installments[installmentNumber - 1].paid  =  true
                         item.save();
                     }
                  )
@@ -349,7 +341,6 @@ router.post("/submitFee", async(req, res) =>{
              });
             }
             catch(err){
-                // console.log(err);
                 res.status(500).json({message: "Server Error.",
                 status : 500,
             });
