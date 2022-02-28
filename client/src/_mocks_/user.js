@@ -75,7 +75,7 @@ for(let i = 0 ; i < metadata.faculties.length ; i += 1){
   }
   result.push(obj);
 }
-result = [...result, ...users];
+// result = [...result, ...users];
 
 // export default users;
 // export default temp_array;

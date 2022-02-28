@@ -8,10 +8,13 @@ import { useNavigate } from 'react-router-dom';
 // material
 import { Stack, TextField, IconButton, InputAdornment } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
-
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
 // ----------------------------------------------------------------------
 
 export default function RegisterForm() {
+  const MySwal = withReactContent(Swal)
+
   const [paymentstatus, setpaymentstatus ] = useState("Fetch Details")
   const navigate = useNavigate();
   // const [showPassword, setShowPassword] = useState(false);
@@ -57,10 +60,30 @@ export default function RegisterForm() {
     
     if(awaited_response.status === 200){
       if(awaited_response.amount === 0){
-        alert("Fees is Fully Paid of this Student");
-        navigate("/admin/app" , {replace:true});
-      }
+        // alert("Fees is Fully Paid of this Student");
+        Swal.fire({
+          icon: 'info',
+          title: 'Good Job!',
+          text: 'Fees is Fully Paid of this Student'
+         
+        });
+
         actions.resetForm({
+          values: {
+            firstName: '',
+            lastName: '' ,          
+            paymentType:'',
+            installmentNumber:'',
+            Amount: '',
+            RollNo:''
+          },
+         
+      })
+       
+        // navigate("/admin/app" , {replace:true});
+      }
+      else{ 
+      actions.resetForm({
         values: {
           firstName: awaited_response.firstname,
           lastName: awaited_response.lastname ,          
@@ -73,36 +96,86 @@ export default function RegisterForm() {
     })
         setpaymentstatus("Make Payment");
     }
+    }
     else{
-      navigate("/500",{replace:true})
+      Swal.fire('Invalid Credentials', '', 'error')
+      navigate("/404",{replace:true})
     }
 
     
      }
     
     else{
-      const { paymentType, installmentNumber , RollNo } = values;
-      const response =  await fetch(`http://localhost:80/submitFee`,{
-        method : "POST",
-        headers :{
-            "Accept":"application/json",
-            "Content-Type" : "application/json"
-        },
-        body : JSON.stringify({
-          paymentType,installmentNumber,"scholarNumber" : RollNo
+      Swal.fire({
+        title: 'Do You Want to Make this Transaction?',
+        showDenyButton: true,
+        showCancelButton: true,
+        confirmButtonText: 'Yes',
+        denyButtonText: `No`,
+        footer: 'This Transaction Cannot Be Reversed!'
+      }).then(async(result) => {
+        /* Read more about isConfirmed, isDenied below */
+        if (result.isConfirmed) {
+          const { paymentType, installmentNumber , RollNo } = values;
+          const response =  await fetch(`http://localhost:80/submitFee`,{
+            method : "POST",
+            headers :{
+                "Accept":"application/json",
+                "Content-Type" : "application/json"
+            },
+            body : JSON.stringify({
+              paymentType,installmentNumber,"scholarNumber" : RollNo
+            })
+        });
+        const awaited_response = await response.json();
+       
+         if(awaited_response.status === 201){
+          //  alert(awaited_response.message + " ,Now Navigating to Home Page!")
+          Swal.fire('Transaction Done!', '', 'success')
+
+          actions.resetForm({
+            values: {
+              firstName: '',
+              lastName: '',          
+              paymentType:'',
+              installmentNumber:'',
+              Amount: '',
+              RollNo:''
+            },
+           
         })
-    });
-    const awaited_response = await response.json();
-   
-     if(awaited_response.status === 201){
-       alert(awaited_response.message + " ,Now Navigating to Home Page!")
-       navigate("/admin/app",{replace:true});
+            setpaymentstatus("Fetch Details");
 
-     }
-     else{
-       navigate("/500", {replace:true});
-     }
-
+          // navigate("/admin/app",{replace:true});
+    
+         }
+         else if(awaited_response.status >= 500){
+          Swal.fire('Server Error', '', 'error')
+           navigate("/500", {replace:true});
+         }
+         else{
+          Swal.fire('Not Found', '', 'error')
+          navigate("/404", {replace:true});
+         }
+    
+          
+        } else if (result.isDenied) {
+          Swal.fire('Transaction Aborted!', '', 'info')
+          actions.resetForm({
+            values: {
+              firstName: '',
+              lastName: '',          
+              paymentType:'',
+              installmentNumber:'',
+              Amount: '',
+              RollNo:''
+            },
+           
+        })
+            setpaymentstatus("Fetch Details");
+        }
+      })
+     
      
     }
   }

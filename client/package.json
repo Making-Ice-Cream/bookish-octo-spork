@@ -54,6 +54,8 @@
     "react-toastify": "^8.1.1",
     "simplebar": "^5.3.5",
     "simplebar-react": "^2.3.5",
+    "sweetalert2": "^11.4.4",
+    "sweetalert2-react-content": "^4.2.0",
     "sync-fetch": "^0.3.1",
     "web-vitals": "^2.1.4",
     "yup": "^0.32.9"
