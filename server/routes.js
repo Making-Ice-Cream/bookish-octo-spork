@@ -337,14 +337,7 @@ router.post("/submitFee", async(req, res) =>{
     const paymentType = req.body.paymentType;
     const installmentNumber = parseInt(req.body.installmentNumber);
     if(paymentType === "Installments"){
-        try {
-            console.log(installmentNumber);
-            //let result = await studentSchema.findOne({scholarNumber:scholarNumber});
-            //console.log(result);
-            
             try{
-                //  console.log(await studentSchema.findOne({scholarNumber}))
-                
                  studentSchema.findOne({scholarNumber}).then(item =>{
                 
                     item.payment.installments[installmentNumber].paid  =  true
@@ -360,14 +353,7 @@ router.post("/submitFee", async(req, res) =>{
                 res.status(500).json({message: "Server Error.",
                 status : 500,
             });
-            }
- 
-           
-        } catch (error) {
-            res.status(404).json({message: "No record found, check the scholar number.",
-                                status : 404,
-                            });
-        }    
+            }   
     }
     else{
         try {
