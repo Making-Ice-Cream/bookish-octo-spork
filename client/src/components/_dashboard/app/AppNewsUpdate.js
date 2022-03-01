@@ -88,8 +88,9 @@ function NewsItem({ news }) {
 }
 
 function NewsItems({ news }) {
-  console.log(news);
-  const { urlToImage, title, description ,publishedAt  } = news;
+  // console.log(news);
+  const { urlToImage, title, description ,publishedAt ,url  } = news;
+  // console.log(url);
   return (
    
     <Stack direction="row" alignItems="center" spacing={2}>
@@ -99,7 +100,7 @@ function NewsItems({ news }) {
         sx={{ width: 48, height: 48, borderRadius: 1.5 }}
       />
       <Box sx={{ minWidth: 240 }}>
-        <Link to="#" color="inherit" underline="hover" component={RouterLink} target = "_blank">
+        <Link  href= {url} color="inherit" underline="hover"  rel="noreferrer"  target = "_blank">
           <Typography variant="subtitle2" noWrap>
             {title}
           </Typography>
@@ -134,7 +135,7 @@ export default function AppNewsUpdate() {
 
   return (
     <Card>
-      <CardHeader title="News Update" />
+      <CardHeader title="Admin | News Update" />
 
       <Scrollbar>
         <Stack spacing={3} sx={{ p: 3, pr: 0 }}>
