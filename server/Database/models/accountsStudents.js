@@ -74,6 +74,10 @@ const student = new mongoose.Schema({
             type: lumpsumpSchema
         }
     },
+    dateOfJoin : {
+        type: Date,
+        required :true
+    },
     url1:String,
     url2:String
 });
