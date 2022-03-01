@@ -30,7 +30,7 @@ const admin = new mongoose.Schema({
       }
   }],
   
-  url: {
+  imageurl: {
     type: String
   }
 });

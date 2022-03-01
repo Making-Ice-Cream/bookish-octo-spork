@@ -34,8 +34,10 @@ router.post("/login",async(req,res)=>{
                                      name: result[0].name.firstname + " " + 
                                      result[0].name.lastname, 
                                      email: result[0].email,
-                                    status: 200,
-                                    token : token});
+                                     imageurl: result[0].imageurl,
+                                     studentsRegistered: scholarNumber,
+                                     status: 200,
+                                     token : token});
             }
             else{
                 res.status(404).json({message: "Invalid Credentials",
@@ -140,7 +142,7 @@ router.post("/checkpassword", auths , async(req, res)=>{
 
 
 //adding add student route
-router.post("/admin/student/newstudent",async(req,res)=>{
+router.post("/student/newstudent",async(req,res)=>{
     var installmentDate = new Date();
     let email = req.body.email;
     let schoNum = req.body.scholarNumber;
@@ -180,7 +182,7 @@ router.post("/admin/student/newstudent",async(req,res)=>{
     
     try {
         newst.save();
-        const filePath = path.join(__dirname, './emailTemplates/signupStudent.html');
+        const filePath = path.join(__dirname, '../emailTemplates/signupStudent.html');
         const replacements = {
             Username: req.body.firstName,
             scno: schoNum
@@ -197,7 +199,7 @@ router.post("/admin/student/newstudent",async(req,res)=>{
 });
 
 // adding add teacher route
-router.post("/admin/faculty/newfaculty",async(req,res)=>{
+router.post("/faculty/newfaculty",async(req,res)=>{
     let email = req.body.email;
     let password = req.body.password;
     let newfct = new facultySchema(req.body);; 
@@ -205,7 +207,7 @@ router.post("/admin/faculty/newfaculty",async(req,res)=>{
     newfct.password = await bcrypt.hash(newfct.password, salt);
     try {
         newfct.save();
-        const filePath = path.join(__dirname, './emailTemplates/signupFaculty.html');
+        const filePath = path.join(__dirname, '../emailTemplates/signupFaculty.html');
         const replacements = {
             Username: req.body.fullName,
             id: email,
@@ -222,7 +224,7 @@ router.post("/admin/faculty/newfaculty",async(req,res)=>{
     }
 });
 
-router.post("/admin/student/scholarNumber",auths, async(req,res)=>{
+router.post("/student/scholarNumber",auths, async(req,res)=>{
     try{
     let result = await signupSchema.find({});
     if(result){
