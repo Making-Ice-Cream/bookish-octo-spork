@@ -25,6 +25,7 @@ import {UserContext} from './App';
 import Cookies from 'js-cookie';
 import AddTeacher from './components/authentication/login/AddTeacher';
 import ContactDev from './Prev_Components/ContactDev';
+import Profile from  './Prev_Components/Profile/Profile';
 
 export default function AdminRoutes() {
   const {state,dispatch} = useContext(UserContext);
@@ -97,7 +98,8 @@ export default function AdminRoutes() {
         { path: 'user', element: <User /> },
         { path: 'products', element: <Products /> },
         { path: 'blog', element: <Blog /> },
-        { path: 'Student', element: <Student /> }
+        { path: 'student', element: <Student /> },
+        { path: 'profile' , element: <Profile />}
        
       ]
     },
@@ -123,6 +125,10 @@ export default function AdminRoutes() {
     {
       path:"/contact/developers",
       element : <> <NavBar /><ContactDev /> <Footer />  </>
+    },
+    {
+      path : '/resetPassword',
+      element : state ? (!JSON.parse(sessionStorage.getItem("islocked")) ? <ResetPassword /> :<Navigate to="/lock" />)  : <Navigate to="/signin" />
     },
     
     { path: '*', element: <Navigate to="/404" replace /> }

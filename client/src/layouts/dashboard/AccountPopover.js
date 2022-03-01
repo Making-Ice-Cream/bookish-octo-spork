@@ -21,23 +21,24 @@ const MENU_OPTIONS = [
   {
     label: 'Home',
     icon: homeFill,
-    linkTo: '/'
+    linkTo: '/admin/app'
   },
   {
     label: 'Profile',
     icon: personFill,
-    linkTo: '#'
-  },
-  {
-    label: 'Settings',
-    icon: settings2Fill,
-    linkTo: '#'
+    linkTo: '/admin/profile'
   },
   {
     label: 'Lock Profile',
     icon: lockFill,
     linkTo: '/lock'
+  },
+  {
+    label: 'Reset Password',
+    icon: settings2Fill,
+    linkTo: '/resetPassword'
   }
+  
 ];
 
 export default function AccountPopover() {

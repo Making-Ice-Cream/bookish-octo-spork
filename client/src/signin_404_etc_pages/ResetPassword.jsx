@@ -4,11 +4,16 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleLeft, faEnvelope, faUnlockAlt } from "@fortawesome/free-solid-svg-icons";
 import { Col, Row, Form, Card, Button, Container, InputGroup } from '@themesberg/react-bootstrap';
 import { Link } from 'react-router-dom';
-
+import { useNavigate } from "react-router-dom";
 // import { Routes } from "../../routes";
 import "../AllCSS/pages.css";
 
 const ResetPassword =  () => {
+  const navigate = useNavigate();
+
+  const GotoHome = () => {
+    navigate("/admin/app");
+  }
   return (
     <main>
       <section className="bg-soft d-flex align-items-center my-5 mt-lg-6 mb-lg-5">
@@ -16,8 +21,8 @@ const ResetPassword =  () => {
           <Row className="justify-content-center">
             <p className="text-center">
               {/* <Card.Link as={Link} to={Routes.Signin.path} className="text-gray-700"> */}
-              <Card.Link as={Link}  className="text-gray-700">
-                <FontAwesomeIcon icon={faAngleLeft} className="me-2" /> Back to sign in
+              <Card.Link  className="text-gray-700">
+                <FontAwesomeIcon onClick={GotoHome} icon={faAngleLeft} className="me-2" style={{color : "blue", cursor : "pointer"}} /> Back to sign in
               </Card.Link>
             </p>
             <Col xs={12} className="d-flex align-items-center justify-content-center">

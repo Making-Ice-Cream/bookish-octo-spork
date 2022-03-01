@@ -24,7 +24,7 @@ const sidebarConfig = [
   },
   {
     title: 'Students',
-    path: '/admin/Student',
+    path: '/admin/student',
     icon: getIcon(peopleFill)
   },
   // {
