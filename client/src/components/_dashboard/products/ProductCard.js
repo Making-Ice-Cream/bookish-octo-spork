@@ -29,6 +29,7 @@ ShopProductCard.propTypes = {
 };
 
 export default function ShopProductCard({ product }) {
+  // console.log(product);
   const { name, cover, price, colors, status, priceSale } = product;
 
   return (
