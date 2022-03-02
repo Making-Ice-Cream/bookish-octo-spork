@@ -28,7 +28,11 @@ const admin = new mongoose.Schema({
       token:{
           type:String,
       }
-  }]
+  }],
+  
+  imageurl: {
+    type: String
+  }
 });
 
 // to generate the Jwt token
