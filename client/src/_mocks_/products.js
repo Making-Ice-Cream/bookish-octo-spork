@@ -1,5 +1,6 @@
 import faker from 'faker';
-import { sample } from 'lodash';
+import { isUndefined, sample } from 'lodash';
+import fetch from 'sync-fetch';
 // utils
 import { mockImgProduct } from '../utils/mockImages';
 
@@ -62,4 +63,37 @@ const products = [...Array(24)].map((_, index) => {
   };
 });
 
-export default products;
+
+const metadata = fetch('http://localhost:80/admin/students', {
+  method: 'GET',
+  headers: {
+    Accept: 'application/vnd.citationstyles.csl+json'
+  }
+}).json()
+
+let result = [];
+
+// result.push(metadata.data);
+// console.log("jhgh");
+for(let i = 0 ; i < metadata.data.length ; i += 1){
+
+  let obj = {
+    id : metadata.data[i].id ,
+    cover: typeof metadata.data[i].url === "undefined" ?  faker.image.image() : metadata.data[i].url,
+    name : metadata.data[i].name,
+    status : metadata.data[i].batch,
+    gender: metadata.data[i].gender,
+    email:  metadata.data[i].email,
+    contact: metadata.data[i].contact,
+    paymentType: metadata.data[i].paymentType,
+    scholarNumber : metadata.data[i].scholarNumber,
+    payment : metadata.data[i].payment,
+    parentName : faker.name.findName(),
+
+
+  }
+  result.push(obj);
+}
+
+export default result ;
+// export default products;

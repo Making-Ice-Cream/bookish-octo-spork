@@ -419,4 +419,58 @@ router.post("/pendingDues", async(req, res) =>{
     }
 });
 
+router.get("/students" , async(req,res)=>{
+    try{
+
+         let data = await studentSchema.find({});
+        
+        //  console.log(data);
+         
+         if(data){
+            let result_data = [] ;
+
+            for(let  i = 0 ; i < data.length ;  i++){
+
+                let obj = {
+                    name : data[i].firstName + data[i].lastName,
+                    scholarNumber : data[i].scholarNumber,
+                    gender:data[i].gender,
+                    email:data[i].email,
+                    batch : data[i].batch,
+                    contact:data[i].contact,
+                    paymentType : data[i].paymentType,
+                    url : data[i].url1,
+                    payment : data[i].payment,
+                    id : data[i]._id
+        
+                }
+                result_data.push(obj);
+            }
+
+            res.status(200).json({
+                message: "Students Data Sent Successfully",
+                status : 200,
+                data : result_data
+            })
+
+
+
+         }else{
+             res.status(400).json({
+                 message : "An Error Occured!",
+                 status : 400
+             })
+         }
+
+
+    }catch(err){
+        console.log(err);
+        res.status(500).json({
+            message:"Server Error!",
+            status : 500
+        })
+    }
+
+})
+
 module.exports = router;

@@ -59,7 +59,7 @@ const metadata = fetch('http://localhost:80/admin/getTeachersData', {
 
 let result = [];
 
-console.log("jhgh");
+// console.log("jhgh");
 for(let i = 0 ; i < metadata.faculties.length ; i += 1){
 
   let obj = {
