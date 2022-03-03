@@ -65,6 +65,7 @@
        "keyword-spacing":0,
       "react-hooks/rules-of-hooks": 2,
       "indent": 0,
+      "new-cap":0,
       "import/no-mutable-exports":0,
       "no-nested-ternary" : 0,
       "space-infix-ops": 0,

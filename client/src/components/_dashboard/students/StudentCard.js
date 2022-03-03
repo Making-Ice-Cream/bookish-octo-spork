@@ -1,8 +1,9 @@
 import PropTypes from 'prop-types';
 import { Link as RouterLink } from 'react-router-dom';
 import Tooltip from '@mui/material/Tooltip';
-
-import { Box, Card, Link, Typography, Stack } from '@mui/material';
+import React from 'react';
+import Badge from '@mui/material/Badge';
+import { Box, Card, Link, Typography, Stack , Popper } from '@mui/material';
 import { styled } from '@mui/material/styles';
 // utils
 import { fCurrency } from '../../../utils/formatNumber';
@@ -40,7 +41,14 @@ StudentCard.propTypes = {
 
 export default function StudentCard({ product }) {
   const { name, cover, price, colors, status, priceSale } = product;
+  const [anchorEl, setAnchorEl] = React.useState(null);
 
+  const handleClick = (event) => {
+    setAnchorEl(anchorEl ? null : event.currentTarget);
+  };
+
+  const open = Boolean(anchorEl);
+  const id = open ? 'simple-popper' : undefined;
   return (
     <Card>
       <Box sx={{ pt: '100%', position: 'relative' }}>
@@ -79,7 +87,7 @@ export default function StudentCard({ product }) {
             {fCurrency(price)}
           </Typography> */}
 
-          <Tooltip title="Roll Number" arrow>
+          <Tooltip title="Scholar Number" arrow>
            <Typography variant="subtitle1">
             10024
             
@@ -89,6 +97,49 @@ export default function StudentCard({ product }) {
             "deepaky.tt.19@ntij.ac.in"
           </Typography> */}
         </Stack>
+
+        
+
+        <Stack direction = "row" spacing = {9}>
+        <Tooltip title="Gender" arrow>
+           <Typography  variant="body" style = {{color:"#6C567B"}}>
+            Male
+            
+          </Typography>
+          </Tooltip>
+
+          <Tooltip title="Payment Type" arrow>
+           <Typography  style = {{color:"#8B9A46"}}
+           variant="body" aria-describedby={id} type="button" onClick={handleClick}>
+            Installment
+            
+          </Typography>
+          
+          </Tooltip>
+          <Popper id={id} open={open} anchorEl={anchorEl}>
+        <Box sx={{ border: 1, p: 1, bgcolor: 'background.paper' ,padding:4 , borderRadius : 5}}>
+          <Stack >
+            <Typography mb = {2} varient = "h5">
+            <Badge badgeContent={"Paid"} color="primary">
+                1 Installment &nbsp;&nbsp;
+            </Badge>
+              
+              
+            </Typography>
+            <Typography varient = "h5">
+            <Badge badgeContent={"Unpaid"} color="error">
+                2 Installment &nbsp;&nbsp;
+            </Badge>
+              
+              
+            </Typography>
+            
+          </Stack>
+        </Box>
+      </Popper>
+
+        </Stack>
+
         <Grid container  direction="column" spacing={0}>
         <Grid item xs={6} md={4}>
              <Tooltip title="Mobile">
@@ -101,12 +152,12 @@ export default function StudentCard({ product }) {
               </Tooltip>
             </Grid>
             
-            <Grid item xs={6} md={4}>
+            {/* <Grid item xs={6} md={4}>
               <Item>1st Installment Paid</Item>
             </Grid>
             <Grid item xs={6} md={4}>
               <Item>2nd Installment Paid</Item>
-            </Grid>
+            </Grid> */}
         </Grid>
       </Stack>
     </Card>

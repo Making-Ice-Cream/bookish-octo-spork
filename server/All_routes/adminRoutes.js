@@ -17,12 +17,15 @@ const sentEmail = require("../sentEmail");
 
 const jwt = require('jsonwebtoken');
 router.use(bodyParser.urlencoded({extended: true}));
+router.use(bodyParser.json());
+router.use(express.json());
 
 router.post("/login",async(req,res)=>{
     let email = req.body.email;
     let password = req.body.password;
     try {
         let result = await signupSchema.find({email:email});
+        console.log(result)
         if(result!=null){
             let matched = await bcrypt.compare(password, result[0].password);
             if(matched){
@@ -35,7 +38,7 @@ router.post("/login",async(req,res)=>{
                                      result[0].name.lastname, 
                                      email: result[0].email,
                                      imageurl: result[0].imageurl,
-                                     studentsRegistered: scholarNumber,
+                                     studentsRegistered: result[0].scholarNumber,
                                      status: 200,
                                      token : token});
             }
@@ -48,6 +51,7 @@ router.post("/login",async(req,res)=>{
                                                      status : 404});
         }
     } catch (error) {
+        console.log(error);
         res.status(500).json({message: "Server error!" ,
                             status : 500});
     }
@@ -56,7 +60,8 @@ router.post("/login",async(req,res)=>{
 // geting userid
 const auths = async (req,res,next)=>{
     try {
-        const token = req.body.token;
+        const token = req.body.token === undefined || null ? req.headers.batch : req.body.token ;
+        // console.log(token)
         const secured_string = "helloweareheretodesignthestringwhichisverystronghopeitwillworksthanks";
         
         const verify =  jwt.verify(token,secured_string);
@@ -363,8 +368,13 @@ router.post("/submitFee", async(req, res) =>{
     }
 });
 
-router.post("/pendingDues", auths, async(req, res) =>{
-    const batch = req.body.batch;
+router.post("/pendingDues", async(req, res) =>{
+    // console.log(req) 
+    // console.log(req.body)
+    // console.log(req.headers)
+    // console.log(req.data.get("batch"))
+    const batch = req.headers.batch;
+    console.log(batch);
     try{
     let stu = await studentSchema.find({batch: batch, paymentType: "Installments"});
     class pendStudent {
@@ -373,7 +383,7 @@ router.post("/pendingDues", auths, async(req, res) =>{
           this.installNumber = installmentNumber;
           this.name = name;
           this.Amount = Amount;
-          this.dueDate = dueDate;
+          this.dueDate = new Date(dueDate).toLocaleDateString("en-IN");
         }
     }
     let result = [];

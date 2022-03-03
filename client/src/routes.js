@@ -31,7 +31,7 @@ export default function AdminRoutes() {
   const {state,dispatch} = useContext(UserContext);
   let cookie = Cookies.get('token');
   if(cookie !== "" && cookie !== null && cookie !== "undefined" && typeof cookie !== 'undefined'){
-  fetch('http://localhost:80/check', {
+  fetch('http://localhost:80/admin/check', {
       method: 'POST', 
       headers: {
         'Content-Type': 'application/json',

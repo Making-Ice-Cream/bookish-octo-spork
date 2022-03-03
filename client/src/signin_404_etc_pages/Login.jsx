@@ -81,7 +81,7 @@ const Login =  (props) => {
       e.preventDefault() ;
 
      
-      const response =  await fetch(`http://localhost:80/login`,{
+      const response =  await fetch(`http://localhost:80/admin/login`,{
         method : "POST",
         headers :{
             "Accept":"application/json",
@@ -132,7 +132,7 @@ const Login =  (props) => {
       setbuttonProperty(false);
 
     }else if(awaited_response.status === 500){
-
+       console.log(awaited_response)
       navigate('/500',{replace:true});
     }
 

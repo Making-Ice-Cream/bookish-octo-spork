@@ -62,15 +62,13 @@ export default function ShopFilterSidebar({
   return (
     <>
 
-      <TextField
+      {/* <TextField
         id="demo-helper-text-misaligned"
         label="Student Name"
         size="small"
         color="secondary"
-      />
-        <Button variant="contained" endIcon={<SendIcon />}>
-            Check
-          </Button>
+      /> */}
+        
         
        
 
