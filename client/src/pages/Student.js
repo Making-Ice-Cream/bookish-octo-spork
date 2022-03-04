@@ -1,4 +1,5 @@
 import { Icon } from '@iconify/react';
+import { useFormik } from 'formik';
 import plusFill from '@iconify/icons-eva/plus-fill';
 import { Link as RouterLink } from 'react-router-dom';
 import TextField from '@mui/material/TextField';
@@ -8,12 +9,13 @@ import { Grid, Button, Container, Stack, Typography} from '@mui/material';
 // components
 import Page from '../components/Page';
 import { BlogPostCard, BlogPostsSort, BlogPostsSearch } from '../components/_dashboard/blog';
-
+import SendIcon from '@mui/icons-material/Send';
 
 
 import '../AllCSS/Add_task.css';
 // import SendIcon from '@mui/icons-material/Send';
 import PRODUCTS from '../_mocks_/products';
+import { ProductFilterSidebar , ProductSort} from "../components/_dashboard/products"
 
 
 
@@ -41,6 +43,35 @@ export default function Student() {
   // const handleOpen = ()=>{
   //   navigate("/admin/new/student")
   // }
+  const [openFilter, setOpenFilter] = useState(false);
+
+  const formik = useFormik({
+    initialValues: {
+      gender: '',
+      category: '',
+      priceRange: '',
+      rating: ''
+    },
+    onSubmit: () => {
+      setOpenFilter(false);
+    }
+  });
+
+  const { resetForm, handleSubmit } = formik;
+
+  const handleOpenFilter = () => {
+    setOpenFilter(true);
+  };
+
+  const handleCloseFilter = () => {
+    setOpenFilter(false);
+  };
+
+  const handleResetFilter = () => {
+    handleSubmit();
+    resetForm();
+  };
+
    return (
     <Page title="Dashboard: Student">
       <Container>
@@ -65,19 +96,26 @@ export default function Student() {
         
 
         <Stack mb={5} direction="row" alignItems="center" justifyContent="space-between">
-          {/* <TextField  id="outlined-basic" label="Outlined" variant="Student Name" size="small" /> */}
+          {/* <TextField  id="outlined-basic" label="Outlined"  size="small" /> */}
           <TextField
-
-            id="filled-hidden-label-small"
-
-            label="Search Student"
-            size="small"
+             id="filled-hidden-label-small"
+              label="Student Scholar Number"
+            
+               size="small"
             sx={{
               width: '30ch',
             }}
           />
-
-          <BlogPostsSort options={SORT_OPTIONS} />
+          <Button align=  "right" variant="contained" endIcon={<SendIcon />}>
+            Check
+          </Button>
+          <ProductFilterSidebar formik={formik}
+              isOpenFilter={openFilter}
+              onResetFilter={handleResetFilter}
+              onOpenFilter={handleOpenFilter}
+              onCloseFilter={handleCloseFilter}/>
+          {/* <BlogPostsSort options={SORT_OPTIONS} /> */}
+          <ProductSort />
         </Stack>
 
         <Grid container spacing={3}>

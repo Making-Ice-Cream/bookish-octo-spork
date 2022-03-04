@@ -12,6 +12,8 @@ import {
 //
 import PRODUCTS from '../_mocks_/products';
 import '../AllCSS/Add_task.css';
+import TryCard from 'src/components/_dashboard/products/TryCard';
+
 export default function EcommerceShop() {
   const [openFilter, setOpenFilter] = useState(false);
 
@@ -57,19 +59,20 @@ export default function EcommerceShop() {
           sx={{ mb: 5 }}
         >
           <Stack direction="row" spacing={1} flexShrink={0} sx={{ my: 1 }}>
-            <ProductFilterSidebar
+            {/* <ProductFilterSidebar
               formik={formik}
               isOpenFilter={openFilter}
               onResetFilter={handleResetFilter}
               onOpenFilter={handleOpenFilter}
               onCloseFilter={handleCloseFilter}
-            />
-            <ProductSort />
+            /> */}
+            {/* <ProductSort /> */}
           </Stack>
         </Stack>
 
-        <ProductList products={PRODUCTS} />
+        {/* <ProductList products={PRODUCTS} /> */}
         
+         <TryCard />
       </Container>
     </Page>
   );

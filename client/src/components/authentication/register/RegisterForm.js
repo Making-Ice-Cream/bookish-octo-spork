@@ -47,7 +47,7 @@ export default function RegisterForm() {
 
       
       const {RollNo} = values;
-      const response =  await fetch(`http://localhost:80/fee_payment_manually`,{
+      const response =  await fetch(`http://localhost:80/admin/fee_payment_manually`,{
         method : "POST",
         headers :{
             "Accept":"application/json",
@@ -118,7 +118,7 @@ export default function RegisterForm() {
         /* Read more about isConfirmed, isDenied below */
         if (result.isConfirmed) {
           const { paymentType, installmentNumber , RollNo } = values;
-          const response =  await fetch(`http://localhost:80/submitFee`,{
+          const response =  await fetch(`http://localhost:80/admin/submitFee`,{
             method : "POST",
             headers :{
                 "Accept":"application/json",

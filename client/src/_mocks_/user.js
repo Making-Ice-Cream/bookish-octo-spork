@@ -47,7 +47,7 @@ console.log("Hello");
 
 // console.log(faculties.length);
 
-const metadata = fetch('http://localhost:80/getTeachersData', {
+const metadata = fetch('http://localhost:80/admin/getTeachersData', {
   method: 'POST',
   headers: {
     Accept: 'application/vnd.citationstyles.csl+json'
@@ -59,7 +59,7 @@ const metadata = fetch('http://localhost:80/getTeachersData', {
 
 let result = [];
 
-console.log("jhgh");
+// console.log("jhgh");
 for(let i = 0 ; i < metadata.faculties.length ; i += 1){
 
   let obj = {

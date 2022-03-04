@@ -12,7 +12,7 @@ const ResetPassword =  () => {
   const navigate = useNavigate();
 
   const GotoHome = () => {
-    navigate("/admin/app");
+    navigate("/admin/app", {replace:true});
   }
   return (
     <main>

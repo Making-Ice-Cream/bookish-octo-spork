@@ -61,7 +61,7 @@ export default function Register() {
         <ContentStyle>
           <Box sx={{ mb: 5 }}>
             <Typography variant="h4" gutterBottom>
-              Manually Fees Payment System.
+              Manual Fee Payment System.
             </Typography>
             <Typography sx={{ color: 'text.secondary' }}>
               Fast, Secure, Safe.
