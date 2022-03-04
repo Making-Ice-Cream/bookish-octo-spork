@@ -395,8 +395,8 @@ router.post("/pendingDues", async(req, res) =>{
         let amount = 0;
         for(let j=0; j<curStudent.payment.installments.length; j++){
             if(curStudent.payment.installments[j].paid === false && curStudent.payment.installments[j].dueDate < curDate){
-                dDate = curStudent.payment.installments[i].dueDate;
-                amount = curStudent.payment.installments[i].amount;
+                dDate = curStudent.payment.installments[j].dueDate;
+                amount = curStudent.payment.installments[j].amount;
                 instNo = j+1;
                 break;
             }
