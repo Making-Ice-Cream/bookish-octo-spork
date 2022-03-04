@@ -432,7 +432,7 @@ router.get("/students" , async(req,res)=>{
             for(let  i = 0 ; i < data.length ;  i++){
 
                 let obj = {
-                    name : data[i].firstName + data[i].lastName,
+                    name : data[i].firstName +" " + data[i].lastName,
                     scholarNumber : data[i].scholarNumber,
                     gender:data[i].gender,
                     email:data[i].email,

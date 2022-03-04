@@ -9,7 +9,8 @@ import { useNavigate } from 'react-router-dom';
 import { Stack, TextField, IconButton, InputAdornment } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 import Swal from 'sweetalert2'
-import withReactContent from 'sweetalert2-react-content'
+import withReactContent from 'sweetalert2-react-content';
+import {FeeReceipt} from './FeeReceipt';
 // ----------------------------------------------------------------------
 
 export default function RegisterForm() {
@@ -142,6 +143,8 @@ export default function RegisterForm() {
          if(awaited_response.status === 201){
           //  alert(awaited_response.message + " ,Now Navigating to Home Page!")
           Swal.fire('Transaction Done!', '', 'success')
+          
+          FeeReceipt();
 
           actions.resetForm({
             values: {
