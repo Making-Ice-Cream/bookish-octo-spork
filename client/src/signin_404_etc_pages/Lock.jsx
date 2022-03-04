@@ -38,7 +38,7 @@ const Lock =  () => {
   }
  
   const gotoApp = () =>{
-    fetch('http://localhost:80/checkpassword', {
+    fetch('http://localhost:80/admin/checkpassword', {
       method: 'POST', 
       headers: {
         'Content-Type': 'application/json',
@@ -112,7 +112,7 @@ const Lock =  () => {
               <div className="bg-white shadow-soft border border-light rounded p-4 p-lg-5 w-100 fmxw-500">
                 <div className="text-center text-md-center mb-4 mt-md-0">
                   <div className="user-avatar large-avatar mx-auto mb-3 ">
-                    <Image src={Profile3} className="rounded-circle"  />
+                    <Image src={JSON.parse(localStorage.getItem("image"))} className="rounded-circle"  />
                   </div>
                   <h3 className="mb-3">{sessionStorage.getItem('name')}</h3>
                   <p className="text-gray">Better to be safe than sorry.</p>

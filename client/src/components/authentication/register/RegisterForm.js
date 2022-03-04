@@ -17,6 +17,7 @@ import FeeReceipt from './FeeReceipt';
 export default function RegisterForm() {
   // const pdfExportComponent = useRef(null);
   const MySwal = withReactContent(Swal)
+  const [ispaymentdone , setispaymentdone] = useState(false);
 
   const [paymentstatus, setpaymentstatus ] = useState("Fetch Details")
   const navigate = useNavigate();
@@ -145,7 +146,7 @@ export default function RegisterForm() {
          if(awaited_response.status === 201){
           //  alert(awaited_response.message + " ,Now Navigating to Home Page!")
           Swal.fire('Transaction Done!', '', 'success')
-          
+          setispaymentdone(true);
           // FeeReceipt(pdfExportComponent);
 
           actions.resetForm({
@@ -200,9 +201,10 @@ export default function RegisterForm() {
   return (
     
     <FormikProvider value={formik}>
-      <div style= {{display : "none"}}>
-         < FeeReceipt / >
-      </div >
+      {/* <div id = "payment">
+        {ispaymentdone ? < FeeReceipt / > : "" } 
+        { setispaymentdone(false) }
+      </div > */}
       <Form autoComplete="off" noValidate onSubmit={handleSubmit}>
         <Stack spacing={3}>
           <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>

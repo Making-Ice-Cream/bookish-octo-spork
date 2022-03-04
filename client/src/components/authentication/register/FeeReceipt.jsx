@@ -1,12 +1,11 @@
 import React from 'react'
 import {useEffect,useRef, useState} from "react";
 import * as ReactDOM from "react-dom";
-import { PDFExport} from "@progress/kendo-react-pdf";
+import { PDFExport,savePDF} from "@progress/kendo-react-pdf";
 
 
 const FeeReceipt = () => {
-    
-  const [isactive , setisactive]  = useState(false);
+
     const container = useRef(null);
      const pdfExportComponent = useRef(null);
 
@@ -19,21 +18,24 @@ const FeeReceipt = () => {
         "Amount": 5000,
       };
 
-    const exportPDFWithComponent = () => {
-        if (pdfExportComponent.current) {
-          pdfExportComponent.current.save();
-        }
-    };
+      const exportPDFWithMethod = () => {
+        let element = container.current || document.body;
+        savePDF(element, {
+          paperSize: "auto",
+          margin: 40,
+          fileName: `Report for ${new Date().getFullYear()}`,
+        });
+      };
 
-    console.log(pdfExportComponent.current);
+    // console.log(pdfExportComponent.current);
     // exportPDFWithComponent();
 
     useEffect(() => {
-        exportPDFWithComponent();
+      exportPDFWithMethod();
     },[])
 
     return(
-        <div >
+       
       <div className="border rounded p-2">
         <PDFExport ref={pdfExportComponent} paperSize="auto" margin={40} fileName={`Payment Receipt`} author="Apni Coaching">
           <div className = "row">
@@ -81,7 +83,6 @@ const FeeReceipt = () => {
           </div>
         </PDFExport>
       </div>
-    </div>
     )
 }
 

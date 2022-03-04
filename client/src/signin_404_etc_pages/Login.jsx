@@ -109,7 +109,10 @@ const Login =  (props) => {
         Cookies.set('token', awaited_response.token, { expires: 1, path: '' })
         
         dispatch({type:'USER',payload:true})
-        
+        localStorage.setItem("image" , JSON.stringify(awaited_response.imageurl));
+        localStorage.setItem("name" , JSON.stringify(awaited_response.name));
+        localStorage.setItem("user_email" , JSON.stringify(email));
+
         window.sessionStorage.setItem("user_email" , email);
         window.sessionStorage.setItem("name" , awaited_response.name);
         window.sessionStorage.setItem("Logged_in_as", location.state.name);
