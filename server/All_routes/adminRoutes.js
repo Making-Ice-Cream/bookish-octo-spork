@@ -473,4 +473,45 @@ router.get("/students" , async(req,res)=>{
 
 })
 
+router.get("/resetPassword" , async(req,res)=>{
+    const email = req.body.email;
+    let oldPwd = req.body.oldPassword;
+    let newPwd = req.body.newPassword;
+    const salt = await bcrypt.genSalt(10);
+    
+    if(oldPwd === newPwd){
+        res.status(400).json({
+            message: "New Password and old password cannot be the same.",
+            status : 400,
+        })
+    }
+
+    try{
+            let result = await signupSchema.findOne({email:email});
+            let matched = await bcrypt.compare(oldPwd, result.password);
+            if(matched){
+                result.password = await bcrypt.hash(newPwd, salt);
+                result.save();
+                res.status(200).json({
+                    message: "Reset Password Successful.",
+                    status : 200,
+                })
+            }
+            else{
+                res.status(400).json({
+                    message : "Old Password is incorrect.",
+                    status : 400
+                })
+            }
+            
+    }
+    catch(err){
+        console.log(err);
+        res.status(500).json({
+            message:"Server Error!",
+            status : 500
+        })
+    }
+})
+
 module.exports = router;

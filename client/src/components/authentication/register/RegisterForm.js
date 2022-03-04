@@ -200,9 +200,10 @@ export default function RegisterForm() {
   return (
     
     <FormikProvider value={formik}>
-      <div style= {{display : "none"}}>
+      <div>
          < FeeReceipt / >
       </div >
+      
       <Form autoComplete="off" noValidate onSubmit={handleSubmit}>
         <Stack spacing={3}>
           <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>

@@ -5,10 +5,11 @@ import { PDFExport} from "@progress/kendo-react-pdf";
 
 
 const FeeReceipt = () => {
-    
-  const [isactive , setisactive]  = useState(false);
+  
+
+    const [isactive , setisactive]  = useState(false);
     const container = useRef(null);
-     const pdfExportComponent = useRef(null);
+    const pdfExportComponent = useRef(null);
 
     const obj = {
         "Transaction_ID": 1,
@@ -20,19 +21,13 @@ const FeeReceipt = () => {
       };
 
     const exportPDFWithComponent = () => {
+
         if (pdfExportComponent.current) {
+            console.log("EPWC running");
           pdfExportComponent.current.save();
         }
     };
-
-    console.log(pdfExportComponent.current);
-    // exportPDFWithComponent();
-
-    useEffect(() => {
-        exportPDFWithComponent();
-    },[])
-
-    return(
+    function myfun() {
         <div >
       <div className="border rounded p-2">
         <PDFExport ref={pdfExportComponent} paperSize="auto" margin={40} fileName={`Payment Receipt`} author="Apni Coaching">
@@ -82,7 +77,19 @@ const FeeReceipt = () => {
         </PDFExport>
       </div>
     </div>
-    )
+
+console.log("Function called");
+
+    }
+    console.log(pdfExportComponent.current);
+    // exportPDFWithComponent();
+    myfun();
+    useEffect(() => {
+        exportPDFWithComponent();
+    },[])
+    
+    return("");
+    
 }
 
 export default FeeReceipt ;
