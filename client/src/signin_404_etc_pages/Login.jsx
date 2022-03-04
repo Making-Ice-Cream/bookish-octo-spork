@@ -58,21 +58,7 @@ const Login =  (props) => {
     // console.log("Hello");
     const {email , password} = user ;
     
-    // console.log(validEmail(email));
-    //  if(validEmail(email) === false){
-    //   toast.error("In Valid Email or Password", {
-    //     position: "top-center",
-    //     autoClose: 5000,
-    //     hideProgressBar: false,
-    //     closeOnClick: true,
-    //     pauseOnHover: true,
-    //     draggable: true,
-    //     progress: undefined,
-    //     });
-    //     return ;
-    //  }
-     
-    //  console.log(email +  " " + password)
+   
 
       setbuttonProperty(true);
 

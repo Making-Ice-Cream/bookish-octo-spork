@@ -1,5 +1,5 @@
 
-import React from "react";
+import React , {useState} from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleLeft, faEnvelope, faUnlockAlt } from "@fortawesome/free-solid-svg-icons";
 import { Col, Row, Form, Card, Button, Container, InputGroup } from '@themesberg/react-bootstrap';
@@ -7,9 +7,70 @@ import { Link } from 'react-router-dom';
 import { useNavigate } from "react-router-dom";
 // import { Routes } from "../../routes";
 import "../AllCSS/pages.css";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const ResetPassword =  () => {
+  const [user , setuser] = useState({
+    email:"",oldPassword :"",newPassword:""
+    })
   const navigate = useNavigate();
+
+  const checkCredential = async(e) =>{
+   
+    const {email , oldPassword ,newPassword} = user ;
+   
+      e.preventDefault() ;
+
+     
+      const response =  await fetch(`http://localhost:80/admin/resetPassword`,{
+        method : "POST",
+        headers :{
+            "Accept":"application/json",
+            "Content-Type" : "application/json"
+        },
+        body : JSON.stringify({
+          email , oldPassword ,newPassword
+        })
+    });
+    const awaited_response = await response.json();
+    
+    if(awaited_response.status === 200){
+      toast.success("Password Changed Successfully!", {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        });
+        navigate("/admin/app" , {replace:true});
+
+      }else if(awaited_response.status === 400){
+        toast.error("Invalid Credentials!", {
+          position: "top-center",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          });
+          setuser({
+            email:"",oldPassword :"",newPassword:""
+            })
+      }
+      else{
+        navigate("/500" , {replace:true});
+      }
+    }
+
+  const ChangingCredential = (e) =>{
+    let input_name = e.target.name ;
+    let  value = e.target.value ;
+    setuser({...user , [input_name]:value})
+  }
 
   const GotoHome = () => {
     navigate("/admin/app", {replace:true});
@@ -35,28 +96,28 @@ const ResetPassword =  () => {
                       <InputGroup.Text>
                         <FontAwesomeIcon icon={faEnvelope} />
                       </InputGroup.Text>
-                      <Form.Control autoFocus required type="email" placeholder="example@company.com" />
+                      <Form.Control autoFocus required type="email" placeholder="example@company.com" name = "email" value = {user.email} onChange= {ChangingCredential} />
                     </InputGroup>
                   </Form.Group>
                   <Form.Group id="password" className="mb-4">
-                    <Form.Label>Your Password</Form.Label>
+                    <Form.Label>Current Password</Form.Label>
                     <InputGroup>
                       <InputGroup.Text>
                         <FontAwesomeIcon icon={faUnlockAlt} />
                       </InputGroup.Text>
-                      <Form.Control required type="password" placeholder="Password" />
+                      <Form.Control required type="password" placeholder="Current Password" name = "oldPassword" value = {user.oldPassword} onChange= {ChangingCredential}/>
                     </InputGroup>
                   </Form.Group>
                   <Form.Group id="confirmPassword" className="mb-4">
-                    <Form.Label>Confirm Password</Form.Label>
+                    <Form.Label>New Password</Form.Label>
                     <InputGroup>
                       <InputGroup.Text>
                         <FontAwesomeIcon icon={faUnlockAlt} />
                       </InputGroup.Text>
-                      <Form.Control required type="password" placeholder="Confirm Password" />
+                      <Form.Control required type="password" placeholder="New Password" name = "newPassword" value = {user.newPassword} onChange= {ChangingCredential}/>
                     </InputGroup>
                   </Form.Group>
-                  <Button variant="primary" type="submit" className="w-100">
+                  <Button variant="primary" type="submit" className="w-100" onClick = {checkCredential}>
                     Reset password
                   </Button>
                 </Form>
@@ -64,6 +125,19 @@ const ResetPassword =  () => {
             </Col>
           </Row>
         </Container>
+        <ToastContainer
+                      position="top-center"
+                      autoClose={5000}
+                      hideProgressBar={false}
+                      newestOnTop={false}
+                      closeOnClick
+                      rtl={false}
+                      pauseOnFocusLoss
+                      draggable
+                      pauseOnHover
+                      />
+                      
+                <ToastContainer />
       </section>
     </main>
   );

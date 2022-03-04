@@ -10,7 +10,7 @@ import { Stack, TextField, IconButton, InputAdornment } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content';
-import FeeReceipt from './FeeReceipt';
+// import FeeReceipt from './FeeReceipt';
 // import {useRef} from "react";
 // ----------------------------------------------------------------------
 
@@ -201,9 +201,9 @@ export default function RegisterForm() {
   return (
     
     <FormikProvider value={formik}>
-      <div>
+      {/* <div>
          < FeeReceipt / >
-      </div >
+      </div > */}
       
       <Form autoComplete="off" noValidate onSubmit={handleSubmit}>
         <Stack spacing={3}>
