@@ -1,13 +1,14 @@
 import React from 'react'
-import {useRef} from "react";
+import {useEffect,useRef, useState} from "react";
 import * as ReactDOM from "react-dom";
 import { PDFExport} from "@progress/kendo-react-pdf";
 
 
-export const FeeReceipt = () => {
-
-    //const container = React.useRef(null);
-    const pdfExportComponent = useRef(null);
+const FeeReceipt = () => {
+    
+  const [isactive , setisactive]  = useState(false);
+    const container = useRef(null);
+     const pdfExportComponent = useRef(null);
 
     const obj = {
         "Transaction_ID": 1,
@@ -24,12 +25,15 @@ export const FeeReceipt = () => {
         }
     };
 
-    // useEffect(() => {
-    //     exportPDFWithComponent();
-    // },[])
+    console.log(pdfExportComponent.current);
+    // exportPDFWithComponent();
 
-    return (
-        <div>
+    useEffect(() => {
+        exportPDFWithComponent();
+    },[])
+
+    return(
+        <div >
       <div className="border rounded p-2">
         <PDFExport ref={pdfExportComponent} paperSize="auto" margin={40} fileName={`Payment Receipt`} author="Apni Coaching">
           <div className = "row">
@@ -42,7 +46,7 @@ export const FeeReceipt = () => {
             </div>
           </div>
           <div>
-          <hr className="k-hr" />
+          <hr ref = {container} className="k-hr" />
             <h3 className="text-center">Payment Receipt</h3>
             <hr className="k-hr" />
             <table className ="table">
@@ -80,4 +84,6 @@ export const FeeReceipt = () => {
     </div>
     )
 }
+
+export default FeeReceipt ;
 

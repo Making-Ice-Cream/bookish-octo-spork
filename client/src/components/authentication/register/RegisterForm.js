@@ -10,10 +10,12 @@ import { Stack, TextField, IconButton, InputAdornment } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content';
-import {FeeReceipt} from './FeeReceipt';
+import FeeReceipt from './FeeReceipt';
+// import {useRef} from "react";
 // ----------------------------------------------------------------------
 
 export default function RegisterForm() {
+  // const pdfExportComponent = useRef(null);
   const MySwal = withReactContent(Swal)
 
   const [paymentstatus, setpaymentstatus ] = useState("Fetch Details")
@@ -144,7 +146,7 @@ export default function RegisterForm() {
           //  alert(awaited_response.message + " ,Now Navigating to Home Page!")
           Swal.fire('Transaction Done!', '', 'success')
           
-          FeeReceipt();
+          // FeeReceipt(pdfExportComponent);
 
           actions.resetForm({
             values: {
@@ -196,7 +198,11 @@ export default function RegisterForm() {
   const { errors, touched, handleSubmit, isSubmitting, getFieldProps } = formik;
 
   return (
+    
     <FormikProvider value={formik}>
+      <div style= {{display : "none"}}>
+         < FeeReceipt / >
+      </div >
       <Form autoComplete="off" noValidate onSubmit={handleSubmit}>
         <Stack spacing={3}>
           <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
