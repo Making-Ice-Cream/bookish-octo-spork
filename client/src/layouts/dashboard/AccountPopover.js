@@ -54,7 +54,7 @@ export default function AccountPopover() {
     setOpen(false);
   };
   const logout = () =>{
-    fetch('http://localhost:80/logout', {
+    fetch('http://localhost:80/admin/logout', {
       method: 'POST', 
       headers: {
         'Content-Type': 'application/json',
@@ -67,7 +67,7 @@ export default function AccountPopover() {
     .then(data => {
       // console.log(data);
       if(data.status === 200) {
-        sessionStorage.clear();
+        // sessionStorage.clear();
         Cookies.remove('token');
         dispatch({type:'USER',payload:false});
         toast.success("Logout Sucessfully!", {

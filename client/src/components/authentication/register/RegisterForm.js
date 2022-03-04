@@ -99,7 +99,17 @@ export default function RegisterForm() {
     }
     else{
       Swal.fire('Invalid Credentials', '', 'error')
-      navigate("/404",{replace:true})
+      // navigate("/404",{replace:true})
+      actions.resetForm({
+        values: {
+          firstName: '',
+          lastName: '' ,          
+          paymentType:'',
+          installmentNumber:'',
+          Amount: '',
+          RollNo:''
+        },
+      })
     }
 
     

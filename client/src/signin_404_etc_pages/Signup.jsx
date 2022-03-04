@@ -50,7 +50,7 @@ export default function Signup() {
                                             <MDBInput disabled id='form6Example1' label='First name' />
                                     </MDBCol>
                                     <MDBCol>
-                                        <MDBInput disabled id='form6Example2' label='Last name' />
+                                        <MDBInput  id='form6Example2' label='Parent name' />
                                     </MDBCol>
                                 </MDBRow>
 
