@@ -65,7 +65,7 @@ admin.methods.generateAuthToken = async function(){
 // to generate forgotPass token
 admin.methods.hasExpired=  function(){
   var now = Date.now();
-  return (now - Date.parse(this.forgotPass.createDate)) > 30000000000; // Date is converted to milliseconds to calculate 7 days it > one day = 24 hours * 60 minutes * 60 seconds *1000 milliseconds * 7 days = 604800000
+  return (now - Date.parse(this.forgotPass.createDate)) > 300000; // Date is converted to milliseconds to calculate 7 days it > one day = 24 hours * 60 minutes * 60 seconds *1000 milliseconds * 7 days = 604800000
 };
 
 var sign = mongoose.model('admin', admin);
