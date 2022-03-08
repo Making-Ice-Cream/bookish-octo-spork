@@ -15,10 +15,10 @@ const ContactDev = () => {
                     <div className="c_d_details">
                         <h2>Shreenav Khandelwal<br /><span>Software Developer</span></h2>
                         <ul className="social_icons">
-                            <li><a href="#"><i className="fa-brands fa-facebook-f"></i></a></li>
-                            <li><a href="#"><i className="fa-brands fa-twitter"></i></a></li>
-                            <li><a href="#"><i className="fa-brands fa-instagram"></i></a></li>
-                            <li><a href="#"><i className="fa-brands fa-linkedin-in"></i></a></li>
+                            <li><a href="https://www.facebook.com/shreenav.khandelwal"><i className="fa-brands fa-facebook-f"></i></a></li>
+                            <li><a href="https://github.com/shreenav"><i className="fa-brands fa-github"></i></a></li>
+                            <li><a href="https://www.instagram.com/shreenavkhandelwal"><i className="fa-brands fa-instagram"></i></a></li>
+                            <li><a href="https://www.linkedin.com/in/shreenav-khandelwal-a8b2591b5"><i className="fa-brands fa-linkedin-in"></i></a></li>
                         </ul>
                     </div>
                 </div>
@@ -31,10 +31,10 @@ const ContactDev = () => {
                     <div className="c_d_details">
                         <h2>Deepak Yadav<br /><span>Software Developer</span></h2>
                         <ul className="social_icons">
-                            <li><a href="#"><i className="fa-brands fa-facebook-f"></i></a></li>
-                            <li><a href="#"><i className="fa-brands fa-twitter"></i></a></li>
-                            <li><a href="#"><i className="fa-brands fa-instagram"></i></a></li>
-                            <li><a href="#"><i className="fa-brands fa-linkedin-in"></i></a></li>
+                            <li><a href="https://www.facebook.com/deepakrao0223"><i className="fa-brands fa-facebook-f"></i></a></li>
+                            <li><a href="https://github.com/deepakyadav0223"><i className="fa-brands fa-github"></i></a></li>
+                            <li><a href="https://www.instagram.com/deepak_yadav_1011/"><i className="fa-brands fa-instagram"></i></a></li>
+                            <li><a href="https://www.linkedin.com/in/deepak-yadav-63068320a"><i className="fa-brands fa-linkedin-in"></i></a></li>
                         </ul>
                     </div>
                 </div>

@@ -1,6 +1,41 @@
-import React from 'react';
+import React , {useState} from 'react';
 import { MDBBtn , MDBFooter,MDBCol,MDBInput,MDBContainer,MDBRow, MDBIcon} from 'mdb-react-ui-kit';
 const Footer = () => {
+
+  const [email_footer, setemail_footer] = useState("");
+
+  async function submitData_footer(e) {
+    e.preventDefault();
+    const response =  await fetch(`http://localhost:80/common/subscribeNewsletter`,{
+        method : "POST",
+        headers :{
+            "Accept":"application/json",
+            "Content-Type" : "application/json"
+        },
+        body : JSON.stringify({
+            email : email_footer 
+        })
+     });
+    
+    const awaited_response = await response.json();
+
+    if(awaited_response.status === 200){
+      alert(awaited_response.message);
+      setemail_footer(" ");
+    }
+    else{
+      alert(awaited_response.message);
+      setemail_footer(" ");
+    }
+  }
+
+  function assignEmail_footer(e) {
+    setemail_footer(e.target.value);
+  }
+
+
+
+
     return (
 
        
@@ -22,9 +57,8 @@ const Footer = () => {
                       Apni Coaching
                     </h6>
                     <p>
-                      Here you can use rows and columns to organize your footer
-                      content. Lorem ipsum dolor sit amet, consectetur adipisicing
-                      elit.
+                    Inspired to help you learn with ease and fun. We are here to help you
+                      achieve whatever you aspire.
                     </p>
                   </div>
                   
@@ -121,11 +155,11 @@ const Footer = () => {
             </MDBCol>
 
             <MDBCol md='5' size='12' className='mb-4 mb-md-0'>
-              <MDBInput type='text' id='form5Example2' label='Email address' />
+              <MDBInput type='text' id='form5Example2' label='Email address'value = {email_footer} onChange = {assignEmail_footer} />
             </MDBCol>
 
             <MDBCol size='auto' className='mb-4 mb-md-0'>
-              <MDBBtn>Subscribe</MDBBtn>
+              <MDBBtn onClick = {submitData_footer}>Subscribe</MDBBtn>
             </MDBCol>
           </MDBRow>
         </form>
