@@ -15,7 +15,8 @@ const TASKS = [
   'Create FireStone Logo',
   'Write a Blog if required',
   'Check the Pending Dues',
-  'Scoping & Estimations'
+  'Scoping & Estimations',
+  'Check Social Media Followers'
 ];
 
 TaskItem.propTypes = {
@@ -54,7 +55,7 @@ function TaskItem({ task, checked, formik, ...other }) {
 export default function AppTasks() {
   const formik = useFormik({
     initialValues: {
-      checked: [TASKS[2]]
+      checked: [TASKS[4]]
     },
     onSubmit: (values) => {
       console.log(values);

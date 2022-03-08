@@ -26,6 +26,9 @@ import Cookies from 'js-cookie';
 import AddTeacher from './components/authentication/login/AddTeacher';
 import ContactDev from './Prev_Components/ContactDev';
 import Profile from  './Prev_Components/Profile/Profile';
+import ForgotPasswordUsingLink from './signin_404_etc_pages/ForgotPassword_using_Link';
+import TimeOutResetLink from './signin_404_etc_pages/TimeOutResetLink';
+import LoadingButton from "./signin_404_etc_pages/LoadingButton";
 
 export default function AdminRoutes() {
   const {state,dispatch} = useContext(UserContext);
@@ -129,6 +132,16 @@ export default function AdminRoutes() {
     {
       path : '/resetPassword',
       element : state ? (!JSON.parse(sessionStorage.getItem("islocked")) ? <ResetPassword /> :<Navigate to="/lock" />)  : <Navigate to="/signin" />
+    },
+    {
+      path: '/setPassword' , element : JSON.parse(sessionStorage.getItem("validToken")) ? < ForgotPasswordUsingLink /> : <Navigate to="/InvalidLink" replace />
+
+    },
+    {
+      path:"/forgot/Password/*" , element: <LoadingButton />
+    },
+    {
+      path :"/InvalidLink" ,element: <TimeOutResetLink />
     },
     
     { path: '*', element: <Navigate to="/404" replace /> }

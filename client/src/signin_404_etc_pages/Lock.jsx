@@ -1,4 +1,3 @@
-
 import React, { useState, useContext } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleLeft, faEye, faUnlockAlt } from "@fortawesome/free-solid-svg-icons";

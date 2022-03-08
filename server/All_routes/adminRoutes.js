@@ -4,10 +4,12 @@ const bodyParser = require("body-parser");
 const bcrypt = require("bcrypt");
 const router = express.Router();
 const path = require("path");
+const generator = require('generate-password');
 const nodemailer = require('nodemailer');
 const fs = require("fs");
 const handlebars = require('handlebars');
 const smtpTransport = require('nodemailer-smtp-transport');
+const crypto = require('crypto');
 
 const signupSchema = require("../Database/models/accountsAdmin");
 const studentSchema = require("../Database/models/accountsStudents");
@@ -473,7 +475,7 @@ router.get("/students" , async(req,res)=>{
 
 })
 
-router.get("/resetPassword" , async(req,res)=>{
+router.post("/resetPassword" , async(req,res)=>{
     const email = req.body.email;
     let oldPwd = req.body.oldPassword;
     let newPwd = req.body.newPassword;
@@ -512,6 +514,157 @@ router.get("/resetPassword" , async(req,res)=>{
             status : 500
         })
     }
+})
+
+router.post("/forgotPassword" , async(req,res)=>{
+
+    let email = req.body.email;
+
+    const token = crypto.randomBytes(31).toString('hex');
+    let Username ;
+    let a = await signupSchema.findOne({email});
+     a != null || undefined ? Username = a.name.firstname + " " + a.name.lastname : " ";
+         if( a == null || !a ){
+       
+            res.status(400).json({
+                message:"Invaild Email",
+                status: 400
+            })
+            return ;
+         }
+
+    try{
+       
+        console.log(token);
+        signupSchema.findOne({email}).then(item =>{
+            item.forgotPass.token = token;
+            item.save();
+            }
+         ).catch((err)=>{
+             console.log(err)
+         });
+
+         
+
+
+        const filePath = path.join(__dirname, '../emailTemplates/ForgotPass.html');
+        const replacements = {
+            Username: Username,
+            id: email,
+            link: `http://localhost:3000/forgot/Password/?token=%22${token}%22&email=%22${email}%22`
+        };
+        sentEmail.sendEmail(email, "Reset Password", filePath, replacements);
+        res.status(200).json({
+            message: "Password is Reset",
+            status: 200
+        })
+
+
+
+    }
+    catch(error){
+        console.log(error);
+        res.status(500).json({
+            status:500,
+            message:"Server Error!"
+        })
+    }
+
+
+})
+
+router.post("/verifyForgotPassToken" , async(req,res)=>{
+      let email = req.body.email;
+      let token = req.body.token;
+    //   console.log(email);
+    //   console.log(token);
+
+      let d = await signupSchema.findOne({email});
+      console.log(d)
+
+      if(d){
+        //   console.log("583");
+        //   console.log(d.hasExpired() === false);
+        //   console.log(d.forgotPass.token === token);
+        //   console.log(d.forgotPass.token);
+        //   console.log(d.hasExpired())
+
+          if(d.forgotPass.token === token && !d.hasExpired()){
+            res.status(200).json({
+                status:200
+            })
+          }
+          else{
+            res.status(400).json({
+                status:400
+            })
+          }
+         
+      }
+      else{
+          res.status(400).json({
+              status:400
+          })
+      }
+
+
+})
+
+router.post("/updatePassword" , async(req,res)=>{
+    let email = req.body.email;
+    // console.log(email);
+    let password =await bcrypt.hash( req.body.password,10);
+    
+    
+    let checkToken = await signupSchema.findOne({email});
+    if(checkToken){
+
+        if(checkToken.forgotPass.token !== req.body.token){
+                res.status(402).json({
+                    "message":"Invalid Operation",
+                    status : 402
+                })
+                return ;
+        }
+    }
+    else{
+        res.status(402).json({
+            "message":"Invalid Operation",
+            status : 402
+        })
+        return ;
+    }
+
+
+    try{
+    signupSchema.findOne({email}).then(item =>{
+        item.password = password;
+        item.save();
+        }
+       
+     ).catch((err)=>{
+         console.log(err);
+         res.status(404).json({
+            "message":"An Error Occured!",
+            status:404
+        })
+     });
+     res.status(201).json({
+        "message":"PassWord Changed",
+        status:201
+    })
+    }
+    catch(err){
+        res.status(500).json({
+            message:"Server Error",
+            status:500
+        })
+    }
+
+    
+    
+
+
 })
 
 module.exports = router;

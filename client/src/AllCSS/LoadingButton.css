@@ -1,0 +1,83 @@
+
+#body_forgotPass{
+    display:flex;
+    justify-content: center;
+    align-items:center;
+     min-height: 100vh;
+      font-family: "Montserrat", sans-serif;
+    
+  }
+  
+  
+  #svg_forgotPass {
+    background-color: #ffffff;
+    border-radius: 50%;
+    animation: spin 3s ease infinite alternate;
+  }
+  
+  
+  .shape_forgotPass {
+    r: 20;
+  }
+  
+  .shape_forgotPass:nth-child(1) {
+    cy: 50;
+    cx: 50;
+    fill: #c20f00;
+    animation: movein 3s ease infinite alternate;
+  }
+  .shape_forgotPass:nth-child(2) {
+    cy: 50;
+    cx: 150;
+    fill: #ffdd22;
+    animation: movein 3s ease infinite alternate;
+  }
+  .shape_forgotPass:nth-child(3) {
+    cy: 150;
+    cx: 50;
+    fill: #2374c6;
+    animation: movein 3s ease infinite alternate;
+  }
+  .shape_forgotPass:nth-child(4) {
+    cy: 150;
+    cx: 150;
+    fill: #000000;
+    animation: movein 3s ease infinite alternate;
+  }
+  
+  
+  .control-panel_forgotPass {
+    position: fixed;
+    bottom: 70px;
+    display: flex;
+    align-items: center;
+  }
+  
+  
+  .switch-label_forgotPass {
+    display: inline-block;
+    color: #000000;
+    margin: 5px;
+    font-size:50px;
+  }
+  
+  
+  @keyframes spin {
+    to {
+      transform: rotate(1turn);
+    }
+  }
+  
+  @keyframes movein {
+    to {
+      cy: 100;
+      cx: 100;
+    }
+  }
+  
+  @keyframes moveup {
+    to {
+      cy: 20;
+    }
+  }
+  
