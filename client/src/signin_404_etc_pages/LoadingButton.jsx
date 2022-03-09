@@ -38,7 +38,10 @@ const LoadingButton = () => {
     }
    
     useEffect(() => {
-        checkToken()
+        setTimeout(() => {
+            checkToken();
+        }, 8000);
+        
     }, [])
     
     

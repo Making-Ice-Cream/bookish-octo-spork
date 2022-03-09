@@ -42,7 +42,7 @@ const ForgotPassword = () => {
     
     if(awaited_response.status === 200){
      
-      toast.success("Password Changed Successfully!, Please Check Your Email!", {
+      toast.success("Email Sent!, Please Check Your Inbox", {
         position: "top-center",
         autoClose: 2000,
         hideProgressBar: false,
@@ -87,7 +87,7 @@ const ForgotPassword = () => {
             <Col  xs={12} className="d-flex align-items-center justify-content-center">
               <div className="signin-inner my-3 my-lg-0 bg-white shadow-soft border rounded border-light p-4 p-lg-5 w-100 fmxw-500">
                 <h3>Forgot your password?</h3>
-                <p className="mb-4">Don't fret! Just type in your email and we will send you  a temperory  password!</p>
+                <p className="mb-4">Don't fret! Just type in your email and we will send you  a link to reset your password!</p>
                 <Form>
                   <div className="mb-4">
                     <Form.Label htmlFor="email">Your Email</Form.Label>
