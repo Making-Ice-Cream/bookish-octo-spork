@@ -120,7 +120,7 @@ function NewsItems({ news }) {
 export default function AppNewsUpdate() {
   let d = [];
  try{
-  const metadata = fetch('https://newsapi.org/v2/top-headlines?country=in&sortBy=popularity&from=2022-02-17&sortBy=popularity&apiKey=a19dd466d7324e3cb83429f0d1818f3b', {
+  const metadata = fetch('https://saurav.tech/NewsAPI/top-headlines/category/general/in.json', {
   headers: {
     Accept: 'application/vnd.citationstyles.csl+json'
   }

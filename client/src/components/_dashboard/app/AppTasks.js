@@ -10,6 +10,9 @@ import {
   FormControlLabel,
   Stack
 } from '@mui/material';
+import IconButton from '@mui/material/IconButton';
+import AddIcon from '@mui/icons-material/Add';
+import Tooltip from '@mui/material/Tooltip';
 
 const TASKS = [
   'Create FireStone Logo',
@@ -80,6 +83,11 @@ export default function AppTasks() {
             ))}
           </Form>
         </FormikProvider>
+        <Tooltip title="Add Task" >
+        <IconButton aria-label="delete" size="medium" style ={{backgroundColor : "green", color:"white"}}>
+              <AddIcon  fontSize="inherit" />
+        </IconButton>
+        </Tooltip>
       </Box>
     </Card>
   );

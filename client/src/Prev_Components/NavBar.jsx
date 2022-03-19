@@ -2,6 +2,7 @@ import React from 'react';
 import logo from '../images/logo.png'; // Tell webpack this JS file uses this image
 import "../AllCSS/logo.css"
 import "../AllCSS/buttons.css"
+import "../AllCSS/Hamburger_Navbar.css"
 import { Link ,NavLink } from 'react-router-dom';
 // import {useNavigate} from 'react-router-dom'
 const NavBar = (props) => {
@@ -11,27 +12,27 @@ const NavBar = (props) => {
     <div className="container-fluid mx-2">
       <img src={logo} alt=""  width={"110px"} height={"90px"}/>
       <a className="navbar-brand mx-1" href="#"><span className="multicolortext">Apni Coaching</span></a>
-      <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <button className="navbar-toggler custom-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span className="navbar-toggler-icon"></span>
       </button>
       <div className="collapse navbar-collapse mx-5" id="navbarSupportedContent">
         <ul className="navbar-nav me-auto mb-2 mb-lg-0">
           <li className="nav-item">
             {/* {console.log(props.active + "hello")} */}
-            <NavLink className="nav-link {(navData) => (navData.isActive ? 'active' : '')} "  aria-current="page" to = "/">Home</NavLink>
+            <NavLink className="nav-link"  aria-current="page" to = "/">Home</NavLink>
           </li>
           {/* {console.log(props.active === 'home' ? "active" : '')} */}
           <li className="nav-item">
-            <Link className="nav-link"  to="/about-us">About-Us</Link>
+            <NavLink className="nav-link"  to="/about-us">About-Us</NavLink>
           </li>
           <li className="nav-item">
-            <NavLink className="nav-link {(navData) => (navData.isActive ? 'active' : '')}"  to="/contact/developers">Contact-Developer</NavLink>
+            <NavLink className="nav-link"  to="/contact/developers">Contact-Developer</NavLink>
           </li>
           
         </ul>
-        <div className='d-flex' >
+        <div className='d-flex' id = "main_display_flex" >
          <div className="buttons">
-        <Link type="button" className="btn  mx-4" to = "/signup"  >Signup As Student</Link> 
+        <Link type="button" className="btn  mx-4 signup_button_navbar" to = "/signup"  >Signup As Student</Link> 
         </div>
         <div className="btn-group">
         <button type="button" className="btn btn-warning Login_text">LOGIN AS</button>
