@@ -667,4 +667,31 @@ router.post("/updatePassword" , async(req,res)=>{
 
 })
 
+router.post("/saveChangesToProfile" , auths, async(req,res)=>{
+    let objId = req.user;
+    let newemail = req.body.email;
+    let username = req.body.username;
+    let nfirstname = (username.split(" "))[0];
+    let nlastname = (username.split(" "))[1];
+    try {
+        
+        let r = signupSchema.findOne({_id: objId}).then(item =>{
+            item.email = newemail;
+            item.name.firstname = nfirstname;
+            item.name.lastname = nlastname;
+            item.save();
+            });
+        
+        res.status(201).json({
+            "message":"Data Saved.",
+            status:201
+        })
+    } catch (error) {
+        res.status(201).json({
+            "message":"Some error occured.",
+            status:404
+        })
+    }
+    
+}) 
 module.exports = router;
