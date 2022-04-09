@@ -1,5 +1,6 @@
 import { Navigate, useRoutes } from 'react-router-dom';
 import DashboardLayout from './layouts/dashboard';
+import DashboardStudentLayout from './layouts/dashboardStudent';
 import LogoOnlyLayout from './layouts/LogoOnlyLayout';
 import RegisterStudent from './pages/Login';
 import Register from './pages/Register';
@@ -29,6 +30,9 @@ import Profile from  './Prev_Components/Profile/Profile';
 import ForgotPasswordUsingLink from './signin_404_etc_pages/ForgotPassword_using_Link';
 import TimeOutResetLink from './signin_404_etc_pages/TimeOutResetLink';
 import LoadingButton from "./signin_404_etc_pages/LoadingButton";
+import DashboardAppStudent from "./pages/DashboardStudent"
+import Classes from "./pages/Classes"
+import Index from "./FaceMatching/Index"
 
 export default function AdminRoutes() {
   const {state,dispatch} = useContext(UserContext);
@@ -142,6 +146,16 @@ export default function AdminRoutes() {
     },
     {
       path :"/InvalidLink" ,element: <TimeOutResetLink />
+    },
+    {
+      path: '/student',
+      element: < DashboardStudentLayout /> ,
+      children: [
+        { element: <Navigate to="/student/app" replace /> },
+        { path: 'app', element: <DashboardAppStudent /> },
+        { path: 'class', element: <Classes /> },
+        { path : 'markingAttendence' , element : < Index /> }
+      ]
     },
     
     { path: '*', element: <Navigate to="/404" replace /> }

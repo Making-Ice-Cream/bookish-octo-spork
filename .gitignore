@@ -9,7 +9,7 @@ client/node_modules
 /client/coverage
 /client/src/scss
 client/src/scss
-
+node_modules/
 # production
 /client/build
 
