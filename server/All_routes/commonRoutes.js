@@ -30,10 +30,11 @@ router.post("/subscribeNewsletter", async function(req,res){
     }   
     catch (err) {
         res.status(404).json({
-            "message":"Something went wrong, or you maybe already subscribed to our newsletter.",
+            "message":"Something went wrong.",
             status:404
         })
     }
 });
+
 
 module.exports = router;

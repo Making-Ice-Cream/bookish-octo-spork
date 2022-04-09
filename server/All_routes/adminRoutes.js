@@ -670,9 +670,14 @@ router.post("/updatePassword" , async(req,res)=>{
 router.post("/saveChangesToProfile" , auths, async(req,res)=>{
     let objId = req.user;
     let newemail = req.body.email;
-    let username = req.body.username;
-    let nfirstname = (username.split(" "))[0];
-    let nlastname = (username.split(" "))[1];
+    let username = req.body.name;
+    let nameParts = username.split(" ");
+    let nfirstname = "", nlastname = "";
+    if(nameParts.length === 2){
+         nfirstname = nameParts[0];
+         nlastname = nameParts[1];
+    }
+    
     try {
         
         let r = signupSchema.findOne({_id: objId}).then(item =>{

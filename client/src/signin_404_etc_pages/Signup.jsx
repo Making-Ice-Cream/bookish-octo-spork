@@ -47,10 +47,10 @@ export default function Signup() {
 
                                     <MDBRow className='mb-4'>
                                         <MDBCol>
-                                            <MDBInput disabled id='form6Example1' label='First name' />
+                                            <MDBInput disabled id='name' label='Name' />
                                     </MDBCol>
                                     <MDBCol>
-                                        <MDBInput  id='form6Example2' label='Parent name' />
+                                        <MDBInput  id='form6Example6' label='Parent name' />
                                     </MDBCol>
                                 </MDBRow>
 
@@ -65,18 +65,56 @@ export default function Signup() {
 
                                     <MDBRow className='mb-4'>
                                         <MDBCol>
-                                            <MDBInput focussed id='form6Example1' label='Matrix Id' />
+                                            <MDBInput  id='matrixID' label='Matrix Id' />
                                         </MDBCol>
                                         <MDBCol>
-                                            <MDBInput id='form6Example2' label='City' />
+                                            <MDBInput id='cityLabel' label='City' />
                                         </MDBCol>
                                         <MDBCol>
-                                            <MDBInput id='form6Example2' label='State' />
+                                        <select name="state" id="state" className="form-control">
+                                        <option default disabled>State</option>
+                                            <option value="Andhra Pradesh">Andhra Pradesh</option>
+                                            <option value="Andaman and Nicobar Islands">Andaman and Nicobar Islands</option>
+                                            <option value="Arunachal Pradesh">Arunachal Pradesh</option>
+                                            <option value="Assam">Assam</option>
+                                            <option value="Bihar">Bihar</option>
+                                            <option value="Chandigarh">Chandigarh</option>
+                                            <option value="Chhattisgarh">Chhattisgarh</option>
+                                            <option value="Dadar and Nagar Haveli">Dadar and Nagar Haveli</option>
+                                            <option value="Daman and Diu">Daman and Diu</option>
+                                            <option value="Delhi">Delhi</option>
+                                            <option value="Lakshadweep">Lakshadweep</option>
+                                            <option value="Puducherry">Puducherry</option>
+                                            <option value="Goa">Goa</option>
+                                            <option value="Gujarat">Gujarat</option>
+                                            <option value="Haryana">Haryana</option>
+                                            <option value="Himachal Pradesh">Himachal Pradesh</option>
+                                            <option value="Jammu and Kashmir">Jammu and Kashmir</option>
+                                            <option value="Jharkhand">Jharkhand</option>
+                                            <option value="Karnataka">Karnataka</option>
+                                            <option value="Kerala">Kerala</option>
+                                            <option value="Madhya Pradesh">Madhya Pradesh</option>
+                                            <option value="Maharashtra">Maharashtra</option>
+                                            <option value="Manipur">Manipur</option>
+                                            <option value="Meghalaya">Meghalaya</option>
+                                            <option value="Mizoram">Mizoram</option>
+                                            <option value="Nagaland">Nagaland</option>
+                                            <option value="Odisha">Odisha</option>
+                                            <option value="Punjab">Punjab</option>
+                                            <option value="Rajasthan">Rajasthan</option>
+                                            <option value="Sikkim">Sikkim</option>
+                                            <option value="Tamil Nadu">Tamil Nadu</option>
+                                            <option value="Telangana">Telangana</option>
+                                            <option value="Tripura">Tripura</option>
+                                            <option value="Uttar Pradesh">Uttar Pradesh</option>
+                                            <option value="Uttarakhand">Uttarakhand</option>
+                                            <option value="West Bengal">West Bengal</option>
+                                            </select>
                                         </MDBCol>
                                     </MDBRow>
                                 <MDBRow className='mb-4'>
                                     <MDBCol>
-                                        <MDBInput id='form6Example1' label='Zip Code' />
+                                        <MDBInput id='zip_code' label='Zip Code' />
                                     </MDBCol>
                                     <MDBCol>
                                         <MDBInput id='form6Example2' label='Country' />
@@ -131,8 +169,8 @@ export default function Signup() {
                                 <MDBRow className='mb-4'>
 
                                     <div className='file-container' >
-                                        <MDBFile label='Attach Your 2 different photos' id='customFile' />
-                                    <MDBFile label='' id='customFile' />
+                                        <MDBFile label='Attach Your 2 different photos' id='customFile1' />
+                                    <MDBFile label='' id='customFile2' />
                                     </div>
 
 

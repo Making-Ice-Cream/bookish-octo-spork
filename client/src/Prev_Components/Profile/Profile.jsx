@@ -1,6 +1,7 @@
 import React , {useState} from 'react'
 import "./Profile.css"
 import "./Profiles.js" 
+import Cookies from 'js-cookie'
 import {TextField } from '@mui/material';
 import deepak from "../../images/deepak2.jpeg"
 import { useNavigate } from "react-router-dom";
@@ -15,18 +16,18 @@ const Profile = () => {
     const sendData = async(e) =>{
       const {name, email} = user ;
       e.preventDefault() ;
-      const response =  await fetch(`http://localhost:80/admin/SaveChangesToProfile`,{
+      const response =  await fetch(`http://localhost:80/admin/saveChangesToProfile`,{
         method : "POST",
         headers :{
             "Accept":"application/json",
             "Content-Type" : "application/json"
         },
         body : JSON.stringify({
-            email,name 
+            email,name, token: `${Cookies.get('token')}`
         })
     });
     const awaited_response = await response.json();
-    if(awaited_response.status === 200){
+    if(awaited_response.status === 201){
       alert("Profile Updated!");
       localStorage.setItem("name" , JSON.stringify(user.name));
       localStorage.setItem("email" , JSON.stringify(user.email));
