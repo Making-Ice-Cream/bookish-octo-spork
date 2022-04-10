@@ -4,10 +4,87 @@ const bcrypt = require("bcrypt");
 const router = express.Router();
 const path = require("path");
 const studentSchema = require("../Database/models/accountsStudents");
-
+const lectureSchema = require("../Database/models/lectures");
 router.use(bodyParser.urlencoded({extended: true}));
 router.use(bodyParser.json());
 router.use(express.json());
+
+
+router.post("/getProfile", async function(req, res){
+   try {
+       let student = await studentSchema.findOne({email: req.body.email});
+       if(student){
+        res.status(200).json({
+            message: "Data Send Successfully",
+            profile: student,
+            status: 200
+       });
+       }
+       else{
+           res.status(404).json({
+               message: "Email not found in records",
+               status: 404
+           })
+       }
+       
+   } catch (error) {
+    console.log(error);
+    res.status(500).json({message: "Server error!" ,
+                        status : 500});
+   }
+});
+
+router.post("/feeStatus", async function(req, res){
+   try {
+       let student = await studentSchema.findOne({scholarNumber: req.body.scholarNumber});
+       let curDate = new Date();
+       const paymentType = student.paymentType;
+       if(paymentType === "Lump Sum"){
+           if(student.payment.lumpsum.paid === true){
+               res.status(200).json({
+                   message: "Data sent successfully.",
+                   feeStatus: "Complete fees is already paid.",
+                   paymentType: paymentType
+               })
+           }
+           else{
+               res.status(200).json({
+                message: "Data sent successfully.",
+                feeStatus : "Complete fees is due.",
+                amountDue: student.payment.lumpsum.amount,
+                paymentType: paymentType,
+                delay: curDate - student.dateOfJoin
+               })
+           }
+       }
+       else{
+           let installments = student.payment.installments;
+           let paid = [];
+           let due = [];
+           for(let i=0; i<installments.length; i++){
+                if(installments[i].dueDate > curDate && installments[i].paid === false){
+                    due.push(installments[i]);
+                    break;
+                }
+                else{
+                    paid.push(installments[i]);
+                }
+           }
+           res.status(200).json({
+            message: "Data sent successfully.",
+            paid: paid,
+            due: due
+           })
+        }
+
+       }
+   catch (error) {
+       console.log(error);
+    res.status(500).json({message: "Server error!" ,
+    status : 500});
+    }
+       
+});
 
 router.post("/fetchData", async function(req,res){
     const scNo = req.body.scholarNumber;
@@ -67,5 +144,35 @@ router.post("/signUp", async function(req,res){
                             status : 500});
     } 
 });
+
+router.post("/getLectures", async function(req,res){
+    const batch = req.body.batch;
+    try{
+        let result = await lectureSchema.find({batch:batch});
+        if(result.length == 0){
+            res.status(200).json({message: "No Lectures Available." ,
+            status : 4200}); 
+        }
+        else
+        if(result){
+            res.status(200).json({
+                message: "Data Sent Sucessfully.",
+                lectures: result,
+                status: 200
+            });
+        }
+        
+        else{
+            res.status(404).json({message: "Batch not found in our records." ,
+            status : 404}); 
+        }
+    }
+    catch(err){
+        console.log(err);
+        res.status(500).json({message: "Server error!" ,
+                            status : 500});
+    } 
+});
+
 
 module.exports = router;
