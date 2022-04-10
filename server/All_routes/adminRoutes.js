@@ -27,7 +27,7 @@ router.post("/login",async(req,res)=>{
     let password = req.body.password;
     try {
         let result = await signupSchema.find({email:email});
-        console.log(result)
+        //console.log(result)
         if(result!=null){
             let matched = await bcrypt.compare(password, result[0].password);
             if(matched){

@@ -62,6 +62,9 @@ const student = new mongoose.Schema({
         type:Number,
         required: true
     },
+    parent_name:{
+        type: String
+    },
     parent_contact: {
         type:Number,
         required: true
@@ -78,8 +81,12 @@ const student = new mongoose.Schema({
         type: Date,
         required :true
     },
-    url1:String,
-    url2:String
+    descriptor1:{
+        type: [Number]
+    },
+    descriptor2:{
+        type: [Number]
+    }
 });
 
 var s = mongoose.model('student', student);

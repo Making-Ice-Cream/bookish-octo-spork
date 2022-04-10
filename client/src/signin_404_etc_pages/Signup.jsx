@@ -6,7 +6,7 @@ import {
     MDBCheckbox,
     MDBBtn,
     MDBFile,
-    MDBContainer
+    // MDBContainer
 } from 'mdb-react-ui-kit';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import "../AllCSS/Signup.css"
@@ -65,14 +65,17 @@ export default function Signup() {
 
                                     <MDBRow className='mb-4'>
                                         <MDBCol>
-                                            <MDBInput  id='matrixID' label='Matrix Id' />
+                                            <MDBInput  id='Scholar_Number' label='Scholar Number' />
+                                        </MDBCol>
+                                        <MDBCol>
+                                        <MDBInput id='plot_no' label='Plot No.' />
                                         </MDBCol>
                                         <MDBCol>
                                             <MDBInput id='cityLabel' label='City' />
                                         </MDBCol>
                                         <MDBCol>
                                         <select name="state" id="state" className="form-control">
-                                        <option default disabled>State</option>
+                                            <option value="No Value">State</option>
                                             <option value="Andhra Pradesh">Andhra Pradesh</option>
                                             <option value="Andaman and Nicobar Islands">Andaman and Nicobar Islands</option>
                                             <option value="Arunachal Pradesh">Arunachal Pradesh</option>
@@ -110,6 +113,7 @@ export default function Signup() {
                                             <option value="Uttarakhand">Uttarakhand</option>
                                             <option value="West Bengal">West Bengal</option>
                                             </select>
+                                            
                                         </MDBCol>
                                     </MDBRow>
                                 <MDBRow className='mb-4'>
@@ -117,9 +121,8 @@ export default function Signup() {
                                         <MDBInput id='zip_code' label='Zip Code' />
                                     </MDBCol>
                                     <MDBCol>
-                                        <MDBInput id='form6Example2' label='Country' />
+                                    <MDBInput id='country' label='Country' />
                                     </MDBCol>
-
                                 </MDBRow>
 
 
