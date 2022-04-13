@@ -113,9 +113,11 @@ router.post("/fetchData", async function(req,res){
 });
 
 router.post("/signUp", async function(req,res){
+    console.log(req.body)
     const scNo = req.body.scholarNumber;
     try{
         let result = await studentSchema.findOne({scholarNumber:scNo});
+        console.log(result)
         if(result){
             const salt = await bcrypt.genSalt(10);
             result.password = await bcrypt.hash(req.body.password, salt);
@@ -127,6 +129,7 @@ router.post("/signUp", async function(req,res){
             result.address.zipcode= req.body.zipcode;
             result.descriptor1 = req.body.descriptor1;
             result.descriptor2 = req.body.descriptor2;
+            result.descriptor3 = req.body.descriptor3;
             result.save();
             res.status(200).json({
                 message: "Data Saved Sucessfully.",

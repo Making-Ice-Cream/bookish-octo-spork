@@ -82,10 +82,13 @@ const student = new mongoose.Schema({
         required :true
     },
     descriptor1:{
-        type: [Number]
+        type: String
     },
     descriptor2:{
-        type: [Number]
+        type: String
+    },
+    descriptor3:{
+        type: String
     }
 });
 
