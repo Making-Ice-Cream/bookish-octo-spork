@@ -120,8 +120,8 @@ router.post("/signUp", async function(req,res){
             const salt = await bcrypt.genSalt(10);
             result.password = await bcrypt.hash(req.body.password, salt);
             result.parent_name = req.body.parent_name;
-            result.address.plotno = req.body.plotno;
             result.address.city = req.body.city;
+            result.address.plotno = req.body.plotno;
             result.address.state = req.body.state;
             result.address.country = req.body.country;
             result.address.zipcode= req.body.zipcode;
