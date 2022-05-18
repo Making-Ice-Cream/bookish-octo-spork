@@ -1,11 +1,26 @@
 const mongoose = require("mongoose");
 
 const AddressSchema = mongoose.Schema({
-    plotno: String,
-    city: String,
-    state: String,
-    zipcode: Number,
-    country:String
+    plotno: {
+        type:String,
+        default:" "
+    },
+    city: {
+        type:String,
+        default:" "
+    },
+    state: {
+        type:String,
+        default:" "
+    },
+    zipcode: {
+        type:Number,
+        default:0
+    },
+    country:{
+        type:String,
+        default:" "
+    }
 });
 
 const installmentSchema = mongoose.Schema({

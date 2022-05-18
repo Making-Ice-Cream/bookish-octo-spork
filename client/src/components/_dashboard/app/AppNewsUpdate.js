@@ -126,6 +126,7 @@ export default function AppNewsUpdate() {
   }
    }).json()
    d = metadata.articles.slice(0,5);
+   console.log(d)
    localStorage.setItem("news" , JSON.stringify(d));
   }
   catch(err){

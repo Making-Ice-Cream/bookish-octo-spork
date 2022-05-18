@@ -1,4 +1,4 @@
-.body{
+.body-text{
     display: flex;
     justify-content: center;
     align-items: center;
@@ -8,10 +8,10 @@
     background-color: rgba(83, 83, 83, 0.157);
     
 }
-.loader{
+.loader-text{
     position: relative;
 }
-.loader::before{
+.loader-text::before{
     content: '';
     position:absolute;
     top:0;
@@ -29,7 +29,7 @@
         opacity: 0;
     }
 }
-.loader h1{
+.loader-text h1{
     position: relative;
     color: #03e9f4;
     letter-spacing: 5px;
@@ -52,12 +52,22 @@
 
 @media screen and (max-width: 400px) {
     
-    .loader h1{
+    .loader-text h1{
        
        font-size: 20px;
     }
-    .loader::before{
+    .loader-text::before{
         height: 28px;
     }
 
+}
+
+.rcw-open-launcher{
+    margin-left: 11px !important;
+}
+.rcw-close-launcher{
+    margin-left: 20px !important;
+}
+.rcw-picker-icon{
+    transform: translate(-5px,-7px);
 }
