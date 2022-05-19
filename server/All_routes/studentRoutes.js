@@ -122,8 +122,8 @@ router.post("/signUp", async function(req,res){
             const salt = await bcrypt.genSalt(10);
             result.password = await bcrypt.hash(req.body.password, salt);
             result.parent_name = req.body.parent_name;
-            result.address.city = req.body.city;
             result.address.plotno = req.body.plotno;
+            result.address.city = req.body.city;
             result.address.state = req.body.state;
             result.address.country = req.body.country;
             result.address.zipcode= req.body.zipcode;
@@ -177,5 +177,40 @@ router.post("/getLectures", async function(req,res){
     } 
 });
 
+
+
+
+router.post("/login",async(req,res)=>{
+    let email = req.body.email;
+    let password = req.body.password;
+    try {
+        let result = await studentSchema.findOne({email:email});
+        //console.log(result)
+        if(result!=null){
+            let matched = await bcrypt.compare(password, result.password);
+            if(matched){
+                //generating the token
+                let token  =  await result.generateAuthToken();
+               
+                res.status(201).json({message: "Login Succesful.", 
+                                     name: result.firstName + " " + result.lastName, 
+                                     email: result.email,
+                                     status: 200,
+                                     token : token});
+            }
+            else{
+                res.status(404).json({message: "Invalid Credentials",
+                                     status : 404});
+            }
+        }else{
+            res.status(404).json({message: "Invalid Credentials",
+                                                     status : 404});
+        }
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({message: "Server error!" ,
+                            status : 500});
+    }
+});
 
 module.exports = router;

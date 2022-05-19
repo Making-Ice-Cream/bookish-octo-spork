@@ -1,28 +1,5 @@
 const mongoose = require("mongoose");
 
-const AddressSchema = mongoose.Schema({
-    plotno: {
-        type:String,
-        default:" "
-    },
-    city: {
-        type:String,
-        default:" "
-    },
-    state: {
-        type:String,
-        default:" "
-    },
-    zipcode: {
-        type:Number,
-        default:0
-    },
-    country:{
-        type:String,
-        default:" "
-    }
-});
-
 const installmentSchema = mongoose.Schema({
     dueDate: Date,
     amount: Number,
@@ -62,8 +39,26 @@ const student = new mongoose.Schema({
         //required:true
     },
     address:{
-        type:AddressSchema,
-        //required:true
+        plotno: {
+            type:String,
+            default:" "
+        },
+        city: {
+            type:String,
+            default:" "
+        },
+        state: {
+            type:String,
+            default:" "
+        },
+        zipcode: {
+            type:Number,
+            default:0
+        },
+        country:{
+            type:String,
+            default:" "
+        }
     },
     batch:{
         type:String,
