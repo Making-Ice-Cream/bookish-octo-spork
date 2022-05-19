@@ -20,6 +20,7 @@ const Login =  (props) => {
   const location = useLocation();
   // console.log(location);
   const navigate = useNavigate();
+  
   const [user , setuser] = useState({
      email:"",password :""
      })
@@ -66,8 +67,32 @@ const Login =  (props) => {
 
       e.preventDefault() ;
 
+      let user_data = location.state == null ? window.sessionStorage.getItem("Logged_in_as")   : location.state.name
+      
+      let final_data = user_data.slice(3)
+      let url = "";
+      switch(final_data){
+        case 'Admin':
+              url = "http://localhost:80/admin/login";
+           break;
+
+        case 'Student':
+             url = "http://localhost:80/student/login"
+          break;
+        case 'Teacher':
+
+          break;
+
+        case 'Parent':
+
+          break;
+
+        default:
+
+
+      }
      
-      const response =  await fetch(`http://localhost:80/admin/login`,{
+      const response =  await fetch(url,{
         method : "POST",
         headers :{
             "Accept":"application/json",
@@ -78,6 +103,8 @@ const Login =  (props) => {
         })
     });
     const awaited_response = await response.json();
+
+    console.log(awaited_response);
     
     if(awaited_response.status === 200){
       toast.success("Login Sucessfully!", {
@@ -102,9 +129,23 @@ const Login =  (props) => {
         window.sessionStorage.setItem("user_email" , email);
         window.sessionStorage.setItem("name" , awaited_response.name);
         window.sessionStorage.setItem("Logged_in_as", location.state.name);
-        
+        console.log(final_data);
+         
+       if(final_data === "Admin"){
+           alert("why")
+           navigate('/admin/app',{replace:true});
+      }
 
-        navigate('/admin/app',{replace:true});
+        else if(final_data === "Student"){
+          alert("student")
+          navigate('/student/app',{replace:true});
+        }
+       
+
+
+      
+
+        
 
 
     }else if(awaited_response.status === 404){

@@ -148,7 +148,7 @@ export default function AdminRoutes() {
       path :"/InvalidLink" ,element: <TimeOutResetLink />
     },
     {
-      path: '/student',
+      path: '/student/*',
       element: < DashboardStudentLayout /> ,
       children: [
         { element: <Navigate to="/student/app" replace /> },

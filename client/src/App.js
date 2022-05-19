@@ -120,7 +120,7 @@ export default function App() {
     });
 
     const res = await response.json();
-    console.log(res);
+    // console.log(res);
     addResponseMessage(res.message);
   };
   return (

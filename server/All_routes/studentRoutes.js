@@ -183,9 +183,11 @@ router.post("/getLectures", async function(req,res){
 router.post("/login",async(req,res)=>{
     let email = req.body.email;
     let password = req.body.password;
+    console.log(email)
+    console.log(password)
     try {
         let result = await studentSchema.findOne({email:email});
-        //console.log(result)
+        console.log(result)
         if(result!=null){
             let matched = await bcrypt.compare(password, result.password);
             if(matched){
