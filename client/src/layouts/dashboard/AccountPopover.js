@@ -53,8 +53,35 @@ export default function AccountPopover() {
   const handleClose = () => {
     setOpen(false);
   };
+  console.log(account);
   const logout = () =>{
-    fetch('http://localhost:80/admin/logout', {
+
+    let user_data =  window.sessionStorage.getItem("Logged_in_as");
+      
+    let final_data = user_data.slice(3)
+    let url = "";
+    switch(final_data){
+      case 'Admin':
+            url = "http://localhost:80/admin/logout";
+         break;
+
+      case 'Student':
+           url = "http://localhost:80/student/logout"
+        break;
+      case 'Teacher':
+
+        break;
+
+      case 'Parent':
+
+        break;
+
+      default:
+
+
+    }
+
+    fetch(url, {
       method: 'POST', 
       headers: {
         'Content-Type': 'application/json',
@@ -69,7 +96,8 @@ export default function AccountPopover() {
       if(data.status === 200) {
         // sessionStorage.clear();
         Cookies.remove('token');
-        dispatch({type:'USER',payload:false});
+        
+        dispatch({type:'USER',payload:{state : false , logged_in_as : final_data}})
         toast.success("Logout Sucessfully!", {
           position: "top-center",
           autoClose: 2000,

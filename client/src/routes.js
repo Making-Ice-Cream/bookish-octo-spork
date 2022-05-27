@@ -36,9 +36,37 @@ import Index from "./FaceMatching/Index"
 
 export default function AdminRoutes() {
   const {state,dispatch} = useContext(UserContext);
+  console.log(state);
   let cookie = Cookies.get('token');
   if(cookie !== "" && cookie !== null && cookie !== "undefined" && typeof cookie !== 'undefined'){
-  fetch('http://localhost:80/admin/check', {
+  
+    let user_data =  window.sessionStorage.getItem("Logged_in_as")
+      
+      let final_data = user_data != undefined ? user_data.slice(3) : "";
+      let url = "";
+      console.log(final_data)
+      switch(final_data){
+        case 'Admin':
+              url = "http://localhost:80/admin/check";
+           break;
+
+        case 'Student':
+             url = "http://localhost:80/student/check"
+          break;
+        case 'Teacher':
+
+          break;
+
+        case 'Parent':
+
+          break;
+
+        default:
+
+
+      }
+  
+    fetch(url, {
       method: 'POST', 
       headers: {
         'Content-Type': 'application/json',
@@ -49,8 +77,12 @@ export default function AdminRoutes() {
     })
     .then(response => response.json())
     .then(data => {
-      // console.log("insode routes")
-      if(data.isvalid) dispatch({type:'USER',payload:true});
+       console.log(data);
+      if(data.isvalid) 
+      {
+        dispatch({type:'USER',payload:{state : true , logged_in_as : final_data}})
+        console.log(state.Student)
+      }
     })
     .catch((error) => {
       console.error('Error:', error);
@@ -69,7 +101,7 @@ export default function AdminRoutes() {
     },
     {
       path: '/signin',
-      element: state ? <Navigate to="/admin/app" /> : <Login />
+      element:state.Student? (<Navigate to="/student/app" />) : (state.Admin? (<Navigate to="/admin/app" />) : <Login />)
     },
     
     {
@@ -98,7 +130,7 @@ export default function AdminRoutes() {
     {
       path: '/admin',
       
-       element: state ? (!JSON.parse(sessionStorage.getItem("islocked")) ? <DashboardLayout /> :<Navigate to="/lock" />)  : <Navigate to="/signin" />,
+       element: state.Admin ? (!JSON.parse(sessionStorage.getItem("islocked")) ? <DashboardLayout /> :<Navigate to="/lock" />)  : <Navigate to="/signin" />,
       children: [
         { element: <Navigate to="/admin/app" replace /> },
         { path: 'app', element: <DashboardApp /> },
@@ -148,8 +180,8 @@ export default function AdminRoutes() {
       path :"/InvalidLink" ,element: <TimeOutResetLink />
     },
     {
-      path: '/student/*',
-      element: < DashboardStudentLayout /> ,
+      path: '/student',
+      element: state.Student ? (!JSON.parse(sessionStorage.getItem("islocked")) ? < DashboardStudentLayout /> :<Navigate to="/lock" />)  : <Navigate to="/signin" /> ,
       children: [
         { element: <Navigate to="/student/app" replace /> },
         { path: 'app', element: <DashboardAppStudent /> },

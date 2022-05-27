@@ -10,6 +10,7 @@ import {
   isFeatureExtractionModelLoaded,
   loadModels,
 } from "./faceUtils";
+import { Link } from 'react-router-dom';
 import FormControl from '@mui/material/FormControl';
 import { drawFaceRect } from "./drawFaceRect";
 import ModelLoading from "./ModelLoading";
@@ -23,8 +24,8 @@ const { Option } = Select;
 let inputSize = 160;
 let DEFAULT_WEBCAM_RESOLUTION = {
     label: '640x480',
-    width: 640,
-    height: 480,
+    width: 670,
+    height: 500,
   };
 
 export default (props) => {
@@ -36,6 +37,8 @@ export default (props) => {
 
   const webcamRef = useRef();
   const canvasRef = useRef();
+
+  const [isMatchFound , setisMatchFound ] = useState(false);
 
   const [selectedWebcam, setSelectedWebcam] = useState();
 
@@ -49,20 +52,12 @@ export default (props) => {
   const [fullDesc, setFullDesc] = useState(null);
   const [waitText, setWaitText] = useState("");
 
+  const gotoSite = ()=>{
+    // <Link to={{ pathname: "https://video-meet-react-app.herokuapp.com/hello" }} target="_blank" />
+    window.location.replace("https://video-meet-react-app.herokuapp.com/hello");
+  }
 
 
-//   const [ createTrxCallback ] = useMutation(
-//     CREATE_TRX_MUTATION,
-//     {
-//       update(_, { data }) {
-//         if (data.createTrx != "") message.success(data.createTrx);
-//       },
-//       onError(err) {
-//         // CheckError(err);
-//         console.log(err);
-//       },
-//     }
-//   );
 
   useEffect(() => {
     async function loadingtheModel() {
@@ -120,24 +115,9 @@ export default (props) => {
           });
         const ctx = canvasRef.current.getContext("2d");
 
-        drawFaceRect(fullDesc, faceMatcher, participants, ctx);
+        drawFaceRect(fullDesc, faceMatcher, participants, ctx, setisMatchFound);
 
-        // if (!!fullDesc) {
-        //   console.log("Now got full desc");
-        //   fullDesc.map((desc) => {
-        //     const bestMatch = faceMatcher.findBestMatch(desc.descriptor);
-        //     console.log(bestMatch);
-        //     // if (bestMatch._label != "unknown") {
-        //     //   createTrxCallback({
-        //     //     variables: {
-        //     //       attendanceID: props.match.params.attendanceID,
-        //     //       studentID: bestMatch._label,
-        //     //     },
-        //     //   });
-        //     //   console.log("Saving in db now");
-        //     // }
-        //   });
-        // }
+        
       }
     }
 
@@ -158,40 +138,6 @@ export default (props) => {
   return (
     
       <Card>
-        <FormControl fullWidth>
-          {/* <Form.Item label="Webcam" style ={{margin: "50px"}}>
-            <Select
-              defaultValue="Select Webcam"
-              style={{ width: 500 }}
-              onChange={handleSelectWebcam}
-            >
-              {inputDevices?.inputDevice?.map((device) => (
-                <Option key={device.deviceId} value={device.deviceId}>
-                  {device.label}
-                </Option>
-              ))}
-            </Select>
-          </Form.Item> */}
-
-
-          {/* <InputLabel id="demo-simple-select-label">Webcam</InputLabel>
-        <Select
-          labelId="demo-simple-select-label"
-          id="demo-simple-select"
-          // value={age}
-          // label="Age"
-          // onChange={handleChange}
-        >
-          {inputDevices?.inputDevice?.map((device) => (
-                
-                <MenuItem key={device.deviceId} value={device.deviceId} > {device.label}</MenuItem>
-              ))}
-          
-         
-        </Select> */}
-         
-        </FormControl>
-
         <Card style = {{marginLeft : 60}}>
           <Row>Face Descriptor Matcher: {facePhotos.length}</Row>
           <Row>Threshold Distance: 0.45</Row>
@@ -226,7 +172,7 @@ export default (props) => {
                 
 
                 <Webcam
-                  style = {{marginTop : 70}}
+                  style = {{marginTop : 75}}
                   muted={true}
                   ref={webcamRef}
                   audio={false}
@@ -243,14 +189,15 @@ export default (props) => {
                   style={{
                     position: "absolute",
                     textAlign: "center",
-                    zindex: 8,
+                    top:0,
+                    zindex: 999,
                     width: camWidth,
                     height: camHeight,
                   }}
                 />
                 
               </div>
-              <Button style = {{display:"block" , marginLeft: "320px",marginTop:"30px", marginBottom :"150px"}} variant="contained" color="success" align="center" disabled>
+              <Button disabled = {!isMatchFound} style = {{display:"block" , marginLeft: "320px",marginTop:"30px"}} variant="contained" color="success" align="center" onClick = {gotoSite}>
                  Mark Attendence & Join Class
                 </Button>
             </>

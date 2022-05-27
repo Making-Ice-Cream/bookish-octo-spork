@@ -16,6 +16,7 @@ import Cookies from 'js-cookie'
 import {UserContext} from '../App';
 
 const Login =  (props) => {
+  // const history = useHistory();
   const {state,dispatch} = useContext(UserContext);
   const location = useLocation();
   // console.log(location);
@@ -66,6 +67,7 @@ const Login =  (props) => {
 
 
       e.preventDefault() ;
+      console.log(location.state);
 
       let user_data = location.state == null ? window.sessionStorage.getItem("Logged_in_as")   : location.state.name
       
@@ -104,7 +106,7 @@ const Login =  (props) => {
     });
     const awaited_response = await response.json();
 
-    console.log(awaited_response);
+    // console.log(awaited_response);
     
     if(awaited_response.status === 200){
       toast.success("Login Sucessfully!", {
@@ -117,28 +119,29 @@ const Login =  (props) => {
         progress: undefined,
         });
         
-        // console.log(awaited_response.token);
+        console.log(awaited_response);
 
         Cookies.set('token', awaited_response.token, { expires: 1, path: '' })
         
-        dispatch({type:'USER',payload:true})
+        dispatch({type:'USER',payload:{state : true , logged_in_as : final_data}})
         localStorage.setItem("image" , JSON.stringify(awaited_response.imageurl));
         localStorage.setItem("name" , JSON.stringify(awaited_response.name));
         localStorage.setItem("user_email" , JSON.stringify(email));
 
-        window.sessionStorage.setItem("user_email" , email);
-        window.sessionStorage.setItem("name" , awaited_response.name);
-        window.sessionStorage.setItem("Logged_in_as", location.state.name);
+        sessionStorage.setItem("user_email" , JSON.stringify(email));
+        sessionStorage.setItem("name" , JSON.stringify(awaited_response.name));
+        sessionStorage.setItem("Logged_in_as", location.state.name);
         console.log(final_data);
          
-       if(final_data === "Admin"){
-           alert("why")
+       if(final_data == "Admin"){
+          //  alert("why")
            navigate('/admin/app',{replace:true});
       }
 
-        else if(final_data === "Student"){
-          alert("student")
+        else if(final_data == "Student"){
+          // alert("student")
           navigate('/student/app',{replace:true});
+          
         }
        
 

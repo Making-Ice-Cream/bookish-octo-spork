@@ -8,7 +8,36 @@ const lectureSchema = require("../Database/models/lectures");
 router.use(bodyParser.urlencoded({extended: true}));
 router.use(bodyParser.json());
 router.use(express.json());
+const jwt = require('jsonwebtoken');
 
+const auths = async (req,res,next)=>{
+    try {
+        const token = req.body.token === undefined || null ? req.headers.batch : req.body.token ;
+        // console.log(token)
+        const secured_string = "helloweareheretodesignthestringwhichisverystronghopeitwillworksthanks";
+        
+        const verify =  jwt.verify(token,secured_string);
+
+        if(verify == null || verify == [] || verify == {}){
+            res.status(404).json({message: "Invalid Credentials",
+                                                     status : 404,
+                                                    isvalid : false});
+        }
+
+        const userid =  await studentSchema.findOne({_id:verify._id});
+        req.user = userid;
+        req.token = token;
+        next();
+        
+        
+    } catch (error) {
+      console.log(error)
+      res.status(500).json({message: "Unauthorized access!" ,
+      status : 500,
+      isvalid : false});
+      
+      }
+  }
 
 router.post("/getProfile", async function(req, res){
    try {
@@ -214,5 +243,26 @@ router.post("/login",async(req,res)=>{
                             status : 500});
     }
 });
+
+router.post("/check" ,auths ,async(req,res)=>{
+   
+    try{   
+     let a =  req.user.tokens.filter((curr)=>{
+        return curr.token == req.token;
+     })
+     if(a.length > 0)
+     {
+                res.status(200).json({status : 200 , isvalid : true});
+    }
+    else{
+        res.status(401).json({status : 401 , isvalid : false});
+    }
+  }
+   catch(err)
+   {
+    res.status(404).json({message:`${err}` ,
+                          status : 404})
+   }
+  });
 
 module.exports = router;
