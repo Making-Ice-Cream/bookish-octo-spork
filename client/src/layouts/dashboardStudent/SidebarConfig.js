@@ -12,7 +12,7 @@ const sidebarConfig = [
     icon: getIcon('eva:pie-chart-2-fill')
   },
   {
-    title: 'classs',
+    title: 'classes',
     path: '/student/class',
     icon: getIcon('eva:people-fill')
   },

@@ -8,6 +8,10 @@ import {
   } from 'mdb-react-ui-kit';
 
 import img1 from "../images/chris-montgomery-smgTvepind4-unsplash.jpg"
+import img2 from "../images/Image2.jpg"
+import img3 from "../images/Image3.jpg"
+import img4 from "../images/Image4.jpg"
+import img5 from "../images/Image5.jpg"
 
 const Crousel = () => {
     return (
@@ -22,7 +26,7 @@ const Crousel = () => {
             </MDBCarouselItem>
     
             <MDBCarouselItem >
-              <MDBCarouselElement src="https://c.pxhere.com/photos/d4/d4/university_lecture_campus_education_people_seminar_study_school-1246944.jpg!d" style={{height:"600px"}} alt='...' />
+              <MDBCarouselElement src={img2} style={{height:"600px"}} alt='...' />
               <MDBCarouselCaption>
                 <h3 style={{textTransform:"uppercase",color:"yellow",backdropFilter:"blur(17px)",}}>Execulsive Classrooms</h3>
                 <p style={{color:"red",backdropFilter:"blur(12px)"}}>Classrooms equipped with modern technologies.</p>
@@ -30,7 +34,7 @@ const Crousel = () => {
             </MDBCarouselItem>
             
             <MDBCarouselItem >
-              <MDBCarouselElement src="https://c.pxhere.com/photos/da/af/books_bookstore_book_reading_shop_writer_sale_books_read-822866.jpg!d" style={{height:"600px"}} alt='...' />
+              <MDBCarouselElement src= {img3} style={{height:"600px"}} alt='...' />
               <MDBCarouselCaption>
                 <h3 style = {{backdropFilter:"blur(10px)"}}>Books & Library</h3>
                
@@ -38,7 +42,7 @@ const Crousel = () => {
             </MDBCarouselItem>
 
             <MDBCarouselItem>
-              <MDBCarouselElement src="https://c.pxhere.com/photos/d3/67/psu-234130.jpg!d" style={{height:"600px"}} alt='...' />
+              <MDBCarouselElement src={img4} style={{height:"600px"}} alt='...' />
               <MDBCarouselCaption>
                 <h3 style={{textTransform:"uppercase"}}>Trained Faculty</h3>
                 <p>Self motiviated & trained faculty.</p>
@@ -46,7 +50,7 @@ const Crousel = () => {
             </MDBCarouselItem>
     
             <MDBCarouselItem>
-              <MDBCarouselElement src="https://c.pxhere.com/photos/c7/c8/adults_brainstorming_business_computer_desk_discussion_education_facial_expression-1562525.jpg!d" style={{height:"600px"}} alt='...' />
+              <MDBCarouselElement src={img5} style={{height:"600px"}} alt='...' />
               <MDBCarouselCaption>
                 <h3 style={{textTransform:"uppercase", color:"red",backdropFilter:"blur(10px)",display:"inline-block",width:"40%"}}>Weekly Assements</h3>
                 

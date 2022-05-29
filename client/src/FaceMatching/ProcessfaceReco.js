@@ -39,6 +39,7 @@ export default (props) => {
   const canvasRef = useRef();
 
   const [isMatchFound , setisMatchFound ] = useState(false);
+  const [userName, setuserName] = useState(false);
 
   const [selectedWebcam, setSelectedWebcam] = useState();
 
@@ -53,8 +54,11 @@ export default (props) => {
   const [waitText, setWaitText] = useState("");
 
   const gotoSite = ()=>{
+    let para = new URLSearchParams();
+    para.append("KEY", userName);
+    let url =  "https://video-meet-react-app.herokuapp.com/hello?" +    para.toString();
     // <Link to={{ pathname: "https://video-meet-react-app.herokuapp.com/hello" }} target="_blank" />
-    window.location.replace("https://video-meet-react-app.herokuapp.com/hello");
+    window.location.replace(url);
   }
 
 
@@ -115,7 +119,7 @@ export default (props) => {
           });
         const ctx = canvasRef.current.getContext("2d");
 
-        drawFaceRect(fullDesc, faceMatcher, participants, ctx, setisMatchFound);
+        drawFaceRect(fullDesc, faceMatcher, participants, ctx, setisMatchFound,setuserName);
 
         
       }

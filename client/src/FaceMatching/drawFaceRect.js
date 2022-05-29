@@ -1,4 +1,4 @@
-export const drawFaceRect = (descriptions, faceDB, participants, ctx, setisMatchFound) => {
+export const drawFaceRect = (descriptions, faceDB, participants, ctx, setisMatchFound,setuserName) => {
   // Loop through each desc
   // console.log(descriptions + "line 3")
     descriptions && descriptions.forEach(async (desc) => {
@@ -44,6 +44,7 @@ export const drawFaceRect = (descriptions, faceDB, participants, ctx, setisMatch
       ctx.fillText(bestMatch._label, x, y + height + 20);
       ctx.fillText(`L2: ${bestMatch.distance.toFixed(2)}`, x, y);
       setisMatchFound(true);
+      setuserName(bestMatch._label);
 
       ctx.stroke();
       // console.log("drawn succesfull");

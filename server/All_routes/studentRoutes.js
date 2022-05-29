@@ -265,4 +265,31 @@ router.post("/check" ,auths ,async(req,res)=>{
    }
   });
 
+
+router.get("/StudentsData" , async(req,res)=>{
+
+    let Students = await studentSchema.find({});
+    let data = [];
+
+    for(let i = 0 ; i < Students.length ; i++){
+
+        if(Students[i].descriptor1 == undefined || Students[i].descriptor1 == null 
+            || typeof Students[i].descriptor1 == undefined || Students[i].descriptor1.length == 0){
+                continue;
+            }
+       let obj = {
+           _id : Students[i].firstName + " " + Students[i].lastName,
+           descriptor1 : Students[i].descriptor1,
+           descriptor2 : Students[i].descriptor2,
+           descriptor3 : Students[i].descriptor3
+       }
+       data.push(obj)
+    }
+
+    res.status(200).json({
+        data : data,
+        status : 200
+    })
+})
+
 module.exports = router;
