@@ -11,6 +11,7 @@ import {
   loadModels,
 } from "./faceUtils";
 import { Link } from 'react-router-dom';
+import { v4 as uuidv4 } from 'uuid';
 import FormControl from '@mui/material/FormControl';
 import { drawFaceRect } from "./drawFaceRect";
 import ModelLoading from "./ModelLoading";
@@ -55,7 +56,8 @@ export default (props) => {
 
   const gotoSite = ()=>{
     let para = new URLSearchParams();
-    para.append("KEY", userName);
+    para.append("KEY", uuidv4());
+    para.append("name", userName);
     let url =  "https://video-meet-react-app.herokuapp.com/hello?" +    para.toString();
     // <Link to={{ pathname: "https://video-meet-react-app.herokuapp.com/hello" }} target="_blank" />
     window.location.replace(url);
@@ -171,10 +173,11 @@ export default (props) => {
                   display: "flex",
                   justifyContent: "center",
                   alignItems: "center",
+                  position:'relative'
                 }}
               >
                 
-
+               
                 <Webcam
                   style = {{marginTop : 75}}
                   muted={true}
@@ -194,13 +197,15 @@ export default (props) => {
                     position: "absolute",
                     textAlign: "center",
                     top:0,
+                    marginTop : 75,
                     zindex: 999,
                     width: camWidth,
-                    height: camHeight,
+                    height: camHeight ,
+                    // border:"2px solid red"
                   }}
                 />
-                
-              </div>
+                </div>
+            
               <Button disabled = {!isMatchFound} style = {{display:"block" , marginLeft: "320px",marginTop:"30px"}} variant="contained" color="success" align="center" onClick = {gotoSite}>
                  Mark Attendence & Join Class
                 </Button>
