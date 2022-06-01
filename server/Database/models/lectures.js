@@ -9,6 +9,10 @@ const lecture = new mongoose.Schema({
         type: String,
         required: true
     },
+    subject:{
+        type: String,
+        required:true
+    },
     link: {
         type: String,
         required: true
@@ -18,10 +22,12 @@ const lecture = new mongoose.Schema({
         required: true
     },
     status: {
-        type: String,
+        type: Boolean,
         default: false
+    },
+    time:{
+        type: Date
     }
-
 });
 
 var lectureObj = mongoose.model('lecture', lecture);
