@@ -153,6 +153,12 @@ router.post("/student/newstudent",async(req,res)=>{
     var installmentDate = new Date();
     let email = req.body.email;
     let schoNum = req.body.scholarNumber;
+    let alreadyExist = await studentSchema.find({email:email});
+    if(alreadyExist.length !== 0){
+        res.status(400).json({message: "Student Already Exists." ,
+                            status : 400});
+    }
+    else{
     let newst = new studentSchema(req.body);
     let result = await signupSchema.find({});
     let curScholarNo = result[0].scholarNumber;
@@ -203,6 +209,7 @@ router.post("/student/newstudent",async(req,res)=>{
         res.status(500).json({message: "Server error!" ,
                             status : 500});
     }
+}
 });
 
 // adding add teacher route

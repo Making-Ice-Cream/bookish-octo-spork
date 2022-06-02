@@ -183,7 +183,7 @@ router.post("/getLectures", async function(req,res){
         let result = await lectureSchema.find({batch:batch});
         if(result.length == 0){
             res.status(200).json({message: "No Lectures Available." ,
-            status : 4200}); 
+            status : 200}); 
         }
         else
         if(result){
