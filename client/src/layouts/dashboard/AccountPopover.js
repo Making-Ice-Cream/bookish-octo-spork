@@ -41,19 +41,19 @@ const MENU_OPTIONS = [
   
 ];
 
-export default function AccountPopover() {
+export default function AccountPopover({data}) {
   const navigate = useNavigate();
   const anchorRef = useRef(null);
   const [open, setOpen] = useState(false);
   const {state,dispatch} = useContext(UserContext);
-
+  
   const handleOpen = () => {
     setOpen(true);
   };
   const handleClose = () => {
     setOpen(false);
   };
-  console.log(account);
+  // console.log(account);
   const logout = () =>{
 
     let user_data =  window.sessionStorage.getItem("Logged_in_as");
@@ -152,7 +152,7 @@ export default function AccountPopover() {
           })
         }}
       >
-        <Avatar src={account.photoURL} alt="photoURL" />
+        <Avatar src={data.photoURL} alt="photoURL" />
       </IconButton>
 
       <MenuPopover
@@ -163,10 +163,10 @@ export default function AccountPopover() {
       >
         <Box sx={{ my: 1.5, px: 2.5 }}>
           <Typography variant="subtitle1" noWrap>
-            {account.displayName}
+            {data.displayName}
           </Typography>
           <Typography variant="body2" sx={{ color: 'text.secondary' }} noWrap>
-            {account.email}
+            {data.email}
           </Typography>
         </Box>
 

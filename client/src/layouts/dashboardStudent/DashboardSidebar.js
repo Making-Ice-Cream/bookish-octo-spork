@@ -4,16 +4,15 @@ import { Link as RouterLink, useLocation } from 'react-router-dom';
 // material
 import { styled } from '@mui/material/styles';
 import { Box, Link, Button, Drawer, Typography, Avatar, Stack } from '@mui/material';
-// mocks_
-import account from '../../_mocks_/account';
-// hooks
-import useResponsive from './useResponsive';
 // components
 import Logo from '../../components/Logo';
 import Scrollbar from '../../components/Scrollbar';
 import NavSection from '../../components/NavSection';
+import { MHidden } from '../../components/@material-extend';
 //
 import sidebarConfig from './SidebarConfig';
+import account from '../../_mocks_/account';
+import {FpsView} from "react-fps";
 
 // ----------------------------------------------------------------------
 
@@ -30,8 +29,8 @@ const AccountStyle = styled('div')(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
   padding: theme.spacing(2, 2.5),
-  borderRadius: Number(theme.shape.borderRadius) * 1.5,
-  backgroundColor: theme.palette.grey[500_12]
+  borderRadius: theme.shape.borderRadiusSm,
+  backgroundColor: theme.palette.grey[200]
 }));
 
 // ----------------------------------------------------------------------
@@ -41,11 +40,10 @@ DashboardSidebar.propTypes = {
   onCloseSidebar: PropTypes.func
 };
 
-export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
+export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar , data}) {
   const { pathname } = useLocation();
 
-  const isDesktop = useResponsive('up', 'lg');
-
+  
   useEffect(() => {
     if (isOpenSidebar) {
       onCloseSidebar();
@@ -56,12 +54,14 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
   const renderContent = (
     <Scrollbar
       sx={{
-        height: 1,
-        '& .simplebar-content': { height: 1, display: 'flex', flexDirection: 'column' }
+        height: '100%',
+        '& .simplebar-content': { height: '100%', display: 'flex', flexDirection: 'column' }
       }}
     >
-      <Box sx={{ px: 2.5, py: 3, display: 'inline-flex' }}>
-        <Logo />
+      <Box sx={{ px: 2.5, py: 3 }}>
+        <Box component={RouterLink} to="/" sx={{ display: 'inline-flex' }}>
+          <Logo />
+        </Box>
       </Box>
 
       <Box sx={{ mb: 5, mx: 2.5 }}>
@@ -70,27 +70,61 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
             <Avatar src={account.photoURL} alt="photoURL" />
             <Box sx={{ ml: 2 }}>
               <Typography variant="subtitle2" sx={{ color: 'text.primary' }}>
-                {account.displayName}
+                {data.displayName}
               </Typography>
               <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                {account.role}
+                {data.role}
               </Typography>
             </Box>
           </AccountStyle>
         </Link>
       </Box>
 
-      <NavSection navConfig={sidebarConfig} />
+      <NavSection  navConfig={sidebarConfig} />
 
       <Box sx={{ flexGrow: 1 }} />
 
-      
+      <Box sx={{ px: 2.5, pb: 3, mt: 10 }}>
+        <Stack
+          alignItems="center"
+          spacing={3}
+          sx={{
+            p: 2.5,
+            pt: 5,
+            borderRadius: 2,
+            position: 'relative',
+            bgcolor: 'grey.200'
+          }}
+        >
+          {/* <Box ><FpsView width={100} height={120} bottom={60} left={80}/></Box> */}
+          
+          
+
+          {/* <Box sx={{ textAlign: 'center' }}>
+            <Typography gutterBottom variant="h6">
+              Get more?
+            </Typography>
+            <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+              From only $69
+            </Typography>
+          </Box> */}
+
+          {/* <Button
+            fullWidth
+            href="https://material-ui.com/store/items/minimal-dashboard/"
+            target="_blank"
+            variant="contained"
+          >
+            Upgrade to Pro
+          </Button> */}
+        </Stack>
+      </Box>
     </Scrollbar>
   );
 
   return (
     <RootStyle>
-      {!isDesktop && (
+      <MHidden width="lgUp">
         <Drawer
           open={isOpenSidebar}
           onClose={onCloseSidebar}
@@ -100,23 +134,22 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
         >
           {renderContent}
         </Drawer>
-      )}
+      </MHidden>
 
-      {isDesktop && (
+      <MHidden width="lgDown">
         <Drawer
           open
           variant="persistent"
           PaperProps={{
             sx: {
               width: DRAWER_WIDTH,
-              bgcolor: 'background.default',
-              borderRightStyle: 'dashed'
+              bgcolor: 'background.default'
             }
           }}
         >
           {renderContent}
         </Drawer>
-      )}
+      </MHidden>
     </RootStyle>
   );
 }

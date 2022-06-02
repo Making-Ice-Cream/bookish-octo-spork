@@ -132,7 +132,8 @@ const Login =  (props) => {
         sessionStorage.setItem("name" , JSON.stringify(awaited_response.name));
         sessionStorage.setItem("Logged_in_as", location.state.name);
         console.log(final_data);
-         
+        
+
        if(final_data == "Admin"){
           //  alert("why")
            navigate('/admin/app',{replace:true});

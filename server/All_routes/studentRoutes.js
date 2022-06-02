@@ -292,4 +292,41 @@ router.get("/StudentsData" , async(req,res)=>{
     })
 })
 
+router.post("/getAccountDetails" , auths, async(req,res)=>{
+   try{
+       let data  = await studentSchema.findOne({id : req.userid})
+           
+
+       res.status(200).json({
+        
+            name : data.firstName + " " + data.lastName,
+            email: data.email,
+            status :200
+ 
+        
+       });
+   }
+   catch(e){
+       res.status(400).json({
+           status : 400,
+
+       })
+   }
+})
+
+router.post("/logout" , auths ,async(req,res)=>{
+    try{   
+        req.user.tokens = req.user.tokens.filter((curr)=>{
+           return curr.token != req.token;
+        })
+      
+       await req.user.save();
+       res.status(200).json({status:200});
+      }
+      catch(err)
+      {
+       res.status(404).json({status:404})
+      }
+})
+
 module.exports = router;

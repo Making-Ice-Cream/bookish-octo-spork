@@ -1,15 +1,17 @@
 import PropTypes from 'prop-types';
+import { Icon } from '@iconify/react';
+import menu2Fill from '@iconify/icons-eva/menu-2-fill';
 // material
 import { alpha, styled } from '@mui/material/styles';
 import { Box, Stack, AppBar, Toolbar, IconButton } from '@mui/material';
 // components
-import Iconify from '../../components/Iconify';
+import { MHidden } from '../../components/@material-extend';
 //
 import Searchbar from './Searchbar';
 import AccountPopover from './AccountPopover';
 import LanguagePopover from './LanguagePopover';
 import NotificationsPopover from './NotificationsPopover';
-
+// import Flags from 'country-flag-icons/react/3x2'
 // ----------------------------------------------------------------------
 
 const DRAWER_WIDTH = 280;
@@ -40,24 +42,24 @@ DashboardNavbar.propTypes = {
   onOpenSidebar: PropTypes.func
 };
 
-export default function DashboardNavbar({ onOpenSidebar }) {
+export default function DashboardNavbar({ onOpenSidebar , data }) {
   return (
     <RootStyle>
       <ToolbarStyle>
-        <IconButton
-          onClick={onOpenSidebar}
-          sx={{ mr: 1, color: 'text.primary', display: { lg: 'none' } }}
-        >
-          <Iconify icon="eva:menu-2-fill" />
-        </IconButton>
+        <MHidden width="lgUp">
+          <IconButton onClick={onOpenSidebar} sx={{ mr: 1, color: 'text.primary' }}>
+            <Icon icon={menu2Fill} />
+          </IconButton>
+        </MHidden>
 
         <Searchbar />
         <Box sx={{ flexGrow: 1 }} />
 
         <Stack direction="row" alignItems="center" spacing={{ xs: 0.5, sm: 1.5 }}>
           <LanguagePopover />
+          {/* <Flags.US title="United States" className="..."/> */}
           <NotificationsPopover />
-          <AccountPopover />
+          <AccountPopover data = {data} />
         </Stack>
       </ToolbarStyle>
     </RootStyle>

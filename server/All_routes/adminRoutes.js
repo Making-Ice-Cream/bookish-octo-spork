@@ -698,5 +698,27 @@ router.post("/saveChangesToProfile" , auths, async(req,res)=>{
         })
     }
     
-}) 
+})
+
+router.post("/getAccountDetails" , auths, async(req,res)=>{
+   try{
+       let data  = await signupSchema.findOne({id : req.userid})
+           
+
+       res.status(200).json({
+        
+            name : data.name.firstname + " " + data.name.lastname,
+            email: data.email,
+            status :200
+ 
+        
+       });
+   }
+   catch(e){
+       res.status(400).json({
+           status : 400,
+
+       })
+   }
+})
 module.exports = router;

@@ -42,7 +42,7 @@ DashboardNavbar.propTypes = {
   onOpenSidebar: PropTypes.func
 };
 
-export default function DashboardNavbar({ onOpenSidebar }) {
+export default function DashboardNavbar({ onOpenSidebar , data }) {
   return (
     <RootStyle>
       <ToolbarStyle>
@@ -59,7 +59,7 @@ export default function DashboardNavbar({ onOpenSidebar }) {
           <LanguagePopover />
           {/* <Flags.US title="United States" className="..."/> */}
           <NotificationsPopover />
-          <AccountPopover />
+          <AccountPopover data = {data} />
         </Stack>
       </ToolbarStyle>
     </RootStyle>

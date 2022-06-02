@@ -1,10 +1,11 @@
-import { useState } from 'react';
+import { useState , useEffect } from 'react';
 import { Outlet } from 'react-router-dom';
 // material
 import { styled } from '@mui/material/styles';
-//
+import Cookies from 'js-cookie';
 import DashboardNavbar from './DashboardNavbar';
 import DashboardSidebar from './DashboardSidebar';
+import { useNavigate } from "react-router-dom";
 // import "./delete"
 // ----------------------------------------------------------------------
 
@@ -33,12 +34,68 @@ const MainStyle = styled('div')(({ theme }) => ({
 // ----------------------------------------------------------------------
 
 export default function DashboardLayout() {
+  const navigate = useNavigate();
   const [open, setOpen] = useState(false);
+  const [accountInfo , setaccountInfo] = useState({})
+
+
+   useEffect(async ()=>{
+
+    let user_data = window.sessionStorage.getItem("Logged_in_as");
+    if(user_data == null || user_data == undefined){
+      alert("An Error Occured!");
+      navigate("/");
+    }
+      
+    let final_data = user_data.slice(3)
+    let url = "";
+    switch(final_data){
+      case 'Admin':
+            url = "http://localhost:80/admin/getAccountDetails";
+         break;
+
+      case 'Student':
+           url = "http://localhost:80/student/getAccountDetails"
+        break;
+      case 'Teacher':
+
+        break;
+
+      case 'Parent':
+
+        break;
+
+      default:
+
+
+    }
+   
+    const response =  await fetch(url,{
+      method : "POST",
+      headers :{
+          "Accept":"application/json",
+          "Content-Type" : "application/json"
+      },
+      body : JSON.stringify({
+        token:Cookies.get('token') 
+      })
+  });
+  const awaited_response = await response.json();
+
+  let obj = {
+    displayName : awaited_response.name,
+    email : awaited_response.email,
+    photoURL : '/static/mock-images/avatars/avatar_18.jpg',
+    role:final_data
+  }
+  setaccountInfo(obj);
+
+   },[]);
 
   return (
     <RootStyle>
-      <DashboardNavbar onOpenSidebar={() => setOpen(true)} />
-      <DashboardSidebar isOpenSidebar={open} onCloseSidebar={() => setOpen(false)} />
+      <DashboardNavbar onOpenSidebar={() => setOpen(true)} data = {accountInfo}  />
+      <DashboardSidebar data = {accountInfo} isOpenSidebar={open} onCloseSidebar={() => setOpen(false)} />
       <MainStyle>
         <Outlet />
       </MainStyle>
