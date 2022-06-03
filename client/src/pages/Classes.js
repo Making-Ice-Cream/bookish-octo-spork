@@ -243,7 +243,7 @@ export default function Classes() {
                           <TableCell align="left">
                             {/* {isVerified ? 'Yes' : 'No'} */}
                              
-                          <Button onClick = {GoToFace}variant="contained" color="success">
+                          <Button disabled = {status == "Inactive"} onClick = {GoToFace}variant="contained" color="success">
                              Join Class
                           </Button>
                           
@@ -251,7 +251,7 @@ export default function Classes() {
                             
                             </TableCell>
                             <TableCell align="left">
-                                <Label variant="ghost" color={(status === 'Inactive' && 'error' ) || 'success'}>
+                                <Label variant="ghost" color={(status === 'Inactive' && 'error') || 'success'}>
                                   {sentenceCase(status)}
                                 </Label>
                             </TableCell>

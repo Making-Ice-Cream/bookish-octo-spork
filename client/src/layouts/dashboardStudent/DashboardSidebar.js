@@ -85,7 +85,7 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar , data}
       <Box sx={{ flexGrow: 1 }} />
 
       <Box sx={{ px: 2.5, pb: 3, mt: 10 }}>
-        <Stack
+        {/* <Stack
           alignItems="center"
           spacing={3}
           sx={{
@@ -95,7 +95,7 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar , data}
             position: 'relative',
             bgcolor: 'grey.200'
           }}
-        >
+        > */}
           {/* <Box ><FpsView width={100} height={120} bottom={60} left={80}/></Box> */}
           
           
@@ -117,7 +117,7 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar , data}
           >
             Upgrade to Pro
           </Button> */}
-        </Stack>
+        {/* </Stack> */}
       </Box>
     </Scrollbar>
   );
