@@ -33,6 +33,8 @@ import LoadingButton from "./signin_404_etc_pages/LoadingButton";
 import DashboardAppStudent from "./pages/DashboardStudent"
 import Classes from "./pages/Classes"
 import Index from "./FaceMatching/Index"
+import Fees from "./components/@dashboard/Fees"
+
 
 export default function AdminRoutes() {
   const {state,dispatch} = useContext(UserContext);
@@ -186,7 +188,8 @@ export default function AdminRoutes() {
         { element: <Navigate to="/student/app" replace /> },
         { path: 'app', element: <DashboardAppStudent /> },
         { path: 'class', element: <Classes /> },
-        { path : 'markingAttendence' , element : < Index /> }
+        { path : 'markingAttendence' , element : < Index /> },
+        { path : 'feeStatus' , element : < Fees /> }
       ]
     },
     

@@ -1,6 +1,6 @@
 import { filter } from 'lodash';
 import { sentenceCase } from 'change-case';
-import { useState } from 'react';
+import { useState , useEffect } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import { useNavigate } from "react-router-dom";
 // material
@@ -27,13 +27,14 @@ import Iconify from '../components/Iconify';
 import SearchNotFound from '../components/SearchNotFound';
 import { UserListHead, UserListToolbar, UserMoreMenu } from '../components/@dashboard/user';
 //
-import USERLIST from '../_mocks_/student';
-
+import Cookies from 'js-cookie';
+// import USERLIST from '../_mocks_/student';
+// console.log(USERLIST)
 // ----------------------------------------------------------------------
 
 const TABLE_HEAD = [
-  { id: 'name', label: 'Class Name', alignRight: false },
-  { id: 'company', label: 'Teacher Name', alignRight: false },
+  { id: 'name', label: 'Teacher Name', alignRight: false },
+  { id: 'company', label: 'Class Code', alignRight: false },
   { id: 'role', label: 'Subject', alignRight: false },
   { id: 'isVerified', label: 'Join Class', alignRight: false },
   { id: 'status', label: 'Status', alignRight: false },
@@ -79,6 +80,40 @@ export default function Classes() {
   const [orderBy, setOrderBy] = useState('name');
   const [filterName, setFilterName] = useState('');
   const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [USERLIST , setClassData] = useState([]);
+
+  // fo getting classes data
+  useEffect(async()=>{
+    const response =  await fetch("http://localhost:80/student/getLectures",{
+      method : "POST",
+      headers :{
+          "Accept":"application/json",
+          "Content-Type" : "application/json"
+      },
+      body:JSON.stringify({
+        token:Cookies.get('token')
+      })
+  });
+  const awaited_response = await response.json();
+
+  let result = []
+
+  for(let i = 0 ; i < awaited_response.lectures.length ; i++){
+      let temp = {
+           id : awaited_response.lectures[i]._id,
+           avatarUrl : awaited_response.lectures[i].avatarUrl,
+           name : awaited_response.lectures[i].name,
+           company : awaited_response.lectures[i].code,
+           role : awaited_response.lectures[i].subject,
+           status : 'Inactive',
+           isVerified : awaited_response.lectures[i].status
+      }
+      result.push(temp);
+  }
+  setClassData(result);
+    
+  }, [])
+   
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -144,14 +179,14 @@ export default function Classes() {
           <Typography variant="h4" gutterBottom>
             Classes
           </Typography>
-          <Button
+          {/* <Button
             variant="contained"
             component={RouterLink}
             to="#"
             startIcon={<Iconify icon="eva:plus-fill" />}
           >
             New Class
-          </Button>
+          </Button> */}
         </Stack>
 
         <Card>
@@ -177,7 +212,7 @@ export default function Classes() {
                   {filteredUsers
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                     .map((row) => {
-                      const { id, name, role,  company, avatarUrl,isVerified  } = row;
+                      const { id, name, role, status, company, avatarUrl,isVerified  } = row;
                       const isItemSelected = selected.indexOf(name) !== -1;
 
                       return (
@@ -214,6 +249,11 @@ export default function Classes() {
                           
                             
                             
+                            </TableCell>
+                            <TableCell align="left">
+                                <Label variant="ghost" color={(status === 'Inactive' && 'error' ) || 'success'}>
+                                  {sentenceCase(status)}
+                                </Label>
                             </TableCell>
                           
 

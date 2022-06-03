@@ -17,9 +17,12 @@ const lecture = new mongoose.Schema({
         type: String,
         required: true
     },
-    teacherName: {
+    name: {
         type: String,
         required: true
+    },
+    avatarUrl:{
+        type:String
     },
     status: {
         type: Boolean,

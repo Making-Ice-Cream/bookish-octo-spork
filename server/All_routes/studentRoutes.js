@@ -63,9 +63,10 @@ router.post("/getProfile", async function(req, res){
    }
 });
 
-router.post("/feeStatus", async function(req, res){
+router.post("/feeStatus",auths, async function(req, res){
    try {
-       let student = await studentSchema.findOne({scholarNumber: req.body.scholarNumber});
+       let student = await studentSchema.findOne({_id: req.user});
+    //    console.log(student);
        let curDate = new Date();
        const paymentType = student.paymentType;
        if(paymentType === "Lump Sum"){
@@ -177,9 +178,13 @@ router.post("/signUp", async function(req,res){
     } 
 });
 
-router.post("/getLectures", async function(req,res){
-    const batch = req.body.batch;
+router.post("/getLectures", auths,async function(req,res){
+
+    
     try{
+        let batch = await studentSchema.findOne({_id : req.user});
+        batch = batch.batch;
+        // console.log(await lectureSchema.find({}));
         let result = await lectureSchema.find({batch:batch});
         if(result.length == 0){
             res.status(200).json({message: "No Lectures Available." ,

@@ -28,7 +28,7 @@ const sidebarConfig = [
   },
   {
     title: 'fee Status',
-    path: '/login',
+    path: '/student/feeStatus',
     icon: getIcon('eva:lock-fill')
   }
   
