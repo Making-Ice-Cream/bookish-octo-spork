@@ -8,17 +8,18 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const Fees = () => {
-  const [data , setdata] = useState({
-    paymentType:"Lump Sum",
-    feeStatus:"Not paid",
-    delay:"152221",
-    amountDue: 12535,
-    message : ""
-  })
+  const [data , setdata] = useState(null);
 
-  const [backgroundColor , setbackgroundColor] = useState();
+  // if(localStorage.getItem("feeStatus") != null){
+  //   setdata(JSON.parse(localStorage.getItem("feeStatus")));
+  // }
+  // alert(data != null ? data.paymentType + "  " + data.delay : "empty");
+  console.log(data);
+  
 
-  useEffect(async()=>{
+  // const [backgroundColor , setbackgroundColor] = useState();
+  
+  async function gettingData (){
     const response =  await fetch("http://localhost:80/student/feeStatus",{
       method : "POST",
       headers :{
@@ -30,10 +31,18 @@ const Fees = () => {
       })
   });
   const awaited_response = await response.json();
-  setdata(awaited_response);
-
+  // let obj = {
+  //       paymentType: awaited_response.paymentType,
+  //       feeStatus:awaited_response.feeStatus,
+  //       delay:awaited_response.delay,
+  //       amountDue: awaited_response.amountDue
+  //  }
+   setdata(awaited_response);
+  // console.log(obj);
+   console.log(data);
+   localStorage.setItem("feeStatus" , JSON.stringify(awaited_response));
   if(awaited_response.amountDue == 0){
-    setbackgroundColor("#d9b3ff");
+    // setbackgroundColor("");
     toast.success("Your Fees is not due!", {
       position: "top-right",
       autoClose: 5000,
@@ -46,7 +55,7 @@ const Fees = () => {
       });
   }
   else{
-    setbackgroundColor('ffc266');
+    // setbackgroundColor('#ffc266');
     toast.error("Your Fees is due!", {
       theme: "colored",
       position: "top-right",
@@ -58,7 +67,13 @@ const Fees = () => {
       progress: undefined,
       });
   }
-  },[])
+ }
+
+  
+
+  useEffect(()=>{
+      gettingData();
+  }, []);
   return (
     <Page title="Student | Fee-Status">
       <Container>
@@ -75,7 +90,7 @@ const Fees = () => {
             Add Query
           </Button>
         </Stack>
-              <Box
+              <Box 
                   component="form"
                   sx={{
                     '& .MuiTextField-root': { m: 3, width: '35ch' },
@@ -86,7 +101,7 @@ const Fees = () => {
                     justifyContent : 'center',
                     alignItems :'center',
                     '&:hover': {
-                      backgroundColor: {backgroundColor},
+                      backgroundColor: "#d9b3ff",
                       opacity: [0.9, 0.8, 0.7],
                     },
                   }}
@@ -96,21 +111,26 @@ const Fees = () => {
                 <Stack>
                
               <TextField
-                error = {data.amountDue != 0 ? true : false}
-                varient = "standard"
-                id="outlined-read-only-input"
+                // disabled = {true}
+                error = {data != null && data.amountDue != 0 ? true : false}
+                
+                id="standard-error"
                 label="Payment Type"
-                defaultValue={data.paymentType}
+                focused= {true}
+                value={data != null  ? data.paymentType : " "}
+                varient = "standard"
                  InputProps={{
                         readOnly: true,
                 }}
+                
               />
               <TextField
-                error = {data.amountDue != 0 ? true : false}
+                // disabled = {true}
+                error = {data != undefined && data.amountDue != 0 ? true : false}
                 id="standard-error-helper-text"
                 label="Fee Status"
-               
-                defaultValue={data.feeStatus}
+                 focused= {true}
+                value={data != undefined  ? data.feeStatus : " "}
                 InputProps={{
                        readOnly: true,
                 }}
@@ -122,21 +142,21 @@ const Fees = () => {
 
                 
                 <TextField
-                  error = {data.amountDue != 0 ? true : false}
+                  error = {data != null && data.amountDue != 0 ? true : false}
                   id="standard-error"
                   label="Due Amount"
-                  defaultValue={"₹  " + data.amountDue}
+                  value={"₹  " + (data != null ? data.amountDue : 0)}
                   variant="standard"
-                  
+                  // value = {data.amountDue}
                   InputProps={{
                           readOnly: true,
                   }}
                 />
                 <TextField
-                  error = {data.amountDue != 0 ? true : false}
+                  error = {data != undefined && data.amountDue != 0 ? true : false}
                   id="standard-error-helper-text"
                   label="Delay"
-                  defaultValue= {Math.floor(data.delay / (3600*24)) + " day "}
+                  value= {Math.floor((data != null   ? data.delay : 0) / (3600*24)) + " day "}
                  InputProps={{
                         readOnly: true,
                  }}

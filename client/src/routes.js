@@ -21,7 +21,7 @@ import Lock from "./signin_404_etc_pages/Lock";
 import ResetPassword from "./signin_404_etc_pages/ResetPassword";
 import ServerError from "./signin_404_etc_pages/ServerError";
 import Signup from "./signin_404_etc_pages/Signup";
-import React ,{useState,useContext} from 'react'
+import React ,{useState,useContext , useEffect} from 'react'
 import {UserContext} from './App';
 import Cookies from 'js-cookie';
 import AddTeacher from './components/authentication/login/AddTeacher';
@@ -38,36 +38,40 @@ import Fees from "./components/@dashboard/Fees"
 
 export default function AdminRoutes() {
   const {state,dispatch} = useContext(UserContext);
-  console.log(state);
+  // console.log("states from 41: " , state);
+  // alert(state.Student);
   let cookie = Cookies.get('token');
-  if(cookie !== "" && cookie !== null && cookie !== "undefined" && typeof cookie !== 'undefined'){
   
-    let user_data =  window.sessionStorage.getItem("Logged_in_as")
+  
+  useEffect(()=>{
+    if(cookie !== "" && cookie !== null && cookie !== "undefined" && typeof cookie !== 'undefined'){
+  
+      let user_data =  window.sessionStorage.getItem("Logged_in_as")
+        
+        let final_data = user_data != undefined ? user_data.slice(3) : "";
+        let url = "";
+        console.log(final_data)
+        switch(final_data){
+          case 'Admin':
+                url = "http://localhost:80/admin/check";
+             break;
+  
+          case 'Student':
+               url = "http://localhost:80/student/check"
+            break;
+          case 'Teacher':
+  
+            break;
+  
+          case 'Parent':
+  
+            break;
+  
+          default:
+  
+  
+        }
       
-      let final_data = user_data != undefined ? user_data.slice(3) : "";
-      let url = "";
-      console.log(final_data)
-      switch(final_data){
-        case 'Admin':
-              url = "http://localhost:80/admin/check";
-           break;
-
-        case 'Student':
-             url = "http://localhost:80/student/check"
-          break;
-        case 'Teacher':
-
-          break;
-
-        case 'Parent':
-
-          break;
-
-        default:
-
-
-      }
-  
     fetch(url, {
       method: 'POST', 
       headers: {
@@ -82,7 +86,8 @@ export default function AdminRoutes() {
        console.log(data);
       if(data.isvalid) 
       {
-        dispatch({type:'USER',payload:{state : true , logged_in_as : final_data}})
+       let d =  dispatch({type:'USER',payload:{state : true , logged_in_as : final_data}})
+       console.log(d)
         console.log(state.Student)
       }
     })
@@ -90,11 +95,15 @@ export default function AdminRoutes() {
       console.error('Error:', error);
     });
 
+  
+   
+  }
+  }, [])
 
     
 
 
-  }
+  
     
   return useRoutes([
     {
@@ -103,7 +112,7 @@ export default function AdminRoutes() {
     },
     {
       path: '/signin',
-      element:state.Student? (<Navigate to="/student/app" />) : (state.Admin? (<Navigate to="/admin/app" />) : <Login />)
+      element: state.Student === true? (<Navigate to="/student/app" />) : (state.Admin? (<Navigate to="/admin/app" />) : <Login />)
     },
     
     {

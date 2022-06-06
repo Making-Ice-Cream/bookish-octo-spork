@@ -16,11 +16,7 @@ const sidebarConfig = [
     path: '/student/class',
     icon: getIcon('eva:people-fill')
   },
-  // {
-  //   title: 'product',
-  //   path: '/dashboard/products',
-  //   icon: getIcon('eva:shopping-bag-fill')
-  // },
+  
   {
     title: 'Test Score',
     path: '/student/blog',

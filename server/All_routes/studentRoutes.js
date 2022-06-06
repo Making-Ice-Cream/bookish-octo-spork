@@ -72,14 +72,17 @@ router.post("/feeStatus",auths, async function(req, res){
        if(paymentType === "Lump Sum"){
            if(student.payment.lumpsum.paid === true){
                res.status(200).json({
-                   message: "Data sent successfully.",
+                //    message: "Data sent successfully.",
                    feeStatus: "Complete fees is already paid.",
-                   paymentType: paymentType
+                   paymentType: paymentType,
+                   amountDue : 0 ,
+                   delay : 0
+
                })
            }
            else{
                res.status(200).json({
-                message: "Data sent successfully.",
+               
                 feeStatus : "Complete fees is due.",
                 amountDue: student.payment.lumpsum.amount,
                 paymentType: paymentType,
@@ -101,7 +104,7 @@ router.post("/feeStatus",auths, async function(req, res){
                 }
            }
            res.status(200).json({
-            message: "Data sent successfully.",
+            
             paid: paid,
             due: due
            })
@@ -299,7 +302,7 @@ router.get("/StudentsData" , async(req,res)=>{
 
 router.post("/getAccountDetails" , auths, async(req,res)=>{
    try{
-       let data  = await studentSchema.findOne({id : req.userid})
+       let data  = await studentSchema.findOne({_id : req.user})
            
 
        res.status(200).json({
@@ -312,6 +315,7 @@ router.post("/getAccountDetails" , auths, async(req,res)=>{
        });
    }
    catch(e){
+       console.log(e)
        res.status(400).json({
            status : 400,
 
