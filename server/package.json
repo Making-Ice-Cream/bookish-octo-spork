@@ -10,6 +10,7 @@
     "@mailchimp/mailchimp_marketing": "^3.0.74",
     "bcrypt": "^5.0.1",
     "cors": "^2.8.5",
+    "dotenv": "^16.0.1",
     "express": "^4.17.2",
     "generate-password": "^1.7.0",
     "handlebars": "^4.7.7",

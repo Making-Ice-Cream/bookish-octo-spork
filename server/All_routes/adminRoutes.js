@@ -64,7 +64,7 @@ const auths = async (req,res,next)=>{
     try {
         const token = req.body.token === undefined || null ? req.headers.batch : req.body.token ;
         // console.log(token)
-        const secured_string = "helloweareheretodesignthestringwhichisverystronghopeitwillworksthanks";
+        const secured_string = process.env.TOKEN_GEN_KEY;
         
         const verify =  jwt.verify(token,secured_string);
 

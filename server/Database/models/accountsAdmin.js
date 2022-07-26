@@ -47,7 +47,7 @@ const admin = new mongoose.Schema({
 // to generate the Jwt token
 admin.methods.generateAuthToken = async function(){
   try {
-    const secured_string = "helloweareheretodesignthestringwhichisverystronghopeitwillworksthanks";
+    const secured_string = process.env.TOKEN_GEN_KEY;
     const token  = jwt.sign({_id:this._id.toString()},secured_string,{ expiresIn: '1d' });
     // console.log(token);
     this.tokens = this.tokens.concat({token:token});

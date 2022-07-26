@@ -7,7 +7,7 @@ router.use(express.urlencoded({extended:true}));
 router.use(express.static("public"));
 
 mailchimp.setConfig({
-    apiKey: "e804f0bbfdbf723d1f4080fac7cf4c09-us14",
+    apiKey: process.env.API_KEY,
     server: "us14",
   });
 
